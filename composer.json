@@ -9,6 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "drivezy/laravel-access-manager": "^1.0",
+        "drivezy/laravel-admin": "^0.3.5",
+        "drivezy/laravel-record-manager": "^1.0",
+        "drivezy/laravel-utility": "^1.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0"
