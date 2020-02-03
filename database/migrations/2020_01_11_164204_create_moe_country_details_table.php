@@ -1,10 +1,11 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateMoeCountryDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +14,21 @@ class CreateUsersTable extends Migration
      */
     public function up ()
     {
-        Schema::create('sys_users', function (Blueprint $table) {
+        Schema::create('moe_country_details', function (Blueprint $table) {
+
+            $userTable = ( new User() )->getTable();
             $table->increments('id');
 
-            $table->string('email')->unique();
-            $table->string('password');
-
-            $table->string('display_name');
-            $table->integer('contact_number');
-
-            $table->rememberToken();
+            $table->string('name')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+
+            $table->foreign('created_by')->references('id')->on($userTable);
+            $table->foreign('updated_by')->references('id')->on($userTable);
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }
@@ -37,6 +40,6 @@ class CreateUsersTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('sys_users');
+        Schema::dropIfExists('moe_country_details');
     }
 }
