@@ -2,10 +2,17 @@
 
 namespace App;
 
+use App\Models\Moe\DeveloperMember;
+use App\Models\Moe\UserTraining;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -37,5 +44,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @var string
+     */
     protected $table = 'sys_users';
+
+    /**
+     * @return HasMany
+     */
+    public function developers ()
+    {
+        return $this->hasMany(DeveloperMember::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function trainings ()
+    {
+        return $this->hasMany(UserTraining::class);
+    }
 }

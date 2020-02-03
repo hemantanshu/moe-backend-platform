@@ -3,20 +3,28 @@
 namespace App\Models\Moe;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
-use App\Observers\Moe\CountryObserver;
+use App\Observers\Moe\RiverObserver;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Country
+ * Class River
  * @package App\Models\Moe
  */
-class Country extends BaseModel
+class River extends BaseModel
 {
 
     /**
      * @var string
      */
-    protected $table = 'moe_country_details';
+    protected $table = 'moe_river_details';
+
+    /**
+     * @return HasMany
+     */
+    public function projects ()
+    {
+        return $this->hasMany(River::class);
+    }
 
     /**
      * Override the boot functionality to add up the observer
@@ -24,6 +32,6 @@ class Country extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new CountryObserver());
+        self::observe(new RiverObserver());
     }
 }
