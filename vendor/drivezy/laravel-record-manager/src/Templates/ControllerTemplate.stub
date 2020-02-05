@@ -1,0 +1,17 @@
+<?php
+
+namespace {{app}}\Http\Controllers\{{namespace}};
+
+use Drivezy\LaravelRecordManager\Controllers\{{read}}RecordController;
+use {{app}}\Models\{{namespace}}\{{name}};
+
+/**
+ * Class PropertyController
+ * @package @package {{app}}\Http\Controllers\{{namespace}}
+ */
+class {{name}}Controller extends {{read}}RecordController {
+    /**
+     * @var string
+     */
+     protected $model = {{name}}::class;
+}

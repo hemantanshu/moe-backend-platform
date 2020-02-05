@@ -1,0 +1,18 @@
+<?php
+
+namespace {{app}}\Observers\{{namespace}};
+
+use Drivezy\LaravelUtility\Observers\BaseObserver;
+
+/**
+ * Class {{name}}Observer
+ * @package {{app}}\Observers\{{namespace}}
+ */
+ class {{name}}Observer extends BaseObserver {
+
+    /**
+     * @var array
+     */
+    protected $rules = [
+    ];
+}
