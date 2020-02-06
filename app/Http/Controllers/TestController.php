@@ -17,10 +17,8 @@ class TestController extends Controller
      */
     public function test ()
     {
-        Auth::logout();
         Auth::loginUsingId(1, true);
         AccessManager::setUserObject();
-        return AccessManager::getUserObject();
         return success_response('seems all good till now!');
     }
 }
