@@ -19,6 +19,14 @@ class Country extends BaseModel
     protected $table = 'moe_country_details';
 
     /**
+     * @return HasMany
+     */
+    public function zones ()
+    {
+        return $this->hasMany(Zone::class);
+    }
+
+    /**
      * Override the boot functionality to add up the observer
      */
     public static function boot ()

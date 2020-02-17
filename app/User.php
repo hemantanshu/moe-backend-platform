@@ -4,6 +4,9 @@ namespace App;
 
 use App\Models\Moe\DeveloperMember;
 use App\Models\Moe\UserTraining;
+use Drivezy\LaravelAccessManager\Models\PermissionAssignment;
+use Drivezy\LaravelAccessManager\Models\RoleAssignment;
+use Drivezy\LaravelAccessManager\Models\UserGroupMember;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,5 +66,29 @@ class User extends Authenticatable
     public function trainings ()
     {
         return $this->hasMany(UserTraining::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function roles ()
+    {
+        return $this->hasMany(RoleAssignment::class, 'source_id')->where('source_type', md5(self::class));
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function permissions ()
+    {
+        return $this->hasMany(PermissionAssignment::class, 'source_id')->where('source_type', md5(self::class));
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function user_groups ()
+    {
+        return $this->hasMany(UserGroupMember::class);
     }
 }
