@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('developer', 'Moe\DeveloperController');
     Route::resource('developerMember', 'Moe\DeveloperMemberController');
     Route::resource('developmentAgreement', 'Moe\DevelopmentAgreementController');
+    Route::resource('purchaseAgreement', 'Moe\PurchaseAgreementController');
     Route::resource('project', 'Moe\ProjectController');
     Route::resource('projectDeveloper', 'Moe\ProjectDeveloperController');
     Route::resource('projectDistrict', 'Moe\ProjectDistrictController');
