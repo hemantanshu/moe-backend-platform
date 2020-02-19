@@ -16,6 +16,7 @@ class TestController extends Controller
      */
     public function test ()
     {
+
         Auth::loginUsingId(1, true);
         return success_response('seems all good till now!');
     }
