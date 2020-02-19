@@ -29,6 +29,8 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('river', 'Moe\RiverController');
     Route::resource('station', 'Moe\StationController');
     Route::resource('userTraining', 'Moe\UserTrainingController');
+    Route::resource('userEmployment', 'Moe\UserEmploymentController');
+    Route::resource('userEducation', 'Moe\UserEducationController');
 });
 
 Route::group(['prefix' => 'api/record'], function () {
