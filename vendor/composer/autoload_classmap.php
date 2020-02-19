@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\CodeFixCommand' => $baseDir . '/app/Console/Commands/CodeFixCommand.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -29,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\Moe\\PurchaseAgreementController' => $baseDir . '/app/Http/Controllers/Moe/PurchaseAgreementController.php',
     'App\\Http\\Controllers\\Moe\\RiverController' => $baseDir . '/app/Http/Controllers/Moe/RiverController.php',
     'App\\Http\\Controllers\\Moe\\StationController' => $baseDir . '/app/Http/Controllers/Moe/StationController.php',
+    'App\\Http\\Controllers\\Moe\\UserEmploymentController' => $baseDir . '/app/Http/Controllers/Moe/UserEmploymentController.php',
     'App\\Http\\Controllers\\Moe\\UserTrainingController' => $baseDir . '/app/Http/Controllers/Moe/UserTrainingController.php',
     'App\\Http\\Controllers\\Moe\\ZoneController' => $baseDir . '/app/Http/Controllers/Moe/ZoneController.php',
     'App\\Http\\Controllers\\Sys\\LoginController' => $baseDir . '/app/Http/Controllers/Sys/LoginController.php',
@@ -57,6 +59,7 @@ return array(
     'App\\Models\\Moe\\PurchaseAgreement' => $baseDir . '/app/Models/Moe/PurchaseAgreement.php',
     'App\\Models\\Moe\\River' => $baseDir . '/app/Models/Moe/River.php',
     'App\\Models\\Moe\\Station' => $baseDir . '/app/Models/Moe/Station.php',
+    'App\\Models\\Moe\\UserEmployment' => $baseDir . '/app/Models/Moe/UserEmployment.php',
     'App\\Models\\Moe\\UserTraining' => $baseDir . '/app/Models/Moe/UserTraining.php',
     'App\\Models\\Moe\\Zone' => $baseDir . '/app/Models/Moe/Zone.php',
     'App\\Models\\Sys\\OpenProperty' => $baseDir . '/app/Models/Sys/OpenProperty.php',
@@ -75,6 +78,7 @@ return array(
     'App\\Observers\\Moe\\PurchageAgreementObserver' => $baseDir . '/app/Observers/Moe/PurchageAgreementObserver.php',
     'App\\Observers\\Moe\\RiverObserver' => $baseDir . '/app/Observers/Moe/RiverObserver.php',
     'App\\Observers\\Moe\\StationObserver' => $baseDir . '/app/Observers/Moe/StationObserver.php',
+    'App\\Observers\\Moe\\UserEmploymentObserver' => $baseDir . '/app/Observers/Moe/UserEmploymentObserver.php',
     'App\\Observers\\Moe\\UserTrainingObserver' => $baseDir . '/app/Observers/Moe/UserTrainingObserver.php',
     'App\\Observers\\Moe\\ZoneObserver' => $baseDir . '/app/Observers/Moe/ZoneObserver.php',
     'App\\Observers\\Sys\\OpenPropertyObserver' => $baseDir . '/app/Observers/Sys/OpenPropertyObserver.php',
@@ -1134,6 +1138,7 @@ return array(
     'Drivezy\\LaravelAccessManager\\AccessManager' => $vendorDir . '/drivezy/laravel-access-manager/src/AccessManager.php',
     'Drivezy\\LaravelAccessManager\\Controllers\\IPRestrictionController' => $vendorDir . '/drivezy/laravel-access-manager/src/Controllers/IPRestrictionController.php',
     'Drivezy\\LaravelAccessManager\\Controllers\\LoginController' => $vendorDir . '/drivezy/laravel-access-manager/src/Controllers/LoginController.php',
+    'Drivezy\\LaravelAccessManager\\Controllers\\UserController' => $vendorDir . '/drivezy/laravel-access-manager/src/Controllers/UserController.php',
     'Drivezy\\LaravelAccessManager\\Database\\Seeds\\RoleSeeder' => $vendorDir . '/drivezy/laravel-access-manager/src/Database/Seeds/RoleSeeder.php',
     'Drivezy\\LaravelAccessManager\\ImpersonationManager' => $vendorDir . '/drivezy/laravel-access-manager/src/ImpersonationManager.php',
     'Drivezy\\LaravelAccessManager\\LaravelAccessManagerServiceProvider' => $vendorDir . '/drivezy/laravel-access-manager/src/LaravelAccessManagerServiceProvider.php',
@@ -5841,7 +5846,6 @@ return array(
     'Whoops\\Util\\SystemFacade' => $vendorDir . '/filp/whoops/src/Whoops/Util/SystemFacade.php',
     'Whoops\\Util\\TemplateHelper' => $vendorDir . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
     'XdgBaseDir\\Xdg' => $vendorDir . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
-    'dbseeder' => $baseDir . '/database/seeds/dbseeder.php',
     'phpDocumentor\\Reflection\\DocBlock' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
     'phpDocumentor\\Reflection\\DocBlockFactory' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
     'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

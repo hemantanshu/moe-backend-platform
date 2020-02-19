@@ -597,6 +597,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\CodeFixCommand' => __DIR__ . '/../..' . '/app/Console/Commands/CodeFixCommand.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -620,6 +621,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Http\\Controllers\\Moe\\PurchaseAgreementController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/PurchaseAgreementController.php',
         'App\\Http\\Controllers\\Moe\\RiverController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/RiverController.php',
         'App\\Http\\Controllers\\Moe\\StationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/StationController.php',
+        'App\\Http\\Controllers\\Moe\\UserEmploymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/UserEmploymentController.php',
         'App\\Http\\Controllers\\Moe\\UserTrainingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/UserTrainingController.php',
         'App\\Http\\Controllers\\Moe\\ZoneController' => __DIR__ . '/../..' . '/app/Http/Controllers/Moe/ZoneController.php',
         'App\\Http\\Controllers\\Sys\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Sys/LoginController.php',
@@ -648,6 +650,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Models\\Moe\\PurchaseAgreement' => __DIR__ . '/../..' . '/app/Models/Moe/PurchaseAgreement.php',
         'App\\Models\\Moe\\River' => __DIR__ . '/../..' . '/app/Models/Moe/River.php',
         'App\\Models\\Moe\\Station' => __DIR__ . '/../..' . '/app/Models/Moe/Station.php',
+        'App\\Models\\Moe\\UserEmployment' => __DIR__ . '/../..' . '/app/Models/Moe/UserEmployment.php',
         'App\\Models\\Moe\\UserTraining' => __DIR__ . '/../..' . '/app/Models/Moe/UserTraining.php',
         'App\\Models\\Moe\\Zone' => __DIR__ . '/../..' . '/app/Models/Moe/Zone.php',
         'App\\Models\\Sys\\OpenProperty' => __DIR__ . '/../..' . '/app/Models/Sys/OpenProperty.php',
@@ -666,6 +669,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Observers\\Moe\\PurchageAgreementObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/PurchageAgreementObserver.php',
         'App\\Observers\\Moe\\RiverObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/RiverObserver.php',
         'App\\Observers\\Moe\\StationObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/StationObserver.php',
+        'App\\Observers\\Moe\\UserEmploymentObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/UserEmploymentObserver.php',
         'App\\Observers\\Moe\\UserTrainingObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/UserTrainingObserver.php',
         'App\\Observers\\Moe\\ZoneObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/ZoneObserver.php',
         'App\\Observers\\Sys\\OpenPropertyObserver' => __DIR__ . '/../..' . '/app/Observers/Sys/OpenPropertyObserver.php',
@@ -1725,6 +1729,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'Drivezy\\LaravelAccessManager\\AccessManager' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/AccessManager.php',
         'Drivezy\\LaravelAccessManager\\Controllers\\IPRestrictionController' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/Controllers/IPRestrictionController.php',
         'Drivezy\\LaravelAccessManager\\Controllers\\LoginController' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/Controllers/LoginController.php',
+        'Drivezy\\LaravelAccessManager\\Controllers\\UserController' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/Controllers/UserController.php',
         'Drivezy\\LaravelAccessManager\\Database\\Seeds\\RoleSeeder' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/Database/Seeds/RoleSeeder.php',
         'Drivezy\\LaravelAccessManager\\ImpersonationManager' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/ImpersonationManager.php',
         'Drivezy\\LaravelAccessManager\\LaravelAccessManagerServiceProvider' => __DIR__ . '/..' . '/drivezy/laravel-access-manager/src/LaravelAccessManagerServiceProvider.php',
@@ -6432,7 +6437,6 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'Whoops\\Util\\SystemFacade' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/SystemFacade.php',
         'Whoops\\Util\\TemplateHelper' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
-        'dbseeder' => __DIR__ . '/../..' . '/database/seeds/dbseeder.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

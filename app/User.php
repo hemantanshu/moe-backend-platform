@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Models\Moe\DeveloperMember;
+use App\Models\Moe\UserEducation;
+use App\Models\Moe\UserEmployment;
 use App\Models\Moe\UserTraining;
 use Drivezy\LaravelAccessManager\Models\PermissionAssignment;
 use Drivezy\LaravelAccessManager\Models\RoleAssignment;
@@ -90,5 +92,21 @@ class User extends Authenticatable
     public function user_groups ()
     {
         return $this->hasMany(UserGroupMember::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function educations ()
+    {
+        return $this->hasMany(UserEducation::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function employments ()
+    {
+        return $this->hasMany(UserEmployment::class);
     }
 }
