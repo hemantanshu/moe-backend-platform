@@ -10,7 +10,7 @@ use Drivezy\LaravelRecordManager\Models\ModelColumn;
 use Drivezy\LaravelRecordManager\Models\ModelRelationship;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Message;
+use Drivezy\LaravelUtility\Facade\Message;
 
 class RecordManager extends DataManager
 {
