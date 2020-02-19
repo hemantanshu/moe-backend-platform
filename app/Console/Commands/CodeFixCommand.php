@@ -39,7 +39,7 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        $lookupTypes = [152 => 101, 145 => 102, 146 => 103, 147 => 104];
+        $lookupTypes = [148 => 105, 149 => 106, 150 => 107];
         foreach ( $lookupTypes as $key => $value ) {
             $sql = "select * from moe.utl_lookup_values where lookup_type = {$key}";
             $records = DB::select(DB::raw($sql));
