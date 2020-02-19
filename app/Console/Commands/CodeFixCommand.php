@@ -40,18 +40,21 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        $sql = "select * from moe.sys_users where id > 1";
-        $users = DB::select(DB::raw($sql));
-        foreach ( $users as $user ) {
-            User::create([
-                'email'          => $user->email,
-                'password'       => $user->password,
-                'display_name'   => $user->display_name,
-                'contact_number' => $user->contact_number,
-            ]);
+        $lookupTypes = [153 => 109, 154 => 110, 155 => 108];
+        foreach ( $lookupTypes as $key => $value ) {
+            $sql = "select * from moe.utl_lookup_values where lookup_type = {$key}";
+            $records = DB::select(DB::raw($sql));
 
-            echo "created user {$user->email}" . PHP_EOL;
+            foreach ( $records as $record ) {
+                $lookupValue = LookupValue::create([
+                    'lookup_type_id' => $value,
+                    'name'           => $record->name,
+                    'value'          => $record->value,
+                    'description'    => $record->description,
+                ]);
 
+                DB::update("update moe.utl_lookup_values set new_id = $lookupValue->id where id = $record->id");
+            }
         }
 
 
