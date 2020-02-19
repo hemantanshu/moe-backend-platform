@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\User;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -39,22 +40,20 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        $lookupTypes = [148 => 105, 149 => 106, 150 => 107];
-        foreach ( $lookupTypes as $key => $value ) {
-            $sql = "select * from moe.utl_lookup_values where lookup_type = {$key}";
-            $records = DB::select(DB::raw($sql));
+        $sql = "select * from moe.sys_users where id > 1";
+        $users = DB::select(DB::raw($sql));
+        foreach ( $users as $user ) {
+            User::create([
+                'email'          => $user->email,
+                'password'       => $user->password,
+                'display_name'   => $user->display_name,
+                'contact_number' => $user->contact_number,
+            ]);
 
-            foreach ( $records as $record ) {
-                $lookupValue = LookupValue::create([
-                    'lookup_type_id' => $value,
-                    'name'           => $record->name,
-                    'value'          => $record->value,
-                    'description'    => $record->description,
-                ]);
+            echo "created user {$user->email}" . PHP_EOL;
 
-                DB::update("update moe.utl_lookup_values set new_id = $lookupValue->id where id = $record->id");
-            }
         }
+
 
     }
 }
