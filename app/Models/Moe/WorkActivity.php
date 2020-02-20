@@ -3,13 +3,14 @@
 namespace App\Models\Moe;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
-use App\Observers\Moe\WorkScheduleObserver;
+use App\Observers\Moe\WorkActivityObserver;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class WorkSchedule
  * @package App\Models\Moe
  */
-class WorkSchedule extends BaseModel
+class WorkActivity extends BaseModel
 {
 
     /**
@@ -18,11 +19,11 @@ class WorkSchedule extends BaseModel
     protected $table = 'moe_work_schedules';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function project_schedules ()
     {
-        return $this->hasMany(ProjectSchedule::class, 'work_schedule_id');
+        return $this->hasMany(ProjectSchedule::class, 'work_activity_id');
     }
 
     /**
@@ -31,6 +32,6 @@ class WorkSchedule extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new WorkScheduleObserver());
+        self::observe(new WorkActivityObserver());
     }
 }

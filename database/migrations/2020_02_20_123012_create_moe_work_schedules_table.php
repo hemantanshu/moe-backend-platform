@@ -16,7 +16,7 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('moe_work_schedules', function (Blueprint $table) {
+        Schema::create('moe_work_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');
@@ -41,6 +41,6 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('moe_work_schedules');
+        Schema::dropIfExists('moe_work_activities');
     }
 }

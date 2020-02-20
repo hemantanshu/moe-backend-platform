@@ -19,8 +19,8 @@ class CreateMoeProjectSchedulesTable extends Migration
             $table->unsignedInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('moe_project_details');
 
-            $table->unsignedBigInteger('work_schedule_id')->nullable();
-            $table->foreign('work_schedule_id')->references('id')->on('moe_work_schedules');
+            $table->unsignedBigInteger('work_activity_id')->nullable();
+            $table->foreign('work_activity_id')->references('id')->on('moe_work_activities');
 
 
             $table->boolean('critical_activity')->default(false);

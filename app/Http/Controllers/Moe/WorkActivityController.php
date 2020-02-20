@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Moe;
 
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use App\Models\Moe\WorkSchedule;
+use App\Models\Moe\WorkActivity;
 
 /**
- * Class PropertyController
+ * Class WorkActivityController
  * @package @package App\Http\Controllers\Moe
  */
-class WorkScheduleController extends RecordController {
+class WorkActivityController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = WorkSchedule::class;
+    protected $model = WorkActivity::class;
 }

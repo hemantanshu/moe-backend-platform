@@ -8,7 +8,7 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  * Class WorkScheduleObserver
  * @package App\Observers\Moe
  */
- class WorkScheduleObserver extends BaseObserver {
+ class WorkActivityObserver extends BaseObserver {
 
     /**
      * @var array

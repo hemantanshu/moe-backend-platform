@@ -31,9 +31,9 @@ class ProjectSchedule extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function work_schedule ()
+    public function work_activity ()
     {
-        return $this->belongsTo(WorkSchedule::class);
+        return $this->belongsTo(WorkActivity::class);
     }
 
     /**
