@@ -16,7 +16,7 @@ class WorkActivity extends BaseModel
     /**
      * @var string
      */
-    protected $table = 'moe_work_schedules';
+    protected $table = 'moe_work_activities';
 
     /**
      * @return HasMany
