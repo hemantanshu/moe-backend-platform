@@ -2,6 +2,7 @@
 
 namespace App\Models\Moe;
 
+use Drivezy\LaravelRecordManager\Models\DocumentManager;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectObserver;
 use Drivezy\LaravelUtility\Models\LookupValue;
@@ -114,6 +115,14 @@ class Project extends BaseModel
     public function purchase_agreements ()
     {
         return $this->hasMany(PurchaseAgreement::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function documents ()
+    {
+        return $this->hasMany(DocumentManager::class, 'source_id')->where('source_type', md5(self::class));
     }
 
 
