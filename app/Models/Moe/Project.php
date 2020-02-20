@@ -5,6 +5,7 @@ namespace App\Models\Moe;
 use Drivezy\LaravelRecordManager\Models\DocumentManager;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectObserver;
+use Drivezy\LaravelUtility\Models\CommentDetail;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -123,6 +124,22 @@ class Project extends BaseModel
     public function documents ()
     {
         return $this->hasMany(DocumentManager::class, 'source_id')->where('source_type', md5(self::class));
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function project_schedules ()
+    {
+        return $this->hasMany(ProjectSchedule::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function comments ()
+    {
+        return $this->hasMany(CommentDetail::class, 'source_id')->where('source_type', md5(self::class));
     }
 
 
