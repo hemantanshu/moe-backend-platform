@@ -30,6 +30,7 @@ class ProjectScheduleObserver extends BaseObserver
         $record = ProjectSchedule::where('project_id', $model->project_id)->where('work_activity_id', $model->work_activity_id)->first();
         if ( $record && $record->id != $model->id ) {
             Message::warn('Duplicate project activity..');
+            $model->setAttribute('errors', 'Duplicate project activity..');
 
             return false;
         }
