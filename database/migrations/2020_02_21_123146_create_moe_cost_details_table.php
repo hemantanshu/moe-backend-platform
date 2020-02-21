@@ -4,10 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * Class CreateMoeWorkSchedulesTable
- */
-class CreateMoeWorkSchedulesTable extends Migration
+class CreateMoeCostDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +13,7 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('moe_work_activities', function (Blueprint $table) {
+        Schema::create('moe_cost_details', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');
@@ -41,6 +38,6 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('moe_work_activities');
+        Schema::dropIfExists('moe_cost_details');
     }
 }

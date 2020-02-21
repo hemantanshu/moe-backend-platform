@@ -33,7 +33,10 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('userEducation', 'Moe\UserEducationController');
 
     Route::resource('workActivity', 'Moe\WorkActivityController');
+    Route::resource('costHead', 'Moe\CostHeadController');
     Route::resource('projectSchedule', 'Moe\ProjectScheduleController');
+    Route::resource('projectCost', 'Moe\ProjectCostController');
+
 
 });
 

@@ -142,6 +142,14 @@ class Project extends BaseModel
         return $this->hasMany(CommentDetail::class, 'source_id')->where('source_type', md5(self::class));
     }
 
+    /**
+     * @return HasMany
+     */
+    public function project_costs ()
+    {
+        return $this->hasMany(ProjectCost::class);
+    }
+
 
     /**
      * Override the boot functionality to add up the observer

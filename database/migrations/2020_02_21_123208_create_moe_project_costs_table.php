@@ -4,10 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * Class CreateMoeWorkSchedulesTable
- */
-class CreateMoeWorkSchedulesTable extends Migration
+class CreateMoeProjectCostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +13,17 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('moe_work_activities', function (Blueprint $table) {
+        Schema::create('moe_project_costs', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('name');
-            $table->string('description', 1024)->nullable();
+            $table->unsignedInteger('project_id')->nullable();
+            $table->foreign('project_id')->references('id')->on('moe_project_details');
+
+            $table->unsignedBigInteger('cost_head_id')->nullable();
+            $table->foreign('cost_head_id')->references('id')->on('moe_cost_details');
+
+            $table->integer('estimate_cost')->nullable();
+            $table->integer('actual_cost')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
@@ -41,6 +44,6 @@ class CreateMoeWorkSchedulesTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('moe_work_activities');
+        Schema::dropIfExists('moe_project_costs');
     }
 }
