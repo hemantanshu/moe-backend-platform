@@ -4,6 +4,8 @@ namespace App\Models\Moe;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\CostHeadObserver;
+use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -23,6 +25,14 @@ class CostHead extends BaseModel {
     public function projects ()
     {
         return $this->hasMany(ProjectCost::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function category ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 
     /**
