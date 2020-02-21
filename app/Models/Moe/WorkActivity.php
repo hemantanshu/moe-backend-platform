@@ -4,6 +4,8 @@ namespace App\Models\Moe;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\WorkActivityObserver;
+use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -24,6 +26,14 @@ class WorkActivity extends BaseModel
     public function project_schedules ()
     {
         return $this->hasMany(ProjectSchedule::class, 'work_activity_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function category ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 
     /**
