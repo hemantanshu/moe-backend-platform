@@ -25,7 +25,7 @@ class CreateMoeReasonMappingsTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('reason_id')->references('id')->on('dz_reason_definitions');
+            $table->foreign('reason_id')->references('id')->on('moe_reason_definitions');
             $table->index(['source_type', 'source_id']);
 
             $table->foreign('created_by')->references('id')->on('sys_users');

@@ -37,6 +37,9 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('projectSchedule', 'Moe\ProjectScheduleController');
     Route::resource('projectCost', 'Moe\ProjectCostController');
 
+    Route::resource('reason', 'Moe\ReasonDefinitionController');
+    Route::resource('reasonMapping', 'Moe\ReasonMappingController');
+
 
 });
 
