@@ -45,6 +45,14 @@ class ProjectSchedule extends BaseModel
     }
 
     /**
+     * @return HasMany
+     */
+    public function reasons ()
+    {
+        return $this->hasMany(ReasonMapping::class, 'source_id')->where('source_type', md5(self::class));
+    }
+
+    /**
      * Override the boot functionality to add up the observer
      */
     public static function boot ()
