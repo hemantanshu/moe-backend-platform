@@ -53,6 +53,14 @@ class ProjectSchedule extends BaseModel
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function parent_schedule ()
+    {
+        return $this->belongsTo(ProjectSchedule::class);
+    }
+
+    /**
      * Override the boot functionality to add up the observer
      */
     public static function boot ()
