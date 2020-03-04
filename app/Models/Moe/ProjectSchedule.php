@@ -53,11 +53,19 @@ class ProjectSchedule extends BaseModel
     }
 
     /**
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function parent_schedule ()
+    public function dependencies ()
     {
-        return $this->belongsTo(ProjectSchedule::class);
+        return $this->hasMany(ProjectScheduleDependency::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function dependency_parents ()
+    {
+        return $this->hasMany(ProjectScheduleDependency::class, 'dependency_id');
     }
 
     /**
