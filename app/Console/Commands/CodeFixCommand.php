@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Moe\ProjectSchedule;
+use App\Models\Moe\WorkActivity;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -37,5 +39,9 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
+        $activities = WorkActivity::get();
+        foreach ( $activities as $activity ) {
+            ProjectSchedule::where('work_activity_id', $activity->id)->update(['name' => $activity->name]);
+        }
     }
 }
