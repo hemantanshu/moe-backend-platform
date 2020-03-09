@@ -10,7 +10,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class SecurityRule
  * @package Drivezy\LaravelRecordManager\Models
  */
-class SecurityRule extends BaseModel {
+class SecurityRule extends BaseModel
+{
     /**
      * @var string
      */
@@ -19,21 +20,24 @@ class SecurityRule extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function roles () {
+    public function roles ()
+    {
         return $this->hasMany(RoleAssignment::class, 'source_id')->where('source_type', md5(self::class));
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function script () {
+    public function script ()
+    {
         return $this->belongsTo(SystemScript::class);
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new SecurityRuleObserver());
     }

@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Cache;
  * Class DataManager
  * @package Drivezy\LaravelRecordManager\Library
  */
-class DataManager {
+class DataManager
+{
     protected $includes, $sqlCacheIdentifier = false;
 
     protected $model, $base, $data;
@@ -41,7 +42,8 @@ class DataManager {
      * @param $model
      * @param array $args
      */
-    public function __construct ($model, $args = []) {
+    public function __construct ($model, $args = [])
+    {
         $this->model = $model;
 
         foreach ( $args as $key => $value ) {
@@ -53,7 +55,8 @@ class DataManager {
     /**
      * @param null $id
      */
-    public function process ($id = null) {
+    public function process ($id = null)
+    {
         $this->model->actions = ModelManager::getModelActions($this->model);
 
         self::setReadDictionary($this->base, $this->model);
@@ -82,7 +85,8 @@ class DataManager {
      * @param $relationship
      * @param $base
      */
-    protected function setupColumnJoins ($model, $relationship, $base) {
+    protected function setupColumnJoins ($model, $relationship, $base)
+    {
         //get the source model definition
         $source = (object) [
             'base'   => $base,
@@ -125,7 +129,8 @@ class DataManager {
      * Also create necessary alias and the return element
      * @return string
      */
-    private function getSelectItems () {
+    private function getSelectItems ()
+    {
         self::fixSelectItems();
 
         $query = '';
@@ -143,7 +148,8 @@ class DataManager {
      * Get the select items which are part of the requested layout
      * Also load the parent items part of the dictionary
      */
-    private function fixSelectItems () {
+    private function fixSelectItems ()
+    {
         $columns = [];
         foreach ( $this->dictionary[ $this->base ] as $item ) {
             if ( !$item->is_custom_column )
@@ -171,7 +177,8 @@ class DataManager {
      * If yes then load back to the system
      * @return array|bool|mixed
      */
-    protected function loadDataFromCache () {
+    protected function loadDataFromCache ()
+    {
         if ( !$this->sqlCacheIdentifier ) return false;
 
         $record = Cache::get($this->sqlCacheIdentifier, false);
@@ -189,7 +196,8 @@ class DataManager {
      * This is part of the where condition
      * @return mixed|string
      */
-    private function getJoins () {
+    private function getJoins ()
+    {
         $query = '';
         foreach ( $this->restrictions as $join ) {
             if ( !$join ) continue;
@@ -207,7 +215,8 @@ class DataManager {
      * create array of  necessary join conditions against the tables that are part of the includes.
      * @return string
      */
-    private function getTableDefinitions () {
+    private function getTableDefinitions ()
+    {
         $query = '';
         foreach ( $this->tables as $key => $value ) {
             if ( $query )
@@ -227,7 +236,8 @@ class DataManager {
      * Then save it to the cache so that it can be fetched
      * back without need of too much query iteration
      */
-    protected function constructQuery () {
+    protected function constructQuery ()
+    {
         $this->sql['columns'] = self::getSelectItems();
         $this->sql['tables'] = self::getTableDefinitions();
         $this->sql['joins'] = self::getJoins() ? : ' 1 = 1';
@@ -246,7 +256,8 @@ class DataManager {
      * @param $base
      * @param $model
      */
-    protected function setReadDictionary ($base, $model) {
+    protected function setReadDictionary ($base, $model)
+    {
         $columns = ModelManager::getModelDictionary($model, 'r');
         $this->dictionary[ $base ] = $columns->allowed;
 
@@ -272,7 +283,8 @@ class DataManager {
      * @param $base
      * @return array
      */
-    private function setQueryRestriction ($model, $base) {
+    private function setQueryRestriction ($model, $base)
+    {
         $joins = [];
 
         $restrictions = BusinessRuleManager::getQueryStrings($model);

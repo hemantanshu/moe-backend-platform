@@ -4,13 +4,15 @@ namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 
-class ObserverEvent extends BaseModel {
+class ObserverEvent extends BaseModel
+{
     /**
      * @var string
      */
     protected $table = 'dz_observer_events';
 
-    public function setDataAttribute ($obj) {
+    public function setDataAttribute ($obj)
+    {
         $this->attributes['data'] = serialize($obj);
     }
 
@@ -18,7 +20,8 @@ class ObserverEvent extends BaseModel {
      * @param $query
      * @return mixed
      */
-    public function scopeActive ($query) {
+    public function scopeActive ($query)
+    {
         return $query->whereNull('processed_at');
     }
 
@@ -26,14 +29,16 @@ class ObserverEvent extends BaseModel {
      * @param $query
      * @return mixed
      */
-    public function scopePending ($query) {
+    public function scopePending ($query)
+    {
         return $query->whereNull('processed_at');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function data_model () {
+    public function data_model ()
+    {
         return $this->belongsTo(DataModel::class, 'model_hash', 'model_hash');
     }
 }

@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
  * Class ServerDeploymentController
  * @package Drivezy\LaravelRecordManager\Controllers
  */
-class ServerDeploymentController extends RecordController {
+class ServerDeploymentController extends RecordController
+{
     /**
      * @var string
      */
@@ -21,7 +22,8 @@ class ServerDeploymentController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         $deployment = ServerDeployment::firstOrNew($request->only(['private_ip', 'repository_name', 'branch']));
 
         if ( !$deployment->repository_name ) return failed_response('invalid params');

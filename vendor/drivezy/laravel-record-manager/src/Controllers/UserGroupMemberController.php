@@ -9,12 +9,13 @@ use Illuminate\Http\Request;
  * Class UserGroupMemberController
  * @package Drivezy\LaravelRecordManager\Controller
  */
-class UserGroupMemberController extends RecordController {
+class UserGroupMemberController extends RecordController
+{
     /**
      * @var string
      */
     public $model = UserGroupMember::class;
-    
+
     /**
      * Checks if user already in group. If not assigns user to group.
      *
@@ -23,7 +24,8 @@ class UserGroupMemberController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         $user = $this->model::where('user_group_id', $request->get('user_group_id'))
             ->where('user_id', $request->get('user_id'))
             ->first();

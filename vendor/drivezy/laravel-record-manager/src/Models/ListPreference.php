@@ -10,7 +10,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class ListPreference
  * @package Drivezy\LaravelRecordManager\Models
  */
-class ListPreference extends BaseModel {
+class ListPreference extends BaseModel
+{
     /**
      * @var string
      */
@@ -20,14 +21,16 @@ class ListPreference extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user () {
+    public function user ()
+    {
         return $this->belongsTo(AccessManager::getUserClass());
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new ListPreferenceObserver());
     }

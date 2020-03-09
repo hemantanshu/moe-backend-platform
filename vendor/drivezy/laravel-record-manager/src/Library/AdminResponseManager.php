@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
  * Class AdminResponseManager
  * @package Drivezy\LaravelRecordManager\Library
  */
-class AdminResponseManager {
+class AdminResponseManager
+{
 
     private $request = null;
     private $model = null;
@@ -22,7 +23,8 @@ class AdminResponseManager {
      * @param Request $request
      * @param DataModel $model
      */
-    public function __construct (Request $request, DataModel $model) {
+    public function __construct (Request $request, DataModel $model)
+    {
         $this->request = $request;
         $this->model = $model;
     }
@@ -30,7 +32,8 @@ class AdminResponseManager {
     /**
      *
      */
-    public function index () {
+    public function index ()
+    {
         $request = $this->request;
 
         $records = ( new ListManager($this->model, [
@@ -62,7 +65,8 @@ class AdminResponseManager {
      * @param $export
      * @param $layoutId
      */
-    private function exportData ($records, $export = false, $layoutId) {
+    private function exportData ($records, $export = false, $layoutId)
+    {
         if ( !$export ) return;
 
         $userId = Auth::id();
@@ -79,7 +83,8 @@ class AdminResponseManager {
     /**
      * @param $id
      */
-    public function show ($id) {
+    public function show ($id)
+    {
         $request = $this->request;
 
         $records = ( new RecordManager($this->model, [
@@ -95,7 +100,8 @@ class AdminResponseManager {
      * @param Request $request
      * @return array
      */
-    private function getLayoutDefinition () {
+    private function getLayoutDefinition ()
+    {
         $columns = [];
         if ( !$this->request->has('layout_id') ) return $columns;
 

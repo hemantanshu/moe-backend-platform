@@ -10,7 +10,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class SMSMessage
  * @package Drivezy\LaravelRecordManager\Models
  */
-class SMSMessage extends BaseModel {
+class SMSMessage extends BaseModel
+{
     /**
      * @var string
      */
@@ -19,14 +20,16 @@ class SMSMessage extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user () {
+    public function user ()
+    {
         return $this->belongsTo(LaravelUtility::getUserModelFullQualifiedName());
     }
 
     /**
      * over riding the boot functionality
      */
-    protected static function boot () {
+    protected static function boot ()
+    {
         parent::boot();
         self::observe(new SMSMessageObserver());
     }

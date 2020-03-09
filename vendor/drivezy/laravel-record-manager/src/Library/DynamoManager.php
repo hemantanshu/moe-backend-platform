@@ -8,7 +8,8 @@ use Drivezy\LaravelUtility\LaravelUtility;
  * Class DynamoManager
  * @package Drivezy\LaravelRecordManager\Library
  */
-class DynamoManager {
+class DynamoManager
+{
     /**
      * DynamoDB client.
      *
@@ -21,7 +22,8 @@ class DynamoManager {
      *
      * This methods should be invoked in every public methods.
      */
-    private static function init () {
+    private static function init ()
+    {
         if ( self::$client === null ) self::$client = \AWS::createClient("DynamoDb");
     }
 
@@ -32,7 +34,8 @@ class DynamoManager {
      * @param array $item data to be written
      * @return bool status
      */
-    public static function pushToDynamo ($table, $item) {
+    public static function pushToDynamo ($table, $item)
+    {
         if ( !LaravelUtility::isInstanceProduction() ) return false;
 
         self::init();
@@ -51,7 +54,8 @@ class DynamoManager {
      * @param $items
      * @return bool
      */
-    public static function pushMultipleToDynamo ($table, $items) {
+    public static function pushMultipleToDynamo ($table, $items)
+    {
         if ( !LaravelUtility::isInstanceProduction() ) return false;
 
         self::init();

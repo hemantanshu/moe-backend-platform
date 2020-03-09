@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
  * Class PermissionAssignmentController
  * @package Drivezy\LaravelRecordManager\Controller
  */
-class PermissionAssignmentController extends RecordController {
+class PermissionAssignmentController extends RecordController
+{
     /**
      * @var string
      */
@@ -23,7 +24,8 @@ class PermissionAssignmentController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         $record = $this->model::where('permission_id', $request->get('permission_id'))
             ->where('source_type', $request->get('source_type'))
             ->where('source_id', $request->get('source_id'))

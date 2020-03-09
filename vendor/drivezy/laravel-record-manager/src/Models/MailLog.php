@@ -9,7 +9,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class MailLog
  * @package Drivezy\LaravelRecordManager\Models
  */
-class MailLog extends BaseModel {
+class MailLog extends BaseModel
+{
     /**
      * @var string
      */
@@ -18,14 +19,16 @@ class MailLog extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function mail_recipients () {
+    public function mail_recipients ()
+    {
         return $this->hasMany(MailRecipient::class, 'mail_id');
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new MailLogObserver());
     }

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Response;
  * Class SystemScriptController
  * @package Drivezy\LaravelRecordManager\Controllers
  */
-class SystemScriptController extends RecordController {
+class SystemScriptController extends RecordController
+{
     /**
      * @var string
      */
@@ -21,7 +22,8 @@ class SystemScriptController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         $object = SystemScript::firstOrNew([
             'source_type'   => $request->source_type,
             'source_id'     => $request->source_id,

@@ -11,7 +11,8 @@ use Drivezy\LaravelUtility\Models\LookupValue;
  * Class InAppMessage
  * @package Drivezy\LaravelRecordManager\Models
  */
-class InAppMessage extends BaseModel {
+class InAppMessage extends BaseModel
+{
     use UsesUuid;
     /**
      * @var string
@@ -21,21 +22,24 @@ class InAppMessage extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user () {
+    public function user ()
+    {
         return $this->belongsTo(LaravelUtility::getUserModelFullQualifiedName());
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function platform () {
+    public function platform ()
+    {
         return $this->belongsTo(LookupValue::class);
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new InAppMessageObserver());
     }

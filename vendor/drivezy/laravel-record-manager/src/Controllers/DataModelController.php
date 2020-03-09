@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
  * Class DataModelController
  * @package Drivezy\LaravelRecordManager\Controller
  */
-class DataModelController extends RecordController {
+class DataModelController extends RecordController
+{
     /**
      * @var string
      */
@@ -21,7 +22,8 @@ class DataModelController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSourceColumnDetails (Request $request) {
+    public function getSourceColumnDetails (Request $request)
+    {
         return success_response(ColumnManager::getSourceColumnDetails($request->source_type, $request->source_id));
     }
 }

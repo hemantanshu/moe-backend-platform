@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Response;
  * Class ListPreferenceController
  * @package Drivezy\LaravelRecordManager\Controllers
  */
-class ListPreferenceController extends RecordController {
+class ListPreferenceController extends RecordController
+{
     /**
      * @var string
      */
@@ -22,7 +23,8 @@ class ListPreferenceController extends RecordController {
      * @param Request $request
      * @return mixed
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         //only user with permission form-configurator should be able to create list preference for all
         $isFormConfigurator = AccessManager::hasPermission('form-configurator');
         $request->user_id = $isFormConfigurator ? $request->user_id : Auth::id();
@@ -59,7 +61,8 @@ class ListPreferenceController extends RecordController {
      * @param $id
      * @return \Illuminate\Http\JsonResponse|null
      */
-    public function update (Request $request, $id) {
+    public function update (Request $request, $id)
+    {
         return invalid_operation();
     }
 
@@ -68,7 +71,8 @@ class ListPreferenceController extends RecordController {
      * @param $id
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function destroy (Request $request, $id) {
+    public function destroy (Request $request, $id)
+    {
         $record = ListPreference::find($id);
 
         //if record is not found, return invalid operation

@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
  * Class BusinessRuleManager
  * @package Drivezy\LaravelRecordManager\Library
  */
-class BusinessRuleManager {
+class BusinessRuleManager
+{
     public static $enabled = true;
 
-    private static function abortBusinessRuleProcessing ($model) {
+    private static function abortBusinessRuleProcessing ($model)
+    {
         if ( $model->abort_business_rule ) return true;
 
         return !self::$enabled;
@@ -22,7 +24,8 @@ class BusinessRuleManager {
     /**
      * @param $model
      */
-    public static function getQueryStrings ($model) {
+    public static function getQueryStrings ($model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return [];
 
@@ -51,7 +54,8 @@ class BusinessRuleManager {
      * @param Eloquent $model
      * @return array
      */
-    public static function handleCreatingRules (Eloquent $model) {
+    public static function handleCreatingRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -67,7 +71,8 @@ class BusinessRuleManager {
     /**
      * @param Eloquent $model
      */
-    public static function handleCreatedRules (Eloquent $model) {
+    public static function handleCreatedRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -84,7 +89,8 @@ class BusinessRuleManager {
      * @param Eloquent $model
      * @return array
      */
-    public static function handleUpdatingRules (Eloquent $model) {
+    public static function handleUpdatingRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -100,7 +106,8 @@ class BusinessRuleManager {
     /**
      * @param Eloquent $model
      */
-    public static function handleUpdateRules (Eloquent $model) {
+    public static function handleUpdateRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -117,7 +124,8 @@ class BusinessRuleManager {
      * @param Eloquent $model
      * @return array
      */
-    public static function handleDeletingRules (Eloquent $model) {
+    public static function handleDeletingRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -133,7 +141,8 @@ class BusinessRuleManager {
     /**
      * @param Eloquent $model
      */
-    public static function handleDeletedRules (Eloquent $model) {
+    public static function handleDeletedRules (Eloquent $model)
+    {
         //validate if the business rule is to be processed at the high level
         if ( self::abortBusinessRuleProcessing($model) ) return $model;
 
@@ -151,7 +160,8 @@ class BusinessRuleManager {
      * @param $rules
      * @return Eloquent
      */
-    private static function evaluateBusinessRules (Eloquent $model, $rules) {
+    private static function evaluateBusinessRules (Eloquent $model, $rules)
+    {
         $user = Auth::user();
 
         foreach ( $rules as $rule ) {
@@ -174,7 +184,8 @@ class BusinessRuleManager {
      * @param $query
      * @return mixed
      */
-    private static function getRules ($query) {
+    private static function getRules ($query)
+    {
         $query = $query->where('active', true)
             ->orderBy('order', 'asc')
             ->get();

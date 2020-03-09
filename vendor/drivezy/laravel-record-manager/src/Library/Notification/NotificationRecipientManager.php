@@ -5,7 +5,8 @@ namespace Drivezy\LaravelRecordManager\Library\Notification;
 use Drivezy\LaravelRecordManager\Models\NotificationTrigger;
 use Drivezy\LaravelUtility\Library\DateUtil;
 
-class NotificationRecipientManager {
+class NotificationRecipientManager
+{
     protected $notification_data = null;
     protected $notification;
     protected $default_users;
@@ -22,7 +23,8 @@ class NotificationRecipientManager {
     /**
      * NotificationRecipientManager constructor.
      */
-    public function __construct () {
+    public function __construct ()
+    {
         $this->trigger = NotificationTrigger::create([
             'notification_id' => $this->notification->id,
             'start_time'      => DateUtil::getDateTime(),
@@ -37,7 +39,8 @@ class NotificationRecipientManager {
      * @param object $data
      * @return bool
      */
-    protected function validateRunCondition ($condition, $data = null) {
+    protected function validateRunCondition ($condition, $data = null)
+    {
         if ( !( $condition && $condition->script ) ) return true;
 
         $answer = false;
@@ -51,7 +54,8 @@ class NotificationRecipientManager {
     /**
      * This would sum up the entire notification triggers
      */
-    public function __destruct () {
+    public function __destruct ()
+    {
         $this->trigger->sms_notifications = $this->sms_count;
         $this->trigger->push_notifications = $this->push_count;
         $this->trigger->email_notifications = $this->email_count;

@@ -9,7 +9,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class NotificationTrigger
  * @package Drivezy\LaravelRecordManager\Models
  */
-class NotificationTrigger extends BaseModel {
+class NotificationTrigger extends BaseModel
+{
     /**
      * @var string
      */
@@ -18,14 +19,16 @@ class NotificationTrigger extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function notification () {
+    public function notification ()
+    {
         return $this->belongsTo(Notification::class);
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new NotificationTriggerObserver());
     }

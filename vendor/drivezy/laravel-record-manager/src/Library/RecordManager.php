@@ -8,9 +8,9 @@ use Drivezy\LaravelRecordManager\Models\Column;
 use Drivezy\LaravelRecordManager\Models\DataModel;
 use Drivezy\LaravelRecordManager\Models\ModelColumn;
 use Drivezy\LaravelRecordManager\Models\ModelRelationship;
+use Drivezy\LaravelUtility\Facade\Message;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Drivezy\LaravelUtility\Facade\Message;
 
 class RecordManager extends DataManager
 {

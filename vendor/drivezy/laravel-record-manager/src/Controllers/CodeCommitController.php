@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
  * Class CodeCommitController
  * @package Drivezy\LaravelRecordManager\Controllers
  */
-class CodeCommitController extends RecordController {
+class CodeCommitController extends RecordController
+{
     /**
      * @var string
      */
@@ -21,7 +22,8 @@ class CodeCommitController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logBitBucketCommit ($key, Request $request) {
+    public function logBitBucketCommit ($key, Request $request)
+    {
         //validate key against the bitbucket
         if ( $key != LaravelUtility::getProperty('bitbucket.webhook.key') ) return invalid_operation();
 

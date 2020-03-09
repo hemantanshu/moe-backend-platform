@@ -9,7 +9,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class Column
  * @package Drivezy\LaravelRecordManager\Models
  */
-class Column extends BaseModel {
+class Column extends BaseModel
+{
     /**
      * @var string
      */
@@ -22,35 +23,40 @@ class Column extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function reference_model () {
+    public function reference_model ()
+    {
         return $this->belongsTo(DataModel::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function reference_column () {
+    public function reference_column ()
+    {
         return $this->belongsTo(self::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function column_type () {
+    public function column_type ()
+    {
         return $this->belongsTo(ColumnDefinition::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function security_rules () {
+    public function security_rules ()
+    {
         return $this->hasMany(SecurityRule::class, 'source_id')->where('source_type', md5(self::class));
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new ColumnObserver());
     }

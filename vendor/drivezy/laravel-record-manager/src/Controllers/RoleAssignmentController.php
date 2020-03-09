@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
  * Class RoleAssignmentController
  * @package Drivezy\LaravelRecordManager\Controller
  */
-class RoleAssignmentController extends RecordController {
+class RoleAssignmentController extends RecordController
+{
     /**
      * @var string
      */
@@ -23,7 +24,8 @@ class RoleAssignmentController extends RecordController {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function store (Request $request) {
+    public function store (Request $request)
+    {
         $record = $this->model::where('role_id', $request->get('role_id'))
             ->where('source_type', $request->get('source_type'))
             ->where('source_id', $request->get('source_id'))

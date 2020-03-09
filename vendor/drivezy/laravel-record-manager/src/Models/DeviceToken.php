@@ -10,7 +10,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class DeviceToken
  * @package Drivezy\LaravelRecordManager\Models
  */
-class DeviceToken extends BaseModel {
+class DeviceToken extends BaseModel
+{
     /**
      * @var string
      */
@@ -19,14 +20,16 @@ class DeviceToken extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user () {
+    public function user ()
+    {
         return $this->belongsTo(LaravelUtility::getUserModelFullQualifiedName());
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new DeviceTokenObserver());
     }

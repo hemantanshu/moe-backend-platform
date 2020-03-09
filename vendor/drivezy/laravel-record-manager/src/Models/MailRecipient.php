@@ -9,7 +9,8 @@ use Drivezy\LaravelUtility\Models\BaseModel;
  * Class MailRecipient
  * @package Drivezy\LaravelRecordManager\Models
  */
-class MailRecipient extends BaseModel {
+class MailRecipient extends BaseModel
+{
     /**
      * @var string
      */
@@ -18,14 +19,16 @@ class MailRecipient extends BaseModel {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function mail () {
+    public function mail ()
+    {
         return $this->belongsTo(MailLog::class);
     }
 
     /**
      * Override the boot functionality to add up the observer
      */
-    public static function boot () {
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new MailRecipientObserver());
     }
