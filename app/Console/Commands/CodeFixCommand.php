@@ -42,12 +42,12 @@ class CodeFixCommand extends Command
         $records = ProjectSchedule::get();
         foreach ( $records as $record ) {
             if ( $record->estimate_start_date && $record->estimate_end_date ) {
-                $days = DateUtil::getDateDifference($record->estimate_start_date, $record->estimate_start_date);
+                $days = DateUtil::getDateDifference($record->estimate_start_date, $record->estimate_end_date);
                 $record->estimated_duration = $days;
             }
 
             if ( $record->actual_start_date && $record->actual_end_date ) {
-                $days = DateUtil::getDateDifference($record->actual_start_date, $record->actual_start_date);
+                $days = DateUtil::getDateDifference($record->actual_start_date, $record->actual_end_date);
                 $record->actual_duration = $days;
             }
             $record->save();

@@ -42,12 +42,12 @@ class ProjectScheduleObserver extends BaseObserver
 
         //calculate the duration based on the model data
         if ( $model->estimate_start_date && $model->estimate_end_date ) {
-            $days = DateUtil::getDateDifference($model->estimate_start_date, $model->estimate_start_date);
+            $days = DateUtil::getDateDifference($model->estimate_start_date, $model->estimate_end_date);
             $model->estimated_duration = $days;
         }
 
         if ( $model->actual_start_date && $model->actual_end_date ) {
-            $days = DateUtil::getDateDifference($model->actual_start_date, $model->actual_start_date);
+            $days = DateUtil::getDateDifference($model->actual_start_date, $model->actual_end_date);
             $model->actual_duration = $days;
         }
 
