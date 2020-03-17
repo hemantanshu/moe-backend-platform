@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Moe\ProjectSchedule;
-use App\Models\Moe\WorkActivity;
+use Drivezy\LaravelUtility\Library\DateUtil;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -39,9 +39,18 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        $activities = WorkActivity::get();
-        foreach ( $activities as $activity ) {
-            ProjectSchedule::where('work_activity_id', $activity->id)->update(['name' => $activity->name]);
+        $records = ProjectSchedule::get();
+        foreach ( $records as $record ) {
+            if ( $record->estimate_start_date && $record->estimate_end_date ) {
+                $days = DateUtil::getDateDifference($record->estimate_start_date, $record->estimate_start_date);
+                $record->estimated_duration = $days;
+            }
+
+            if ( $record->actual_start_date && $record->actual_end_date ) {
+                $days = DateUtil::getDateDifference($record->actual_start_date, $record->actual_start_date);
+                $record->actual_duration = $days;
+            }
+            $record->save();
         }
     }
 }
