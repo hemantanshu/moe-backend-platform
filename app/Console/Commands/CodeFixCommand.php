@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Moe\ProjectSchedule;
-use Drivezy\LaravelUtility\Library\DateUtil;
+use App\Libraries\Moe\CriticalPathManager;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -39,18 +38,6 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        $records = ProjectSchedule::get();
-        foreach ( $records as $record ) {
-            if ( $record->estimate_start_date && $record->estimate_end_date ) {
-                $days = DateUtil::getDateDifference($record->estimate_start_date, $record->estimate_end_date);
-                $record->estimated_duration = $days;
-            }
-
-            if ( $record->actual_start_date && $record->actual_end_date ) {
-                $days = DateUtil::getDateDifference($record->actual_start_date, $record->actual_end_date);
-                $record->actual_duration = $days;
-            }
-            $record->save();
-        }
+        ( new CriticalPathManager(50) )->process();
     }
 }
