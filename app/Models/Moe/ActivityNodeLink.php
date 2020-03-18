@@ -28,7 +28,15 @@ class ActivityNodeLink extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function node ()
+    public function head_node ()
+    {
+        return $this->belongsTo(ProjectActivityNode::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tail_node ()
     {
         return $this->belongsTo(ProjectActivityNode::class);
     }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Libraries\Moe\CriticalPathManager;
+use App\Models\Moe\ProjectActivityNode;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
