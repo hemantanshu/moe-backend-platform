@@ -2,9 +2,9 @@
 
 namespace App\Models\Moe;
 
+use App\Observers\Moe\ProjectObserver;
 use Drivezy\LaravelRecordManager\Models\DocumentManager;
 use Drivezy\LaravelUtility\Models\BaseModel;
-use App\Observers\Moe\ProjectObserver;
 use Drivezy\LaravelUtility\Models\CommentDetail;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -148,6 +148,22 @@ class Project extends BaseModel
     public function project_costs ()
     {
         return $this->hasMany(ProjectCost::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function activity_nodes ()
+    {
+        return $this->hasMany(ProjectActivityNode::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function node_links ()
+    {
+        return $this->hasMany(ActivityNodeLink::class);
     }
 
 

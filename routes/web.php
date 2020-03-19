@@ -41,6 +41,10 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('reason', 'Moe\ReasonDefinitionController');
     Route::resource('reasonMapping', 'Moe\ReasonMappingController');
 
+    Route::resource('projectActivityNode', 'Moe\ProjectActivityNodeController');
+    Route::resource('activityNodeLink', 'Moe\ActivityNodeLinkController');
+    Route::post('calculateCriticalPath', 'Moe\ProjectController@calculateCriticalPath');
+
 
 });
 
