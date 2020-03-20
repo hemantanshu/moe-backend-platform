@@ -2,10 +2,9 @@
 
 namespace App\Models\Moe;
 
-use App\User;
-use Drivezy\LaravelUtility\LaravelUtility;
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\DeveloperMemberObserver;
+use App\User;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -21,6 +20,15 @@ class DeveloperMember extends BaseModel
     protected $table = 'moe_developer_members';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new DeveloperMemberObserver());
+    }
+
+    /**
      * @return BelongsTo
      */
     public function developer ()
@@ -34,14 +42,5 @@ class DeveloperMember extends BaseModel
     public function user ()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new DeveloperMemberObserver());
     }
 }

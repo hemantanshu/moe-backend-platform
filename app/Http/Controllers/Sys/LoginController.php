@@ -35,7 +35,7 @@ class LoginController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function checkLogin (Request $request)
     {

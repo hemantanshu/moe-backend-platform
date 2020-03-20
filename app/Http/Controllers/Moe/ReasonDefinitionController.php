@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\ReasonDefinition;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Moe
  */
-class ReasonDefinitionController extends RecordController {
+class ReasonDefinitionController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = ReasonDefinition::class;
+    protected $model = ReasonDefinition::class;
 }

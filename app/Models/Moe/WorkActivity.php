@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\WorkActivityObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +21,15 @@ class WorkActivity extends BaseModel
     protected $table = 'moe_work_activities';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new WorkActivityObserver());
+    }
+
+    /**
      * @return HasMany
      */
     public function project_schedules ()
@@ -34,14 +43,5 @@ class WorkActivity extends BaseModel
     public function category ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new WorkActivityObserver());
     }
 }

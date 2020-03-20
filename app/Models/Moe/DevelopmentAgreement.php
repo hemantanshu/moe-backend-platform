@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\DevelopmentAgreementObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -19,19 +19,19 @@ class DevelopmentAgreement extends BaseModel
     protected $table = 'moe_development_agreements';
 
     /**
-     * @return BelongsTo
-     */
-    public function project ()
-    {
-        return $this->belongsTo(Project::class);
-    }
-
-    /**
      * Override the boot functionality to add up the observer
      */
     public static function boot ()
     {
         parent::boot();
         self::observe(new DevelopmentAgreementObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function project ()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

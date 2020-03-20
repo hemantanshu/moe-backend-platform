@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\WorkActivity;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class WorkActivityController

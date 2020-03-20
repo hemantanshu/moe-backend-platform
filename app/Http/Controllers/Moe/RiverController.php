@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\River;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Moe
  */
-class RiverController extends RecordController {
+class RiverController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = River::class;
+    protected $model = River::class;
 }

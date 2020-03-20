@@ -23,6 +23,15 @@ class Project extends BaseModel
     protected $table = 'moe_project_details';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectObserver());
+    }
+
+    /**
      * @return HasMany
      */
     public function development_agreements ()
@@ -166,13 +175,19 @@ class Project extends BaseModel
         return $this->hasMany(ActivityNodeLink::class);
     }
 
+    /**
+     * @return HasMany
+     */
+    public function paths ()
+    {
+        return $this->hasMany(ProjectPath::class);
+    }
 
     /**
-     * Override the boot functionality to add up the observer
+     * @return HasMany
      */
-    public static function boot ()
+    public function path_routes ()
     {
-        parent::boot();
-        self::observe(new ProjectObserver());
+        return $this->hasMany(PathRoute::class);
     }
 }

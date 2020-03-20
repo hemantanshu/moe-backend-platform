@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\ActivityNodeLinkObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ActivityNodeLink
@@ -18,7 +19,16 @@ class ActivityNodeLink extends BaseModel
     protected $table = 'moe_activity_node_links';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ActivityNodeLinkObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function project ()
     {
@@ -26,7 +36,7 @@ class ActivityNodeLink extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function head_node ()
     {
@@ -34,7 +44,7 @@ class ActivityNodeLink extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function tail_node ()
     {
@@ -42,19 +52,10 @@ class ActivityNodeLink extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function activity ()
     {
         return $this->belongsTo(WorkActivity::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ActivityNodeLinkObserver());
     }
 }

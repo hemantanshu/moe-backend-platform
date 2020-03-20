@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ZoneObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +18,15 @@ class Zone extends BaseModel
      * @var string
      */
     protected $table = 'moe_zone_details';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ZoneObserver());
+    }
 
     /**
      * @return HasMany
@@ -41,14 +50,5 @@ class Zone extends BaseModel
     public function country ()
     {
         return $this->belongsTo(Country::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ZoneObserver());
     }
 }

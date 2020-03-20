@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\District;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Moe
  */
-class DistrictController extends RecordController {
+class DistrictController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = District::class;
+    protected $model = District::class;
 }

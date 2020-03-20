@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\PurchageAgreementObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,6 +18,15 @@ class PurchaseAgreement extends BaseModel
      * @var string
      */
     protected $table = 'moe_purchase_agreements';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new PurchageAgreementObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -49,14 +58,5 @@ class PurchaseAgreement extends BaseModel
     public function dry_month ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new PurchageAgreementObserver());
     }
 }

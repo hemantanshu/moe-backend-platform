@@ -18,6 +18,7 @@ class TestController extends Controller
     {
 
         Auth::loginUsingId(1, true);
+
         return success_response('seems all good till now!');
     }
 }

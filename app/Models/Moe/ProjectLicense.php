@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectLicenseObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -20,6 +20,15 @@ class ProjectLicense extends BaseModel
     protected $table = 'moe_project_licenses';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectLicenseObserver());
+    }
+
+    /**
      * @return BelongsTo
      */
     public function project ()
@@ -33,14 +42,5 @@ class ProjectLicense extends BaseModel
     public function license_type ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectLicenseObserver());
     }
 }

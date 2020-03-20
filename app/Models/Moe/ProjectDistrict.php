@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectDistrictObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -19,6 +19,15 @@ class ProjectDistrict extends BaseModel
     protected $table = 'moe_project_districts';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectDistrictObserver());
+    }
+
+    /**
      * @return BelongsTo
      */
     public function project ()
@@ -32,14 +41,5 @@ class ProjectDistrict extends BaseModel
     public function district ()
     {
         return $this->belongsTo(District::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectDistrictObserver());
     }
 }

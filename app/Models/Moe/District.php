@@ -20,6 +20,15 @@ class District extends BaseModel
     protected $table = 'moe_district_details';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new DistrictObserver());
+    }
+
+    /**
      * @return HasMany
      */
     public function cities ()
@@ -41,14 +50,5 @@ class District extends BaseModel
     public function projects ()
     {
         return $this->hasMany(Project::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new DistrictObserver());
     }
 }

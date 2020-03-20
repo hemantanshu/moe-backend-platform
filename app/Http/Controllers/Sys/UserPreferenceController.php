@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Sys;
 
+use App\Models\Sys\UserPreference;
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use App\Models\Sys\UserPreference;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -89,26 +89,8 @@ class UserPreferenceController extends RecordController
                 return Response::json(['success' => true, 'response' => $this->setGlobalPreference($request)]);
             }
         }
+
         return success_response($this->setIndividualPreference($request));
-    }
-
-    /**
-     * @param Request $request
-     * @return UserPreference
-     */
-    private function setIndividualPreference (Request $request)
-    {
-        $param = $request->get('parameter');
-        $obj = UserPreference::where('parameter', $param)->where('user_id', Auth::user()->id)->first();
-        if ( !$obj )
-            $obj = new UserPreference();
-
-        $obj->parameter = $request->get('parameter');
-        $obj->value = $request->get('value');
-        $obj->user_id = Auth::user()->id;
-        $obj->save();
-
-        return $obj;
     }
 
     /**
@@ -132,20 +114,22 @@ class UserPreferenceController extends RecordController
     }
 
     /**
-     * @return array
+     * @param Request $request
+     * @return UserPreference
      */
-    private function deleteIndividualPreference (Request $request)
+    private function setIndividualPreference (Request $request)
     {
         $param = $request->get('parameter');
-        $userId = $request->has('user_id') ? $request->get('user_id') : Auth::user()->id;
-        $obj = UserPreference::where('parameter', $param)->where('user_id', $userId)->first();
-        if ( $obj ) {
-            $obj->forceDelete();
+        $obj = UserPreference::where('parameter', $param)->where('user_id', Auth::user()->id)->first();
+        if ( !$obj )
+            $obj = new UserPreference();
 
-            return ['success' => true, 'response' => $obj];
-        }
+        $obj->parameter = $request->get('parameter');
+        $obj->value = $request->get('value');
+        $obj->user_id = Auth::user()->id;
+        $obj->save();
 
-        return ['success' => false, 'response' => "You don't have this preference set."];
+        return $obj;
     }
 
     /**
@@ -182,5 +166,22 @@ class UserPreferenceController extends RecordController
         }
 
         return ['success' => false, 'response' => "No such preference exists."];
+    }
+
+    /**
+     * @return array
+     */
+    private function deleteIndividualPreference (Request $request)
+    {
+        $param = $request->get('parameter');
+        $userId = $request->has('user_id') ? $request->get('user_id') : Auth::user()->id;
+        $obj = UserPreference::where('parameter', $param)->where('user_id', $userId)->first();
+        if ( $obj ) {
+            $obj->forceDelete();
+
+            return ['success' => true, 'response' => $obj];
+        }
+
+        return ['success' => false, 'response' => "You don't have this preference set."];
     }
 }

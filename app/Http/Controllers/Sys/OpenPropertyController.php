@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Sys;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Sys\OpenProperty;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Sys
  */
-class OpenPropertyController extends RecordController {
+class OpenPropertyController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = OpenProperty::class;
+    protected $model = OpenProperty::class;
 }

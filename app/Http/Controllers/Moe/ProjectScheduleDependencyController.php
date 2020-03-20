@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\ProjectScheduleDependency;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Moe
  */
-class ProjectScheduleDependencyController extends RecordController {
+class ProjectScheduleDependencyController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = ProjectScheduleDependency::class;
+    protected $model = ProjectScheduleDependency::class;
 }

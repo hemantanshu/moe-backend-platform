@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectCostObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\CommentDetail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +19,15 @@ class ProjectCost extends BaseModel
      * @var string
      */
     protected $table = 'moe_project_costs';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectCostObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -50,14 +59,5 @@ class ProjectCost extends BaseModel
     public function reasons ()
     {
         return $this->hasMany(ReasonMapping::class, 'source_id')->where('source_type', md5(self::class));
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectCostObserver());
     }
 }

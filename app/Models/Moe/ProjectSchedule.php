@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\ProjectScheduleObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\CommentDetail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +19,15 @@ class ProjectSchedule extends BaseModel
      * @var string
      */
     protected $table = 'moe_project_schedules';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectScheduleObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -66,14 +75,5 @@ class ProjectSchedule extends BaseModel
     public function dependency_parents ()
     {
         return $this->hasMany(ProjectScheduleDependency::class, 'dependency_id');
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectScheduleObserver());
     }
 }

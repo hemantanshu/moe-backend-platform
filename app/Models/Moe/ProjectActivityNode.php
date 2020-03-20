@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\ProjectActivityNodeObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ProjectActivityNode
@@ -18,7 +19,16 @@ class ProjectActivityNode extends BaseModel
     protected $table = 'moe_project_activity_nodes';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectActivityNodeObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function project ()
     {
@@ -26,19 +36,10 @@ class ProjectActivityNode extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function project_schedule ()
     {
         return $this->belongsTo(ProjectSchedule::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectActivityNodeObserver());
     }
 }

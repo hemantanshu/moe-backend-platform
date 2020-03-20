@@ -2,8 +2,8 @@
 
 namespace App\Models\Moe;
 
-use Drivezy\LaravelUtility\Models\BaseModel;
 use App\Observers\Moe\DeveloperObserver;
+use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +18,15 @@ class Developer extends BaseModel
      * @var string
      */
     protected $table = 'moe_developer_details';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new DeveloperObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -49,15 +58,5 @@ class Developer extends BaseModel
     public function purchase_agreements ()
     {
         return $this->hasMany(PurchaseAgreement::class);
-    }
-
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new DeveloperObserver());
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models\Moe;
 
+use App\Observers\Moe\UserEmploymentObserver;
 use App\User;
 use Drivezy\LaravelUtility\Models\BaseModel;
-use App\Observers\Moe\UserEmploymentObserver;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -19,6 +19,15 @@ class UserEmployment extends BaseModel
      * @var string
      */
     protected $table = 'moe_user_employments';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new UserEmploymentObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -42,14 +51,5 @@ class UserEmployment extends BaseModel
     public function designation ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new UserEmploymentObserver());
     }
 }

@@ -20,6 +20,15 @@ class ProjectDeveloper extends BaseModel
     protected $table = 'moe_project_developers';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ProjectDeveloperObserver());
+    }
+
+    /**
      * @return BelongsTo
      */
     public function project ()
@@ -41,15 +50,5 @@ class ProjectDeveloper extends BaseModel
     public function developer_type ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ProjectDeveloperObserver());
     }
 }

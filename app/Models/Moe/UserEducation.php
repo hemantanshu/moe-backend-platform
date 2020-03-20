@@ -2,9 +2,9 @@
 
 namespace App\Models\Moe;
 
+use App\Observers\Moe\UserEducationObserver;
 use App\User;
 use Drivezy\LaravelUtility\Models\BaseModel;
-use App\Observers\Moe\UserEducationObserver;
 use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -19,6 +19,15 @@ class UserEducation extends BaseModel
      * @var string
      */
     protected $table = 'moe_user_educations';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new UserEducationObserver());
+    }
 
     /**
      * @return BelongsTo
@@ -42,14 +51,5 @@ class UserEducation extends BaseModel
     public function user ()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new UserEducationObserver());
     }
 }

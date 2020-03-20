@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Moe;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use App\Models\Moe\UserEducation;
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
 
 /**
  * Class PropertyController
  * @package @package App\Http\Controllers\Moe
  */
-class UserEducationController extends RecordController {
+class UserEducationController extends RecordController
+{
     /**
      * @var string
      */
-     protected $model = UserEducation::class;
+    protected $model = UserEducation::class;
 }
