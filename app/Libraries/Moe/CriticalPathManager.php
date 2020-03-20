@@ -22,7 +22,6 @@ class CriticalPathManager
     private $project_id = null;
     private $startNode = 0;
     private $endNode = 0;
-    private $paths = [];
 
 
     /**
@@ -36,15 +35,14 @@ class CriticalPathManager
 
     public function process ()
     {
-//        $this->fixUpdatedStartTime();
-//        $this->generateNodes();
-//        $this->generateLinks();
-//        $this->setStartEndNode();
-//        $this->setEarliestDuration();
-//        $this->setLatestCompletion();
+        $this->fixUpdatedStartTime();
+        $this->generateNodes();
+        $this->generateLinks();
+        $this->setStartEndNode();
+        $this->setEarliestDuration();
+        $this->setLatestCompletion();
         $this->calculateFloats();
-
-//        $this->generatePaths();
+        $this->generatePaths();
 
     }
 
@@ -204,12 +202,6 @@ class CriticalPathManager
 
     private function generatePaths ()
     {
-        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and a.id = b.project_schedule_id and a.work_activity_id = 74 and a.deleted_at is null and b.deleted_at is null";
-        $this->startNode = sql($sql)[0]->id;
-
-        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and a.id = b.project_schedule_id and a.work_activity_id = 75 and a.deleted_at is null and b.deleted_at is null";
-        $this->endNode = sql($sql)[0]->id;
-
         //cleanup tables before new insertion
         ProjectPath::where('project_id', $this->project_id)->delete();
         PathRoute::where('project_id', $this->project_id)->delete();
@@ -245,10 +237,6 @@ class CriticalPathManager
 
     private function getNextNodeOnPath ($node)
     {
-        if ( $node == 219 ) {
-            echo "i am here";
-        }
-
         return ActivityNodeLink::where('tail_node_id', $node)->pluck('head_node_id');
     }
 
