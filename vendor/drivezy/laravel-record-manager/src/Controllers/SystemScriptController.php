@@ -3,6 +3,7 @@
 namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Models\SystemScript;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -20,7 +21,7 @@ class SystemScriptController extends RecordController
     /**
      * reattach the data to the existing model
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store (Request $request)
     {

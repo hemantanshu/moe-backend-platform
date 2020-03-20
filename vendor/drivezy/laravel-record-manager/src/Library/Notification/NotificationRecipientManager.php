@@ -12,13 +12,11 @@ class NotificationRecipientManager
     protected $default_users;
 
     protected $fp;
-    private $log_file;
-
     protected $trigger;
-
     protected $sms_count = 0;
     protected $email_count = 0;
     protected $push_count = 0;
+    private $log_file;
 
     /**
      * NotificationRecipientManager constructor.
@@ -32,6 +30,19 @@ class NotificationRecipientManager
         ]);
     }
 
+    /**
+     * This would sum up the entire notification triggers
+     */
+    public function __destruct ()
+    {
+        $this->trigger->sms_notifications = $this->sms_count;
+        $this->trigger->push_notifications = $this->push_count;
+        $this->trigger->email_notifications = $this->email_count;
+
+        $this->trigger->log_file = 'test';
+        $this->trigger->end_time = DateUtil::getDateTime();
+        $this->trigger->save();
+    }
 
     /**
      * This would check if the given condition is correct or not
@@ -49,19 +60,5 @@ class NotificationRecipientManager
         eval($condition->script);
 
         return $answer;
-    }
-
-    /**
-     * This would sum up the entire notification triggers
-     */
-    public function __destruct ()
-    {
-        $this->trigger->sms_notifications = $this->sms_count;
-        $this->trigger->push_notifications = $this->push_count;
-        $this->trigger->email_notifications = $this->email_count;
-
-        $this->trigger->log_file = 'test';
-        $this->trigger->end_time = DateUtil::getDateTime();
-        $this->trigger->save();
     }
 }

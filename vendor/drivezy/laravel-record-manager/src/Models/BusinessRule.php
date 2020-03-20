@@ -6,6 +6,8 @@ use Drivezy\LaravelAccessManager\Models\RoleAssignment;
 use Drivezy\LaravelRecordManager\Observers\BusinessRuleObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class BusinessRule
@@ -19,7 +21,16 @@ class BusinessRule extends BaseModel
     protected $table = 'dz_business_rules';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new BusinessRuleObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function script ()
     {
@@ -27,7 +38,7 @@ class BusinessRule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function execution_type ()
     {
@@ -35,7 +46,7 @@ class BusinessRule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function filter_condition ()
     {
@@ -43,7 +54,7 @@ class BusinessRule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function model ()
     {
@@ -51,19 +62,10 @@ class BusinessRule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function roles ()
     {
         return $this->hasMany(RoleAssignment::class, 'source_id')->where('source_type', md5(self::class));
-    }
-
-    /**
-     *
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new BusinessRuleObserver());
     }
 }

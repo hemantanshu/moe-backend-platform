@@ -4,6 +4,8 @@ namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelRecordManager\Observers\NotificationRecipientObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class SMSNotification
@@ -18,7 +20,16 @@ class SMSNotification extends BaseModel
     protected $table = 'dz_sms_notifications';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new NotificationRecipientObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function notification ()
     {
@@ -26,7 +37,7 @@ class SMSNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function recipients ()
     {
@@ -34,7 +45,7 @@ class SMSNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function active_recipients ()
     {
@@ -42,7 +53,7 @@ class SMSNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function template ()
     {
@@ -50,19 +61,10 @@ class SMSNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function run_condition ()
     {
         return $this->belongsTo(SystemScript::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new NotificationRecipientObserver());
     }
 }

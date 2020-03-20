@@ -9,7 +9,8 @@ use Drivezy\LaravelRecordManager\Controllers\RecordController;
  * Class ParentMenuController
  * @package Drivezy\LaravelAdmin\Controllers
  */
-class ParentMenuController extends RecordController {
+class ParentMenuController extends RecordController
+{
     /**
      * @var string
      */

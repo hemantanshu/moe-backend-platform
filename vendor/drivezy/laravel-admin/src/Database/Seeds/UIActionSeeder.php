@@ -9,11 +9,13 @@ use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
  * Class UIActionSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class UIActionSeeder extends BaseSeeder {
+class UIActionSeeder extends BaseSeeder
+{
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         $records = [
             [
                 'id'                  => 1,
@@ -102,6 +104,7 @@ class UIActionSeeder extends BaseSeeder {
     /**
      *
      */
-    public function drop () {
+    public function drop ()
+    {
     }
 }

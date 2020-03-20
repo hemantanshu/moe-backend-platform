@@ -6,7 +6,7 @@ use Webpatser\Uuid\Uuid;
 
 /**
  * Trait UsesUuid
- * @package JRApp\Models
+ * @package Drivezy\Models
  */
 trait UsesUuid
 {

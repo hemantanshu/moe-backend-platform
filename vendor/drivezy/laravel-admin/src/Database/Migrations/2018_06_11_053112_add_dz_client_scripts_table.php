@@ -6,13 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDzClientScriptsTable extends Migration {
+class AddDzClientScriptsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_client_scripts', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -53,7 +55,8 @@ class AddDzClientScriptsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_client_scripts');
 
         //remove records created as part of the migration

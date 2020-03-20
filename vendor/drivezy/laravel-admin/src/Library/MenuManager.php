@@ -8,20 +8,23 @@ use Drivezy\LaravelAdmin\Models\Module;
 use Drivezy\LaravelAdmin\Models\ModuleMenu;
 use Drivezy\LaravelAdmin\Models\PageDefinition;
 use Drivezy\LaravelRecordManager\Library\PreferenceManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 
 /**
  * Class MenuManager
  * @package Drivezy\LaravelAdmin\Library
  */
-class MenuManager {
+class MenuManager
+{
     private static $unwanted_columns = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public static function getMenuDetails ($id) {
+    public static function getMenuDetails ($id)
+    {
         $menu = Menu::find($id);
         $menu->list_layouts = PreferenceManager::getListPreference(md5(Menu::class), $id);
         $menu->ui_actions = UIActionManager::getObjectUIActions(md5(Menu::class), $id);
@@ -34,7 +37,8 @@ class MenuManager {
      * Child menu validation is not required. If parent is authorized
      * then child would automatically be added without any validation
      */
-    public static function getMenus () {
+    public static function getMenus ()
+    {
         Menu::$hidden_columns = self::$unwanted_columns;
         Module::$hidden_columns = self::$unwanted_columns;
 
@@ -87,7 +91,8 @@ class MenuManager {
      * check if user has access to the menu object
      * @param $menu
      */
-    private static function validateMenuAccess ($menu) {
+    private static function validateMenuAccess ($menu)
+    {
         $roles = $permissions = [];
 
         //super admin should have complete access

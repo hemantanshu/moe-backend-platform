@@ -6,6 +6,7 @@ use Drivezy\LaravelRecordManager\Library\Notification\Templates\NotificationMail
 use Drivezy\LaravelRecordManager\Models\EmailNotification;
 use Drivezy\LaravelUtility\LaravelUtility;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class EmailNotificationManager extends BaseNotification
 {
@@ -35,7 +36,7 @@ class EmailNotificationManager extends BaseNotification
     /**
      * send individual email notification to users
      * @param $emailNotification
-     * @throws \Symfony\Component\Debug\Exception\FatalThrowableError
+     * @throws FatalThrowableError
      */
     private function processEmailNotification ($emailNotification)
     {

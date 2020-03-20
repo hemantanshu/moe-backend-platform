@@ -8,7 +8,8 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  * Class CustomFormObserver
  * @package Drivezy\LaravelAdmin\Observers
  */
-class CustomFormObserver extends BaseObserver {
+class CustomFormObserver extends BaseObserver
+{
     /**
      * @var array
      */

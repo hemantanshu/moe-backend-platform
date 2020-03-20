@@ -4,6 +4,7 @@ namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Models\ServerDeployment;
 use Drivezy\LaravelUtility\Library\DateUtil;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -20,7 +21,7 @@ class ServerDeploymentController extends RecordController
     /**
      * Over riding the store method so as to avoid duplicate record
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function store (Request $request)
     {

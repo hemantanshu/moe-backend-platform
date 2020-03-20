@@ -9,11 +9,13 @@ use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
  * Class ModuleSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class ModuleSeeder extends BaseSeeder {
+class ModuleSeeder extends BaseSeeder
+{
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         Module::create([
             'id'            => 1,
             'name'          => 'Developer',

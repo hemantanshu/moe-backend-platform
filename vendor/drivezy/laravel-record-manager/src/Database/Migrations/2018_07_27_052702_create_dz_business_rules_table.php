@@ -6,13 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzBusinessRulesTable extends Migration {
+class CreateDzBusinessRulesTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_business_rules', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -61,7 +63,8 @@ class CreateDzBusinessRulesTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         ( new ExecutionTypeSeeder() )->drop();
         Schema::dropIfExists('dz_business_rules');
     }

@@ -6,6 +6,7 @@ use Drivezy\LaravelRecordManager\Observers\InAppMessageObserver;
 use Drivezy\LaravelUtility\LaravelUtility;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class InAppMessage
@@ -20,7 +21,16 @@ class InAppMessage extends BaseModel
     protected $table = 'dz_inapp_messages';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new InAppMessageObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function user ()
     {
@@ -28,20 +38,11 @@ class InAppMessage extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function platform ()
     {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new InAppMessageObserver());
     }
 }
 

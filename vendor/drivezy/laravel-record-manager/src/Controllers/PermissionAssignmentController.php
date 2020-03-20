@@ -3,6 +3,7 @@
 namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelAccessManager\Models\PermissionAssignment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -22,7 +23,7 @@ class PermissionAssignmentController extends RecordController
      * @see https://justride.atlassian.net/browse/DD-3998
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function store (Request $request)
     {

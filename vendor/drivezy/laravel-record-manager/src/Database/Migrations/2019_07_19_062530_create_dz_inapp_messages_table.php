@@ -5,13 +5,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzInappMessagesTable extends Migration {
+class CreateDzInappMessagesTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_inapp_messages', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -50,7 +52,8 @@ class CreateDzInappMessagesTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_inapp_messages');
     }
 }

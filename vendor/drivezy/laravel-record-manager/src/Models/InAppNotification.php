@@ -4,6 +4,8 @@ namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelRecordManager\Observers\InAppNotificationObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class InAppNotification
@@ -16,7 +18,16 @@ class InAppNotification extends BaseModel
     protected $table = 'dz_inapp_notifications';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new InAppNotificationObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function notification ()
     {
@@ -24,7 +35,7 @@ class InAppNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function recipients ()
     {
@@ -32,7 +43,7 @@ class InAppNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function active_recipients ()
     {
@@ -40,20 +51,11 @@ class InAppNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function run_condition ()
     {
         return $this->belongsTo(SystemScript::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new InAppNotificationObserver());
     }
 }
 

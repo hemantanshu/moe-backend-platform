@@ -2,19 +2,21 @@
 
 namespace Drivezy\LaravelAdmin\Database\Seeds;
 
+use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
 use Drivezy\LaravelUtility\Models\LookupType;
 use Drivezy\LaravelUtility\Models\LookupValue;
-use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
 
 /**
  * Class FormTypeSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class FormTypeSeeder extends BaseSeeder {
+class FormTypeSeeder extends BaseSeeder
+{
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         //create client script against the record
         LookupType::firstOrCreate([
             'id'          => 5,
@@ -53,7 +55,8 @@ class FormTypeSeeder extends BaseSeeder {
     /**
      *
      */
-    public function drop () {
+    public function drop ()
+    {
         //delete the records of the lookup value
         $records = LookupValue::where('lookup_type_id', 5)->get();
         foreach ( $records as $record )

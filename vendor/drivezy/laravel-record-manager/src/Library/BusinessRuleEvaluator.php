@@ -4,6 +4,7 @@ namespace Drivezy\LaravelRecordManager\Library;
 
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelRecordManager\Models\BusinessRule;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class BusinessRuleEvaluator
 {
     /**
-     * @var bool|\Illuminate\Contracts\Auth\Authenticatable|null
+     * @var bool|Authenticatable|null
      */
     private $auth = false;
     /**

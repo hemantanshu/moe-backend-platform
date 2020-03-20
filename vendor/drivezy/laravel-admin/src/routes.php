@@ -3,6 +3,7 @@
 Route::group(['namespace' => 'Drivezy\LaravelAdmin\Controllers',
               'prefix'    => 'api/record'], function () {
 
+    Route::resource('openProperty', 'OpenPropertyController');
     Route::resource('module', 'ModuleController');
     Route::resource('menu', 'MenuController');
     Route::resource('moduleMenu', 'ModuleMenuController');

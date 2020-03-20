@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Class CreateDzObserverEventsTable
  */
-class CreateDzObserverEventsTable extends Migration {
+class CreateDzObserverEventsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_observer_events', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -43,7 +45,8 @@ class CreateDzObserverEventsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_observer_events');
     }
 }

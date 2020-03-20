@@ -10,13 +10,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzModelRelationshipsTable extends Migration {
+class CreateDzModelRelationshipsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_model_relationships', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -56,7 +58,7 @@ class CreateDzModelRelationshipsTable extends Migration {
         });
 
         //populate the data model table
-        (new ModelRelationshipTypeSeeder())->run();
+        ( new ModelRelationshipTypeSeeder() )->run();
         ( new DataModelSeeder() )->run();
     }
 
@@ -65,8 +67,9 @@ class CreateDzModelRelationshipsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
-        (new ModelRelationshipTypeSeeder())->drop();
+    public function down ()
+    {
+        ( new ModelRelationshipTypeSeeder() )->drop();
         Schema::dropIfExists('dz_model_relationships');
     }
 }

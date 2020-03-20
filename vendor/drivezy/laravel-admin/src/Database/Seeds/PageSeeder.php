@@ -9,11 +9,13 @@ use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
  * Class PageSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class PageSeeder extends BaseSeeder {
+class PageSeeder extends BaseSeeder
+{
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         $records = [
             [
                 'id'          => 1,

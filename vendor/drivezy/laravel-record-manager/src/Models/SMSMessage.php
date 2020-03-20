@@ -5,6 +5,7 @@ namespace Drivezy\LaravelRecordManager\Models;
 use Drivezy\LaravelRecordManager\Observers\SMSMessageObserver;
 use Drivezy\LaravelUtility\LaravelUtility;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class SMSMessage
@@ -18,19 +19,19 @@ class SMSMessage extends BaseModel
     protected $table = 'dz_sms_messages';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user ()
-    {
-        return $this->belongsTo(LaravelUtility::getUserModelFullQualifiedName());
-    }
-
-    /**
      * over riding the boot functionality
      */
     protected static function boot ()
     {
         parent::boot();
         self::observe(new SMSMessageObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user ()
+    {
+        return $this->belongsTo(LaravelUtility::getUserModelFullQualifiedName());
     }
 }

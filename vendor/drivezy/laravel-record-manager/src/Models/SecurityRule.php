@@ -5,6 +5,8 @@ namespace Drivezy\LaravelRecordManager\Models;
 use Drivezy\LaravelAccessManager\Models\RoleAssignment;
 use Drivezy\LaravelRecordManager\Observers\SecurityRuleObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class SecurityRule
@@ -18,7 +20,16 @@ class SecurityRule extends BaseModel
     protected $table = 'dz_security_rules';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new SecurityRuleObserver());
+    }
+
+    /**
+     * @return HasMany
      */
     public function roles ()
     {
@@ -26,19 +37,10 @@ class SecurityRule extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function script ()
     {
         return $this->belongsTo(SystemScript::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new SecurityRuleObserver());
     }
 }

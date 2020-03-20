@@ -1,17 +1,19 @@
 <?php
 
 use Drivezy\LaravelUtility\LaravelUtility;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateDzSecurityRulesTable extends Migration {
+class CreateDzSecurityRulesTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_security_rules', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -50,7 +52,8 @@ class CreateDzSecurityRulesTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_security_rules');
     }
 }

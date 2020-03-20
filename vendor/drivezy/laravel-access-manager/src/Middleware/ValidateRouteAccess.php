@@ -5,16 +5,19 @@ namespace Drivezy\LaravelAccessManager\Middleware;
 use Closure;
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelAccessManager\RouteManager;
+use Illuminate\Http\Request;
 
-class ValidateRouteAccess {
+class ValidateRouteAccess
+{
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle ($request, Closure $next) {
+    public function handle ($request, Closure $next)
+    {
         if ( RouteManager::validateRouteAccess($request) )
             return $next($request);
 

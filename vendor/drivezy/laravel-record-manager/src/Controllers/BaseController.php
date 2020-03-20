@@ -9,6 +9,7 @@ use Drivezy\LaravelRecordManager\Library\ApiResponseManager;
 use Drivezy\LaravelRecordManager\Library\ModelManager;
 use Drivezy\LaravelRecordManager\Library\PreferenceManager;
 use Drivezy\LaravelRecordManager\Models\DataModel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -67,7 +68,7 @@ class BaseController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function create (Request $request)
     {
@@ -113,6 +114,25 @@ class BaseController extends Controller
             return success_response($data);
 
         return failure_message($data);
+    }
+
+    /**
+     * Convert the data into the corresponding db value. Handling null and empty as well as 0 & false ones
+     * @param $value
+     * @return int|null
+     */
+    private function convertToDbValue ($value)
+    {
+        if ( is_null($value) ) {
+            $val = null;
+        } elseif ( $value === 0 || $value === "0" || $value === false || $value === "false" || $value === 0.0 ) {
+            $val = 0;
+        } elseif ( empty($value) ) {
+            $val = null;
+        } else
+            $val = $value;
+
+        return $val;
     }
 
     /**
@@ -179,7 +199,7 @@ class BaseController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function destroy (Request $request, $id)
     {
@@ -198,24 +218,5 @@ class BaseController extends Controller
             return success_response($data);
 
         return failure_message($data);
-    }
-
-    /**
-     * Convert the data into the corresponding db value. Handling null and empty as well as 0 & false ones
-     * @param $value
-     * @return int|null
-     */
-    private function convertToDbValue ($value)
-    {
-        if ( is_null($value) ) {
-            $val = null;
-        } elseif ( $value === 0 || $value === "0" || $value === false || $value === "false" || $value === 0.0 ) {
-            $val = 0;
-        } elseif ( empty($value) ) {
-            $val = null;
-        } else
-            $val = $value;
-
-        return $val;
     }
 }

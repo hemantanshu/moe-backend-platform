@@ -9,7 +9,8 @@ use Drivezy\LaravelRecordManager\Controllers\RecordController;
  * Class ModuleController
  * @package Drivezy\LaravelAdmin\Controllers
  */
-class ModuleController extends RecordController {
+class ModuleController extends RecordController
+{
     /**
      * @var string
      */

@@ -4,37 +4,42 @@ namespace Drivezy\LaravelAdmin\Models;
 
 use Drivezy\LaravelAdmin\Observers\ModuleMenuObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ModuleMenu
  * @package Drivezy\LaravelAdmin\Models
  */
-class ModuleMenu extends BaseModel {
+class ModuleMenu extends BaseModel
+{
     /**
      * @var string
      */
     protected $table = 'dz_module_menus';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Load the observer rule against the model
      */
-    public function menu () {
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ModuleMenuObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function menu ()
+    {
         return $this->belongsTo(Menu::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function module () {
+    public function module ()
+    {
         return $this->belongsTo(Module::class);
-    }
-
-    /**
-     * Load the observer rule against the model
-     */
-    public static function boot () {
-        parent::boot();
-        self::observe(new ModuleMenuObserver());
     }
 
 }

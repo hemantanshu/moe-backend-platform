@@ -5,6 +5,7 @@ namespace Drivezy\LaravelRecordManager\Jobs;
 use Drivezy\LaravelRecordManager\Library\AuditManager;
 use Drivezy\LaravelRecordManager\Library\ObserverEvaluator;
 use Drivezy\LaravelUtility\Job\BaseJob;
+use Exception;
 
 /**
  * Class ObserverEventManagerJob
@@ -26,7 +27,7 @@ class ObserverEventManagerJob extends BaseJob
 
     /**
      * @return bool|void
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle ()
     {

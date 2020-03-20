@@ -8,7 +8,8 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  * Class PageDefinitionObserver
  * @package Drivezy\LaravelAdmin\Observers
  */
-class PageDefinitionObserver extends BaseObserver {
+class PageDefinitionObserver extends BaseObserver
+{
     /**
      * @var array
      */

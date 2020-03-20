@@ -53,6 +53,30 @@ class SecurityRuleManager
     }
 
     /**
+     * @param $tableName
+     * @param $name
+     * @return mixed
+     */
+    private static function getModelSecurityObjectNotation ($tableName, $name)
+    {
+        if ( $name == $tableName || $name == $tableName . '.*' )
+            return $tableName;
+
+        $splits = explode('.', $name);
+
+        return end($splits);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    private static function getRoles ($id)
+    {
+        return RoleAssignment::where('source_type', md5(SecurityRule::class))->where('source_id', $id)->get();
+    }
+
+    /**
      * @param Form $form
      * @return array
      */
@@ -88,30 +112,6 @@ class SecurityRuleManager
         }
 
         return $rules;
-    }
-
-    /**
-     * @param $tableName
-     * @param $name
-     * @return mixed
-     */
-    private static function getModelSecurityObjectNotation ($tableName, $name)
-    {
-        if ( $name == $tableName || $name == $tableName . '.*' )
-            return $tableName;
-
-        $splits = explode('.', $name);
-
-        return end($splits);
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    private static function getRoles ($id)
-    {
-        return RoleAssignment::where('source_type', md5(SecurityRule::class))->where('source_id', $id)->get();
     }
 
     /**

@@ -4,6 +4,8 @@ namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelRecordManager\Observers\EmailNotificationObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class EmailNotification
@@ -17,7 +19,16 @@ class EmailNotification extends BaseModel
     protected $table = 'dz_email_notifications';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new EmailNotificationObserver());
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function notification ()
     {
@@ -25,7 +36,7 @@ class EmailNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function recipients ()
     {
@@ -33,7 +44,7 @@ class EmailNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function active_recipients ()
     {
@@ -41,7 +52,7 @@ class EmailNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function run_condition ()
     {
@@ -49,20 +60,11 @@ class EmailNotification extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function body ()
     {
         return $this->belongsTo(SystemScript::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new EmailNotificationObserver());
     }
 
 }

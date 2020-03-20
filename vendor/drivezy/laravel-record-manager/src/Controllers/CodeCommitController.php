@@ -4,6 +4,7 @@ namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Models\CodeCommit;
 use Drivezy\LaravelUtility\LaravelUtility;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -20,7 +21,7 @@ class CodeCommitController extends RecordController
     /**
      * @param $key
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function logBitBucketCommit ($key, Request $request)
     {

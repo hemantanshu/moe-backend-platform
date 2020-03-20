@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * Class ClientScriptObserver
  * @package Drivezy\LaravelAdmin\Observers
  */
-class ClientScriptObserver extends BaseObserver {
+class ClientScriptObserver extends BaseObserver
+{
     /**
      * @var array
      */
@@ -23,7 +24,8 @@ class ClientScriptObserver extends BaseObserver {
     /**
      * @param Eloquent $model
      */
-    public function created (Eloquent $model) {
+    public function created (Eloquent $model)
+    {
         parent::created($model);
 
         //automatically create a system script against the object

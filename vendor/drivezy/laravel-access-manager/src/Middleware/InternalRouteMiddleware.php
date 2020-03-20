@@ -4,20 +4,23 @@ namespace Drivezy\LaravelAccessManager\Middleware;
 
 use Closure;
 use Drivezy\LaravelUtility\LaravelUtility;
+use Illuminate\Http\Request;
 
 /**
  * Class InternalRouteMiddleware
  * @package Drivezy\LaravelAccessManager\Middleware
  */
-class InternalRouteMiddleware {
+class InternalRouteMiddleware
+{
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
-    public function handle ($request, Closure $next) {
+    public function handle ($request, Closure $next)
+    {
         //get the integration key from the property
         $pkey = LaravelUtility::getProperty('internal.server.key');
         $hKey = $request->header('access-key');

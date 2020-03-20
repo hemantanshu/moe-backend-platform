@@ -4,23 +4,21 @@ namespace Drivezy\LaravelRecordManager\Library;
 
 use Drivezy\LaravelRecordManager\Models\Column;
 use Drivezy\LaravelRecordManager\Models\DataModel;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class ColumnManager
 {
 
-    private $rules = [];
-    private $data = null;
-
     public $columns = [];
-
     public $restricted = [];
     public $restrictedIdentifiers = [];
-
     public $allowed = [];
     public $allowedIdentifiers = [];
-
     public $encryptedColumns = [];
     public $sourceColumns = [];
+    private $rules = [];
+    private $data = null;
 
     public function __construct ($type, $id, $obj = [])
     {
@@ -65,7 +63,7 @@ class ColumnManager
     }
 
     /**
-     * @return Column[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     * @return Column[]|Builder[]|\Illuminate\Database\Eloquent\Collection|Collection
      */
     public function getDictionary ()
     {

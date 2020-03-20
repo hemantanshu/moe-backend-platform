@@ -14,13 +14,6 @@ class BusinessRuleManager
 {
     public static $enabled = true;
 
-    private static function abortBusinessRuleProcessing ($model)
-    {
-        if ( $model->abort_business_rule ) return true;
-
-        return !self::$enabled;
-    }
-
     /**
      * @param $model
      */
@@ -50,6 +43,26 @@ class BusinessRuleManager
         return $records;
     }
 
+    private static function abortBusinessRuleProcessing ($model)
+    {
+        if ( $model->abort_business_rule ) return true;
+
+        return !self::$enabled;
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private static function getRules ($query)
+    {
+        $query = $query->where('active', true)
+            ->orderBy('order', 'asc')
+            ->get();
+
+        return $query;
+    }
+
     /**
      * @param Eloquent $model
      * @return array
@@ -66,6 +79,31 @@ class BusinessRuleManager
         $rules = self::getRules($query);
 
         return self::evaluateBusinessRules($model, $rules);
+    }
+
+    /**
+     * @param Eloquent $model
+     * @param $rules
+     * @return Eloquent
+     */
+    private static function evaluateBusinessRules (Eloquent $model, $rules)
+    {
+        $user = Auth::user();
+
+        foreach ( $rules as $rule ) {
+            if ( !( new BusinessRuleEvaluator($rule, $model) )->process() )
+                continue;
+
+            //check if aborting has been done
+            if ( $model->abort ) return $model;
+
+            //check if aborting of business rule is enabled
+            if ( $model->abort_business_rule ) continue;
+
+            eval($rule->script->script);
+        }
+
+        return $model;
     }
 
     /**
@@ -153,43 +191,5 @@ class BusinessRuleManager
         $rules = self::getRules($query);
 
         return self::evaluateBusinessRules($model, $rules);
-    }
-
-    /**
-     * @param Eloquent $model
-     * @param $rules
-     * @return Eloquent
-     */
-    private static function evaluateBusinessRules (Eloquent $model, $rules)
-    {
-        $user = Auth::user();
-
-        foreach ( $rules as $rule ) {
-            if ( !( new BusinessRuleEvaluator($rule, $model) )->process() )
-                continue;
-
-            //check if aborting has been done
-            if ( $model->abort ) return $model;
-
-            //check if aborting of business rule is enabled
-            if ( $model->abort_business_rule ) continue;
-
-            eval($rule->script->script);
-        }
-
-        return $model;
-    }
-
-    /**
-     * @param $query
-     * @return mixed
-     */
-    private static function getRules ($query)
-    {
-        $query = $query->where('active', true)
-            ->orderBy('order', 'asc')
-            ->get();
-
-        return $query;
     }
 }

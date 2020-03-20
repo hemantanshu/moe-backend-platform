@@ -9,12 +9,14 @@ use Drivezy\LaravelAdmin\Models\CustomForm;
 use Drivezy\LaravelRecordManager\Library\ColumnManager;
 use Drivezy\LaravelRecordManager\Library\SecurityRuleManager;
 
-class FormManager {
+class FormManager
+{
     /**
      * @param $formId
      * @return bool
      */
-    public static function validateFormAccess ($formId) {
+    public static function validateFormAccess ($formId)
+    {
         //get all the roles attached to the form
         $roles = RoleAssignment::where('source_type', md5(CustomForm::class))->where('source_id', $formId)->pluck('role_id')->toArray();
         if ( AccessManager::hasRole($roles) ) return true;
@@ -33,7 +35,8 @@ class FormManager {
      * @param CustomForm $form
      * @return bool|ColumnManager
      */
-    public static function getFormDictionary (CustomForm $form) {
+    public static function getFormDictionary (CustomForm $form)
+    {
         //get all security rules attached to this model
         $securityRules = SecurityRuleManager::getFormSecurityRules($form);
 

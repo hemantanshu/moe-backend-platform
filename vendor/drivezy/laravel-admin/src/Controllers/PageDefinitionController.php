@@ -9,7 +9,8 @@ use Drivezy\LaravelRecordManager\Controllers\RecordController;
  * Class PageDefinitionController
  * @package Drivezy\LaravelAdmin\Controllers
  */
-class PageDefinitionController extends RecordController {
+class PageDefinitionController extends RecordController
+{
     /**
      * @var string
      */

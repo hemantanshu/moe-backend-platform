@@ -9,12 +9,14 @@ use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
  * Class ModuleMenuSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class ModuleMenuSeeder extends BaseSeeder {
+class ModuleMenuSeeder extends BaseSeeder
+{
 
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         $records = [
             [
                 'module_id'     => 1,

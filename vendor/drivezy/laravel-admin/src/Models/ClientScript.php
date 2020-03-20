@@ -6,12 +6,14 @@ use Drivezy\LaravelAdmin\Observers\ClientScriptObserver;
 use Drivezy\LaravelRecordManager\Models\SystemScript;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class ClientScript
  * @package Drivezy\LaravelRecordManager\Models
  */
-class ClientScript extends BaseModel {
+class ClientScript extends BaseModel
+{
     /**
      * @var string
      */
@@ -22,24 +24,27 @@ class ClientScript extends BaseModel {
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
      */
-    public function script () {
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ClientScriptObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function script ()
+    {
         return $this->belongsTo(SystemScript::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function activity_type () {
+    public function activity_type ()
+    {
         return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot () {
-        parent::boot();
-        self::observe(new ClientScriptObserver());
     }
 }

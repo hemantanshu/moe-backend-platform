@@ -6,13 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzModelDetailsTable extends Migration {
+class CreateDzModelDetailsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_model_details', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
             $routeTable = ( new Route() )->getTable();
@@ -51,7 +53,8 @@ class CreateDzModelDetailsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_model_details');
     }
 }

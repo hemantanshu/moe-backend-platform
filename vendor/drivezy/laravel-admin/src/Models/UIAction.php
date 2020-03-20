@@ -7,12 +7,15 @@ use Drivezy\LaravelAccessManager\Models\RoleAssignment;
 use Drivezy\LaravelAdmin\Observers\UIActionObserver;
 use Drivezy\LaravelRecordManager\Models\SystemScript;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class UIAction
  * @package Drivezy\LaravelRecordManager\Models
  */
-class UIAction extends BaseModel {
+class UIAction extends BaseModel
+{
     /**
      * @var string
      */
@@ -23,45 +26,51 @@ class UIAction extends BaseModel {
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at', 'source_type', 'source_id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Override the boot functionality to add up the observer
      */
-    public function filter_condition () {
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new UIActionObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function filter_condition ()
+    {
         return $this->belongsTo(SystemScript::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function execution_script () {
+    public function execution_script ()
+    {
         return $this->belongsTo(SystemScript::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function form () {
+    public function form ()
+    {
         return $this->belongsTo(CustomForm::class);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function roles () {
+    public function roles ()
+    {
         return $this->hasMany(RoleAssignment::class, 'source_id')->where('source_type', md5(self::class));
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function permissions () {
+    public function permissions ()
+    {
         return $this->hasMany(PermissionAssignment::class, 'source_id')->where('source_type', md5(self::class));
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot () {
-        parent::boot();
-        self::observe(new UIActionObserver());
     }
 }

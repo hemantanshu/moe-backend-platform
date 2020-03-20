@@ -7,9 +7,11 @@ use Drivezy\LaravelAdmin\Library\FormManager;
 use Drivezy\LaravelAdmin\Models\CustomForm;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use Drivezy\LaravelRecordManager\Library\PreferenceManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class CustomFormController extends RecordController {
+class CustomFormController extends RecordController
+{
     /**
      * @var string
      */
@@ -18,9 +20,10 @@ class CustomFormController extends RecordController {
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function getFormDetails (Request $request, $id) {
+    public function getFormDetails (Request $request, $id)
+    {
         //validate if user has access to the form
         if ( !FormManager::validateFormAccess($id) ) return invalid_operation();
 

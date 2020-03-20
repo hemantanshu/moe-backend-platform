@@ -57,6 +57,36 @@ class AdminResponseManager
     }
 
     /**
+     * @param Request $request
+     * @return array
+     */
+    private function getLayoutDefinition ()
+    {
+        $columns = [];
+        if ( !$this->request->has('layout_id') ) return $columns;
+
+        $definition = ListPreference::find($this->request->get('layout_id'));
+        if ( !$definition ) {
+            Message::warn('Layout ' . $this->request->get('layout_id') . ' not found');
+
+            return $columns;
+        }
+
+        $definition = json_decode($definition->column_definition, true);
+
+        foreach ( $definition as $item ) {
+            if ( !isset($item['object']) ) continue;
+
+            array_push($columns, [
+                'object' => $item['object'],
+                'column' => $item['column'],
+            ]);
+        }
+
+        return $columns;
+    }
+
+    /**
      * Sets job to export data if export is true
      *
      * @see https://justride.atlassian.net/browse/DD-4201
@@ -94,35 +124,5 @@ class AdminResponseManager
         ]) )->process($id);
 
         return success_response($records);
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    private function getLayoutDefinition ()
-    {
-        $columns = [];
-        if ( !$this->request->has('layout_id') ) return $columns;
-
-        $definition = ListPreference::find($this->request->get('layout_id'));
-        if ( !$definition ) {
-            Message::warn('Layout ' . $this->request->get('layout_id') . ' not found');
-
-            return $columns;
-        }
-
-        $definition = json_decode($definition->column_definition, true);
-
-        foreach ( $definition as $item ) {
-            if ( !isset($item['object']) ) continue;
-
-            array_push($columns, [
-                'object' => $item['object'],
-                'column' => $item['column'],
-            ]);
-        }
-
-        return $columns;
     }
 }

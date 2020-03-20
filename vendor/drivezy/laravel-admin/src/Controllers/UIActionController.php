@@ -9,7 +9,8 @@ use Drivezy\LaravelRecordManager\Controllers\BaseController;
  * Class UIActionController
  * @package Drivezy\LaravelAdmin\Controllers
  */
-class UIActionController extends BaseController {
+class UIActionController extends BaseController
+{
     /**
      * @var string
      */

@@ -6,13 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzUiActionsTable extends Migration {
+class CreateDzUiActionsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_ui_actions', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -65,7 +67,8 @@ class CreateDzUiActionsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         ( new UIActionSeeder() )->drop();
 
         Schema::dropIfExists('dz_ui_actions');

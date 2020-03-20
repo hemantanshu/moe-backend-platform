@@ -12,14 +12,13 @@ use Drivezy\LaravelUtility\Models\BaseModel;
 class ServerDeployment extends BaseModel
 {
     /**
-     * @var string
-     */
-    protected $table = 'dz_server_deployments';
-
-    /**
      * @var bool
      */
     public $auditable = false;
+    /**
+     * @var string
+     */
+    protected $table = 'dz_server_deployments';
 
     /**
      * Override the boot functionality to add up the observer

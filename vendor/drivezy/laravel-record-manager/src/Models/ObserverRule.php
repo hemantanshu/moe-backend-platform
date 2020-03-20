@@ -18,6 +18,15 @@ class ObserverRule extends BaseModel
     protected $table = 'dz_observer_rules';
 
     /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ObserverRuleObserver());
+    }
+
+    /**
      * @return mixed
      */
     public function actions ()
@@ -56,14 +65,5 @@ class ObserverRule extends BaseModel
     public function scopeActive ($query)
     {
         return $query->where('active', true)->orderBy('execution_order', 'asc');
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ObserverRuleObserver());
     }
 }

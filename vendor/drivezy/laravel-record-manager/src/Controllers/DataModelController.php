@@ -4,6 +4,7 @@ namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Library\ColumnManager;
 use Drivezy\LaravelRecordManager\Models\DataModel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -20,7 +21,7 @@ class DataModelController extends RecordController
     /**
      * get data related to the source polymorphic table
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getSourceColumnDetails (Request $request)
     {

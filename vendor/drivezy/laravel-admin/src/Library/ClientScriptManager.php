@@ -4,12 +4,14 @@ namespace Drivezy\LaravelAdmin\Library;
 
 use Drivezy\LaravelAdmin\Models\ClientScript;
 
-class ClientScriptManager {
+class ClientScriptManager
+{
     /**
      * @param $identifier
      * @return array
      */
-    public static function getClientScripts ($identifier) {
+    public static function getClientScripts ($identifier)
+    {
         $scripts = ClientScript::with('script')
             ->where('name', '' . $identifier . '')
             ->orWhere('name', 'LIKE', '' . $identifier . '.%')

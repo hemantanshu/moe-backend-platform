@@ -4,13 +4,15 @@ namespace Drivezy\LaravelAdmin;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelAdminServiceProvider extends ServiceProvider {
+class LaravelAdminServiceProvider extends ServiceProvider
+{
     /**
      * Bootstrap services.
      *
      * @return void
      */
-    public function boot () {
+    public function boot ()
+    {
         //load routes defined out here
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
 
@@ -23,7 +25,8 @@ class LaravelAdminServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register () {
+    public function register ()
+    {
         //
     }
 }

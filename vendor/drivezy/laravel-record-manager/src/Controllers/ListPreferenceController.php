@@ -4,6 +4,7 @@ namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelRecordManager\Models\ListPreference;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -59,7 +60,7 @@ class ListPreferenceController extends RecordController
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|null
+     * @return JsonResponse|null
      */
     public function update (Request $request, $id)
     {
@@ -69,7 +70,7 @@ class ListPreferenceController extends RecordController
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|mixed
+     * @return JsonResponse|mixed
      */
     public function destroy (Request $request, $id)
     {

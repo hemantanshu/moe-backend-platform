@@ -9,11 +9,13 @@ use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
  * Class MenuSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class MenuSeeder extends BaseSeeder {
+class MenuSeeder extends BaseSeeder
+{
     /**
      *
      */
-    public function run () {
+    public function run ()
+    {
         $records = [
             [
                 'id'               => 1,
@@ -50,7 +52,7 @@ class MenuSeeder extends BaseSeeder {
                 'route'            => 'api/record/module',
                 'page_id'          => 2,
                 'order_definition' => '',
-                'visible'         => false,
+                'visible'          => false,
             ],
             [
                 'id'               => 5,
@@ -60,7 +62,7 @@ class MenuSeeder extends BaseSeeder {
                 'route'            => 'api/record/menu',
                 'page_id'          => 2,
                 'order_definition' => '',
-                'visible'         => false,
+                'visible'          => false,
             ],
             [
                 'id'               => 6,
@@ -70,7 +72,7 @@ class MenuSeeder extends BaseSeeder {
                 'route'            => '',
                 'page_id'          => 2,
                 'order_definition' => '',
-                'visible'         => false,
+                'visible'          => false,
             ],
 
         ];

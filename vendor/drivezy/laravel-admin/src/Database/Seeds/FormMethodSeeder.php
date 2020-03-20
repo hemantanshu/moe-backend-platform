@@ -2,21 +2,23 @@
 
 namespace Drivezy\LaravelAdmin\Database\Seeds;
 
+use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
 use Drivezy\LaravelUtility\Models\LookupType;
 use Drivezy\LaravelUtility\Models\LookupValue;
-use Drivezy\LaravelUtility\Database\Seeds\BaseSeeder;
 
 /**
  * Class FormMethodSeeder
  * @package Drivezy\LaravelAdmin\Database\Seeds
  */
-class FormMethodSeeder extends BaseSeeder {
+class FormMethodSeeder extends BaseSeeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run () {
+    public function run ()
+    {
 
         //create client script against the record
         LookupType::firstOrCreate([
@@ -56,7 +58,8 @@ class FormMethodSeeder extends BaseSeeder {
     /**
      * Drop the records that were created as part of the migration
      */
-    public function drop () {
+    public function drop ()
+    {
         //delete the records of the lookup value
         $records = LookupValue::where('lookup_type_id', 3)->get();
         foreach ( $records as $record )

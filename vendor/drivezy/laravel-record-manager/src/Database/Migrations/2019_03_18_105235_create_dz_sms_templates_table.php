@@ -5,13 +5,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDzSmsTemplatesTable extends Migration {
+class CreateDzSmsTemplatesTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_sms_templates', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -40,7 +42,8 @@ class CreateDzSmsTemplatesTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_sms_templates');
     }
 }

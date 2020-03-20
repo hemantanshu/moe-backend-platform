@@ -8,7 +8,8 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  * Class UIActionObserver
  * @package Drivezy\LaravelAdmin\Observers
  */
-class UIActionObserver extends BaseObserver {
+class UIActionObserver extends BaseObserver
+{
     /**
      * @var array
      */

@@ -3,6 +3,7 @@
 namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ObserverEvent extends BaseModel
 {
@@ -35,7 +36,7 @@ class ObserverEvent extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function data_model ()
     {

@@ -2,17 +2,19 @@
 
 use Drivezy\LaravelAdmin\Database\Seeds\ParentMenuSeeder;
 use Drivezy\LaravelUtility\LaravelUtility;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddDzParentMenusTable extends Migration {
+class AddDzParentMenusTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_parent_menus', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -42,7 +44,8 @@ class AddDzParentMenusTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_parent_menus');
     }
 }

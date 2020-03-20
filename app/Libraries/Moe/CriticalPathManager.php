@@ -43,7 +43,6 @@ class CriticalPathManager
         $this->setLatestCompletion();
         $this->calculateFloats();
         $this->generatePaths();
-
     }
 
     /**

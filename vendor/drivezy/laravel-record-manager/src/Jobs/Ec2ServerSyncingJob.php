@@ -2,6 +2,7 @@
 
 namespace Drivezy\LaravelRecordManager\Jobs;
 
+use AWS;
 use Drivezy\LaravelRecordManager\Models\ServerDeployment;
 use Drivezy\LaravelUtility\Job\BaseJob;
 use Drivezy\LaravelUtility\LaravelUtility;
@@ -26,7 +27,7 @@ class Ec2ServerSyncingJob extends BaseJob
         //get the time for which if not responded server should be made inactive
         $this->inactive_threshold = LaravelUtility::getProperty('server.inactive.threshold', 5);
 
-        $client = \AWS::createClient('Ec2');
+        $client = AWS::createClient('Ec2');
         $result = $client->describeInstances();
 
         foreach ( $result['Reservations'] as $reservation ) {
@@ -44,7 +45,7 @@ class Ec2ServerSyncingJob extends BaseJob
 
                 $this->setServer($obj);
             }
-        };
+        }
 
         //any server which has not responded within 5 minutes should be made inactive
         $this->setInactiveServer();

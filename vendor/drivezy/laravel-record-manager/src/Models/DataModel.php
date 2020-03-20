@@ -7,6 +7,7 @@ use Drivezy\LaravelAdmin\Models\ClientScript;
 use Drivezy\LaravelAdmin\Models\UIAction;
 use Drivezy\LaravelRecordManager\Observers\ModelObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Model
@@ -24,7 +25,16 @@ class DataModel extends BaseModel
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new ModelObserver());
+    }
+
+    /**
+     * @return HasMany
      */
     public function columns ()
     {
@@ -32,7 +42,7 @@ class DataModel extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function relationships ()
     {
@@ -48,7 +58,7 @@ class DataModel extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function ui_actions ()
     {
@@ -56,7 +66,7 @@ class DataModel extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function client_scripts ()
     {
@@ -64,7 +74,7 @@ class DataModel extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function security_rules ()
     {
@@ -72,19 +82,10 @@ class DataModel extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function business_rules ()
     {
         return $this->hasMany(BusinessRule::class, 'model_id');
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new ModelObserver());
     }
 }

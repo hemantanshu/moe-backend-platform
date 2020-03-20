@@ -4,18 +4,21 @@ namespace Drivezy\LaravelAdmin\Library;
 
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelAdmin\Models\UIAction;
+use Illuminate\Support\Collection;
 
 /**
  * Class UIActionManager
  * @package Drivezy\LaravelAdmin\Library
  */
-class UIActionManager {
+class UIActionManager
+{
     /**
      * @param $source
      * @param $id
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    public static function getObjectUIActions ($source, $id) {
+    public static function getObjectUIActions ($source, $id)
+    {
         $uiActions = [];
         $actions = UIAction::with(['permissions', 'roles'])->where('source_type', $source)->where('source_id', $id)->get();
         foreach ( $actions as $action ) {
@@ -31,7 +34,8 @@ class UIActionManager {
      * @param $uiAction
      * @return bool
      */
-    private static function isUIActionAllowed ($uiAction) {
+    private static function isUIActionAllowed ($uiAction)
+    {
         //if no roles or permission assigned then its valid
         if ( sizeof($uiAction->roles) == 0 && sizeof($uiAction->permissions) == 0 ) return true;
 

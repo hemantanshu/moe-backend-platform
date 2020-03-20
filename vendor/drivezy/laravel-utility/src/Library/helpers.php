@@ -1,11 +1,12 @@
 <?php
 
 use Drivezy\LaravelUtility\Library\Message;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
- * @return \Illuminate\Http\JsonResponse
+ * @return JsonResponse
  */
 function invalid_operation ()
 {
@@ -23,7 +24,7 @@ function unsupported_operation ()
 /**
  * @param $message
  * @param null $errorCode
- * @return \Illuminate\Http\JsonResponse
+ * @return JsonResponse
  */
 function failed_response ($message, $errorCode = null)
 {
@@ -32,7 +33,7 @@ function failed_response ($message, $errorCode = null)
 
 /**
  * @param $message
- * @return \Illuminate\Http\JsonResponse
+ * @return JsonResponse
  */
 function success_response ($message)
 {
@@ -122,4 +123,16 @@ function render ($__php, $__data)
 function sql ($query)
 {
     return DB::select(DB::raw($query));
+}
+
+/**
+ * send fixed response in case of invalid login
+ * @param null $message
+ * @return JsonResponse
+ */
+function invalid_login ($message = null)
+{
+    $message = $message ?? 'Invalid Credentials';
+
+    return failed_response($message, 401);
 }

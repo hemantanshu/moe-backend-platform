@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 1.7.0
+
+- Support for Laravel 7 (#330)
+
+## 1.6.2
+
+- Fix for default integrations not disabled (#327)
+
 ## 1.6.1
 
 - Fix queue events with missing handler suffix (#322)

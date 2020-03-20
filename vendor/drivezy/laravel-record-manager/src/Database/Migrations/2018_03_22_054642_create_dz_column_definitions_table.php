@@ -2,17 +2,19 @@
 
 use Drivezy\LaravelRecordManager\Database\Seeds\ColumnTypeSeeder;
 use Drivezy\LaravelUtility\LaravelUtility;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateDzColumnDefinitionsTable extends Migration {
+class CreateDzColumnDefinitionsTable extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up () {
+    public function up ()
+    {
         Schema::create('dz_column_definitions', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
@@ -41,7 +43,8 @@ class CreateDzColumnDefinitionsTable extends Migration {
      *
      * @return void
      */
-    public function down () {
+    public function down ()
+    {
         Schema::dropIfExists('dz_column_definitions');
     }
 }

@@ -6,6 +6,7 @@ use Drivezy\LaravelAccessManager\Models\UserGroup;
 use Drivezy\LaravelRecordManager\Observers\NotificationRecipientObserver;
 use Drivezy\LaravelUtility\LaravelUtility;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class NotificationRecipient
@@ -18,6 +19,15 @@ class NotificationRecipient extends BaseModel
      * @var string
      */
     protected $table = 'dz_notification_recipients';
+
+    /**
+     * Override the boot functionality to add up the observer
+     */
+    public static function boot ()
+    {
+        parent::boot();
+        self::observe(new NotificationRecipientObserver());
+    }
 
     /**
      * @param $str
@@ -73,7 +83,7 @@ class NotificationRecipient extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function custom_query ()
     {
@@ -81,19 +91,10 @@ class NotificationRecipient extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function run_condition ()
     {
         return $this->belongsTo(SystemScript::class);
-    }
-
-    /**
-     * Override the boot functionality to add up the observer
-     */
-    public static function boot ()
-    {
-        parent::boot();
-        self::observe(new NotificationRecipientObserver());
     }
 }

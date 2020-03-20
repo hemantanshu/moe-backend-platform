@@ -2,6 +2,7 @@
 
 namespace Drivezy\LaravelRecordManager\Library;
 
+use AWS;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
@@ -16,16 +17,6 @@ class DynamoManager
      * @var DynamoDbClient
      */
     private static $client = null;
-
-    /**
-     * Initializes DynamoDb client.
-     *
-     * This methods should be invoked in every public methods.
-     */
-    private static function init ()
-    {
-        if ( self::$client === null ) self::$client = \AWS::createClient("DynamoDb");
-    }
 
     /**
      * Writes to DynamoDB table.
@@ -47,6 +38,16 @@ class DynamoManager
         ]);
 
         return true;
+    }
+
+    /**
+     * Initializes DynamoDb client.
+     *
+     * This methods should be invoked in every public methods.
+     */
+    private static function init ()
+    {
+        if ( self::$client === null ) self::$client = AWS::createClient("DynamoDb");
     }
 
     /**

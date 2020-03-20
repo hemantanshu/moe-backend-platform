@@ -6,6 +6,8 @@ use Drivezy\LaravelAdmin\Models\UIAction;
 use Drivezy\LaravelRecordManager\Observers\ModelRelationshipObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelUtility\Models\LookupValue;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class ModelRelationship
@@ -22,55 +24,6 @@ class ModelRelationship extends BaseModel
      */
     protected $hidden = ['created_by', 'updated_by', 'created_at', 'updated_at', 'deleted_at'];
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function model ()
-    {
-        return $this->belongsTo(DataModel::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function source_column ()
-    {
-        return $this->belongsTo(Column::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function alias_column ()
-    {
-        return $this->belongsTo(Column::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function reference_type ()
-    {
-        return $this->belongsTo(LookupValue::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function reference_model ()
-    {
-        return $this->belongsTo(DataModel::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function ui_actions ()
-    {
-        return $this->hasMany(UIAction::class, 'source_id')->where('source_type', md5(self::class));
-    }
-
     /**
      * Override the boot functionality to add up the observer
      */
@@ -78,6 +31,54 @@ class ModelRelationship extends BaseModel
     {
         parent::boot();
         self::observe(new ModelRelationshipObserver());
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function model ()
+    {
+        return $this->belongsTo(DataModel::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function source_column ()
+    {
+        return $this->belongsTo(Column::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function alias_column ()
+    {
+        return $this->belongsTo(Column::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function reference_type ()
+    {
+        return $this->belongsTo(LookupValue::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function reference_model ()
+    {
+        return $this->belongsTo(DataModel::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function ui_actions ()
+    {
+        return $this->hasMany(UIAction::class, 'source_id')->where('source_type', md5(self::class));
     }
 
 }

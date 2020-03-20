@@ -80,6 +80,52 @@ class DataManager
     }
 
     /**
+     * @param $base
+     * @param $model
+     */
+    protected function setReadDictionary ($base, $model)
+    {
+        $columns = ModelManager::getModelDictionary($model, 'r');
+        $this->dictionary[ $base ] = $columns->allowed;
+
+        foreach ( $columns->restrictedIdentifiers as $item )
+            array_push($this->rejectedColumns, $base . '.' . $item);
+
+        foreach ( $columns->allowedIdentifiers as $item ) {
+            array_push($this->acceptedColumns, $base . '.' . $item);
+
+            //find all encrypted columns and act decrypt them before sending data to the user
+            if ( in_array($item, $columns->encryptedColumns) )
+                array_push($this->encryptedColumns, $base . '.' . $item);
+
+            //find all the source columns and then change the source
+            // values before sending to the end user
+            if ( in_array($item, $columns->sourceColumns) )
+                array_push($this->sourceColumns, $base . '.' . $item);
+        }
+    }
+
+    /**
+     * @param $model
+     * @param $base
+     * @return array
+     */
+    private function setQueryRestriction ($model, $base)
+    {
+        $joins = [];
+
+        $restrictions = BusinessRuleManager::getQueryStrings($model);
+        foreach ( $restrictions as $restriction ) {
+            $restriction = str_replace('current', '`' . $base . '`', $restriction);
+
+            //add all current implementation of restrictions
+            array_push($joins, '(' . $restriction . ')');
+        }
+
+        return $joins;
+    }
+
+    /**
      * This will create the join condition for the alias as part of its relationship with the parent one
      * @param $model
      * @param $relationship
@@ -122,6 +168,46 @@ class DataManager
             'table' => $alias->table,
             'join'  => $joinCondition,
         ];
+    }
+
+    /**
+     * Check if the cache against the sql conditions is present
+     * If yes then load back to the system
+     * @return array|bool|mixed
+     */
+    protected function loadDataFromCache ()
+    {
+        if ( !$this->sqlCacheIdentifier ) return false;
+
+        $record = Cache::get($this->sqlCacheIdentifier, false);
+        if ( !$record ) return false;
+
+        $this->sql = $record->sql;
+        $this->encryptedColumns = $record->sql['encrypted_columns'];
+        $this->sourceColumns = $record->sql['source_columns'];
+
+        return true;
+    }
+
+    /**
+     * Create the data related to base query excluding the restrictive condition
+     * Then save it to the cache so that it can be fetched
+     * back without need of too much query iteration
+     */
+    protected function constructQuery ()
+    {
+        $this->sql['columns'] = self::getSelectItems();
+        $this->sql['tables'] = self::getTableDefinitions();
+        $this->sql['joins'] = self::getJoins() ? : ' 1 = 1';
+        $this->sql['encrypted_columns'] = $this->encryptedColumns;
+        $this->sql['source_columns'] = $this->sourceColumns;
+
+        $this->sqlCacheIdentifier = md5($this->model->model_hash . '-' . microtime('true') . '-' . md5($this->includes));
+        Cache::put($this->sqlCacheIdentifier, (object) [
+            'user_id' => Auth::id(),
+            'sql'     => $this->sql,
+            'time'    => strtotime('now'),
+        ], 30);
     }
 
     /**
@@ -173,45 +259,6 @@ class DataManager
     }
 
     /**
-     * Check if the cache against the sql conditions is present
-     * If yes then load back to the system
-     * @return array|bool|mixed
-     */
-    protected function loadDataFromCache ()
-    {
-        if ( !$this->sqlCacheIdentifier ) return false;
-
-        $record = Cache::get($this->sqlCacheIdentifier, false);
-        if ( !$record ) return false;
-
-        $this->sql = $record->sql;
-        $this->encryptedColumns = $record->sql['encrypted_columns'];
-        $this->sourceColumns = $record->sql['source_columns'];
-
-        return true;
-    }
-
-    /**
-     * Create the sql join against the tables that are attached as part of the inclusions
-     * This is part of the where condition
-     * @return mixed|string
-     */
-    private function getJoins ()
-    {
-        $query = '';
-        foreach ( $this->restrictions as $join ) {
-            if ( !$join ) continue;
-
-            if ( $query )
-                $query .= ' AND ' . $join;
-            else
-                $query = $join;
-        }
-
-        return $query;
-    }
-
-    /**
      * create array of  necessary join conditions against the tables that are part of the includes.
      * @return string
      */
@@ -232,69 +279,22 @@ class DataManager
     }
 
     /**
-     * Create the data related to base query excluding the restrictive condition
-     * Then save it to the cache so that it can be fetched
-     * back without need of too much query iteration
+     * Create the sql join against the tables that are attached as part of the inclusions
+     * This is part of the where condition
+     * @return mixed|string
      */
-    protected function constructQuery ()
+    private function getJoins ()
     {
-        $this->sql['columns'] = self::getSelectItems();
-        $this->sql['tables'] = self::getTableDefinitions();
-        $this->sql['joins'] = self::getJoins() ? : ' 1 = 1';
-        $this->sql['encrypted_columns'] = $this->encryptedColumns;
-        $this->sql['source_columns'] = $this->sourceColumns;
+        $query = '';
+        foreach ( $this->restrictions as $join ) {
+            if ( !$join ) continue;
 
-        $this->sqlCacheIdentifier = md5($this->model->model_hash . '-' . microtime('true') . '-' . md5($this->includes));
-        Cache::put($this->sqlCacheIdentifier, (object) [
-            'user_id' => Auth::id(),
-            'sql'     => $this->sql,
-            'time'    => strtotime('now'),
-        ], 30);
-    }
-
-    /**
-     * @param $base
-     * @param $model
-     */
-    protected function setReadDictionary ($base, $model)
-    {
-        $columns = ModelManager::getModelDictionary($model, 'r');
-        $this->dictionary[ $base ] = $columns->allowed;
-
-        foreach ( $columns->restrictedIdentifiers as $item )
-            array_push($this->rejectedColumns, $base . '.' . $item);
-
-        foreach ( $columns->allowedIdentifiers as $item ) {
-            array_push($this->acceptedColumns, $base . '.' . $item);
-
-            //find all encrypted columns and act decrypt them before sending data to the user
-            if ( in_array($item, $columns->encryptedColumns) )
-                array_push($this->encryptedColumns, $base . '.' . $item);
-
-            //find all the source columns and then change the source
-            // values before sending to the end user
-            if ( in_array($item, $columns->sourceColumns) )
-                array_push($this->sourceColumns, $base . '.' . $item);
-        }
-    }
-
-    /**
-     * @param $model
-     * @param $base
-     * @return array
-     */
-    private function setQueryRestriction ($model, $base)
-    {
-        $joins = [];
-
-        $restrictions = BusinessRuleManager::getQueryStrings($model);
-        foreach ( $restrictions as $restriction ) {
-            $restriction = str_replace('current', '`' . $base . '`', $restriction);
-
-            //add all current implementation of restrictions
-            array_push($joins, '(' . $restriction . ')');
+            if ( $query )
+                $query .= ' AND ' . $join;
+            else
+                $query = $join;
         }
 
-        return $joins;
+        return $query;
     }
 }
