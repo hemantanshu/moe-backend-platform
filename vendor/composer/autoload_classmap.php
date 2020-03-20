@@ -57,6 +57,7 @@ return array(
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Libraries\\Moe\\ActivityTimelineManager' => $baseDir . '/app/Libraries/Moe/ActivityTimelineManager.php',
     'App\\Libraries\\Moe\\CriticalPathManager' => $baseDir . '/app/Libraries/Moe/CriticalPathManager.php',
     'App\\Models\\Moe\\ActivityNodeLink' => $baseDir . '/app/Models/Moe/ActivityNodeLink.php',
     'App\\Models\\Moe\\City' => $baseDir . '/app/Models/Moe/City.php',
