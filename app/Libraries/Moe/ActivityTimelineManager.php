@@ -3,25 +3,42 @@
 namespace App\Libraries\Moe;
 
 use App\Models\Moe\ActivityNodeLink;
+use App\Models\Moe\ProjectActivityNode;
 use App\Models\Moe\ProjectSchedule;
 use Drivezy\LaravelUtility\Library\DateUtil;
 
+/**
+ * Class ActivityTimelineManager
+ * @package App\Libraries\Moe
+ */
 class ActivityTimelineManager
 {
+    /**
+     * @var null
+     */
     private $project_id = null;
-    private $startNode = null;
 
+    /**
+     * ActivityTimelineManager constructor.
+     * @param $id
+     */
     public function __construct ($id)
     {
         $this->project_id = $id;
     }
 
+    /**
+     *
+     */
     public function process ()
     {
         $this->analyzeActivities();
         $this->suggestTimelines();
     }
 
+    /**
+     *
+     */
     private function analyzeActivities ()
     {
         $schedules = ProjectSchedule::where('project_id', $this->project_id)->get();
@@ -30,75 +47,96 @@ class ActivityTimelineManager
         }
     }
 
+    /**
+     *
+     */
     private function suggestTimelines ()
     {
-        $links = ActivityNodeLink::with(['tail_node', 'head_node'])->where('project_id', $this->project_id)->get();
+        $links = ActivityNodeLink::with(['tail_node.project_schedule', 'head_node.project_schedule'])->where('project_id', $this->project_id)->get();
         foreach ( $links as $link ) {
-            $link->lag = DateUtil::getDateDifference($link->tail_node->estimate_end_date, $link->head_node->estimate_start_date);
+            $link->lag = DateUtil::getDateDifference($link->tail_node->project_schedule->estimate_end_date, $link->head_node->project_schedule->estimate_start_date);
             $link->save();
         }
         $this->calculateSuggestedTimelines();
     }
 
+    /**
+     *
+     */
     private function calculateSuggestedTimelines ()
     {
-        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and a.id = b.project_schedule_id and a.work_activity_id = 74 and a.deleted_at is null and b.deleted_at is null";
-        $this->startNode = sql($sql)[0]->id;
+        $projectSchedule = ProjectSchedule::where('project_id', $this->project_id)->where('work_activity_id', 74)->first();
 
-        $startNode = ProjectSchedule::find($this->startNode);
-        $startNode->suggested_start_date = $startNode->estimated_start_date;
-        $startNode->suggested_end_date = DateUtil::getFutureDate($startNode->mean_avg, $startNode->estimated_start_date);
-        $startNode->save();
-
-        $this->setTimelinesForConnectedNodes($startNode);
+        $this->setSuggestedTimeline($projectSchedule);
     }
 
-    private function setTimelinesForConnectedNodes ($node)
+    /**
+     * @param $schedule
+     */
+    private function setSuggestedTimeline ($schedule)
     {
-        $this->setTimelineForNode($node);
-        $links = ActivityNodeLink::where('tail_node_id', $node->id)->get();
+        //find the node id
+        $node = ProjectActivityNode::where('project_schedule_id', $schedule->id)->first();
+        $maxPreviousActivity = $this->getMaxActivitySchedule($node->id);
+
+        $schedule->suggested_start_date = $maxPreviousActivity ? $maxPreviousActivity->suggested_end_date : $schedule->estimate_start_date;
+        $schedule->suggested_end_date = DateUtil::getFutureDate($schedule->mean_avg, $schedule->suggested_start_date);
+        $schedule->save();
+
+        //process forward nodes
+        $links = ActivityNodeLink::with('head_node')->where('tail_node_id', $node->id)->get();
         foreach ( $links as $link ) {
-            $this->setTimelineForNode(ProjectSchedule::find($link->head_node_id));
+            $this->setSuggestedTimeline(ProjectSchedule::find($link->head_node->project_schedule_id));
         }
     }
 
-    private function setTimelineForNode ($node)
+    /**
+     * @param $nodeId
+     * @return bool
+     */
+    private function getMaxActivitySchedule ($nodeId)
     {
-        $query = "select a.* from moe_activity_node_links a, moe_project_schedules b, (select max(b.estimate_end_date) max_date from moe_activity_node_links a, moe_project_schedules b where a.head_node_id = {$node->id} and b.id = a.tail_node_id and a.deleted_at is null) c where a.head_node_id = {$node->id} and b.id = a.tail_node_id and a.deleted_at is null and c.max_date = b.estimate_end_date";
-        $record = sql($query)[0];
+        $query = "select c.id from moe_activity_node_links a, moe_project_activity_nodes b, moe_project_schedules c where a.head_node_id = {$nodeId} and a.tail_node_id = b.id and b.project_schedule_id = c.id order by c.estimate_end_date desc limit 1";
+        $record = sql($query);
 
-        $activity = ProjectSchedule::find($record->tail_node_id);
-
-        $node->suggested_start_date = DateUtil::getFutureDate($record->lag, $activity->suggested_end_date);
-        $node->suggested_end_date = DateUtil::getFutureDate($node->mean_avg, $node->suggested_start_date);
-        $node->save();
+        return sizeof($record) ? ProjectSchedule::find($record[0]->id) : false;
     }
 
+
+    /**
+     * @param $schedule
+     */
     private function analyzeActivity ($schedule)
     {
         $query = "select min(percentage) min, max(percentage) max, avg(percentage) avg, stddev(percentage) sigma from (select (aa.actual - aa.estimate) * 100/ aa.estimate percentage from (select DATEDIFF(estimate_end_date, estimate_start_date) estimate, datediff(actual_end_date, actual_start_date) actual from moe_project_schedules a where work_activity_id = {$schedule->work_activity_id} and a.deleted_at is null and a.actual_start_date is not null and a.actual_end_date is not null and a.estimate_start_date is not null and a.estimate_end_date is not null) aa) aaa";
 
         $data = sql($query)[0];
 
-        $duration = DateUtil::getDateDifference($schedule->actual_start_date, $schedule->actual_end_date);
+        $tm = DateUtil::getDateDifference($schedule->estimate_start_date, $schedule->estimate_end_date);
+        $ta = $tm * ( 1 + 0.01 * $data->min );
+        $tb = $tm * ( 1 + 0.01 * $data->max );
 
-        $avg = ( 600 + $data->min + $data->max ) * $duration / 600;
-        $sigma = pow(( $data->max - $data->min ) / 6, 2);
+        $average_1 = ( $ta + 4 * $tm + $tb ) / 6;
+        $sigma_1 = ( $tb - $ta ) / 6;
 
-        $data = [
-            'optimistic_duration'  => floor($duration + $data->min),
-            'pessimistic_duration' => ceil($duration + $data->max),
-            'mean_factor_1'        => $avg,
-            'sigma_factor_1'       => $sigma,
-            'mean_factor_2'        => $data->avg,
-            'sigma_factor_2'       => $data->sigma,
-            'mean_avg'             => ceil(( $avg + $data->avg ) / 2),
-            'sigma_avg'            => ceil(( $sigma + $data->sigma ) / 2),
+        $average_2 = $tm * 0.01 * ( $data->avg + 100 ) ?? 0;
+        $sigma_2 = $tm * $data->sigma / 100 ?? 0;
+
+        $record = [
+            'optimistic_duration'  => floor($ta),
+            'pessimistic_duration' => ceil($tb),
+            'mean_factor_1'        => $average_1,
+            'sigma_factor_1'       => $sigma_1,
+            'mean_factor_2'        => $average_2,
+            'sigma_factor_2'       => $sigma_2,
+            'mean_avg'             => ( $average_2 + $average_1 ) / 2,
+            'sigma_avg'            => ( $sigma_2 + $sigma_1 ) / 2,
+
         ];
-        foreach ( $data as $key => $value )
+        foreach ( $record as $key => $value )
             $schedule->{$key} = $value;
 
-        $schedule->suggested_duration = $duration + $data['mean_avg'];
+        $schedule->suggested_duration = $tm + $record['mean_avg'];
 
         $schedule->save();
     }

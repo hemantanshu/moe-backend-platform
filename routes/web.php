@@ -46,6 +46,7 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::resource('projectPath', 'Moe\ProjectPathController');
     Route::resource('pathRoute', 'Moe\PathRouteController');
     Route::post('calculateCriticalPath', 'Moe\ProjectController@calculateCriticalPath');
+    Route::post('calculateSuggestedTimeline', 'Moe\ProjectController@calculateSuggestedTimeline');
 
 
 });

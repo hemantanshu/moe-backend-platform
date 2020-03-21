@@ -17,7 +17,7 @@ class CreateDzOpenPropertiesTable extends Migration
         Schema::create('dz_open_properties', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
-            $table->id();
+            $table->increments('id');
 
             $table->string('property_name');
             $table->string('property_value')->nullable();

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Libraries\Moe\ActivityTimelineManager;
 use App\Libraries\Moe\CriticalPathManager;
-use App\Models\Moe\ProjectActivityNode;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -39,6 +39,9 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        ( new CriticalPathManager(50) )->process();
+//        ( new CriticalPathManager(40) )->fixUpdatedStartTime();
+//        ( new CriticalPathManager(40) )->generateNodes();
+//        ( new CriticalPathManager(40) )->generateLinks();
+        ( new ActivityTimelineManager(40) )->process();
     }
 }

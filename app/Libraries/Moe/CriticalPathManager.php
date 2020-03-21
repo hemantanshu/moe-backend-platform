@@ -48,7 +48,7 @@ class CriticalPathManager
     /**
      *
      */
-    private function fixUpdatedStartTime ()
+    public function fixUpdatedStartTime ()
     {
         $projectSchedules = ProjectSchedule::where('project_id', $this->project_id)->get();
         foreach ( $projectSchedules as $projectSchedule ) {
@@ -71,7 +71,7 @@ class CriticalPathManager
         return $projectSchedule->estimate_start_date;
     }
 
-    private function generateNodes ()
+    public function generateNodes ()
     {
         ProjectActivityNode::where('project_id', $this->project_id)->delete();
 
@@ -85,7 +85,7 @@ class CriticalPathManager
         }
     }
 
-    private function generateLinks ()
+    public function generateLinks ()
     {
         ActivityNodeLink::where('project_id', $this->project_id)->delete();
 
