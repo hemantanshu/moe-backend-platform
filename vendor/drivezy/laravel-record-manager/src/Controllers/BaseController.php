@@ -8,6 +8,7 @@ use Drivezy\LaravelRecordManager\Library\AdminResponseManager;
 use Drivezy\LaravelRecordManager\Library\ApiResponseManager;
 use Drivezy\LaravelRecordManager\Library\ModelManager;
 use Drivezy\LaravelRecordManager\Library\PreferenceManager;
+use Drivezy\LaravelRecordManager\Library\ShowResponseManager;
 use Drivezy\LaravelRecordManager\Models\DataModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

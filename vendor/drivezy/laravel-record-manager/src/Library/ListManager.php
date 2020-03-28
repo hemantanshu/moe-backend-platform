@@ -51,7 +51,7 @@ class ListManager extends DataManager
      */
     private function processIncludes ()
     {
-        if ( !$this->includes ) return true;
+        if ( !$this->includes ) $this->getIncludesFromLayout();
 
         $includes = explode(',', $this->includes);
         foreach ( $includes as $include ) {
@@ -94,6 +94,24 @@ class ListManager extends DataManager
                 $this->relationships[ $base ] = $data;
             }
         }
+    }
+
+    private function getIncludesFromLayout ()
+    {
+        $includes = [];
+        foreach ( $this->layout as $value ) {
+            $object = $value['object'];
+
+            if ( $object == $this->base ) continue;
+
+            $object = str_replace($this->base . '.', '', $object);
+
+            if ( !$object ) continue;
+
+            if ( !in_array($object, $includes) )
+                array_push($includes, $object);
+        }
+        $this->includes = implode(',', $includes);
     }
 
 
