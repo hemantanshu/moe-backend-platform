@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\PathRouteObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 
 /**
  * Class PathRoute
@@ -39,6 +40,14 @@ class PathRoute extends BaseModel
     public function node ()
     {
         return $this->belongsTo(ProjectActivityNode::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\ProjectActivityNodeObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -41,5 +42,13 @@ class ProjectActivityNode extends BaseModel
     public function project_schedule ()
     {
         return $this->belongsTo(ProjectSchedule::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function type ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Moe\ProjectPath;
 use App\Models\Moe\ProjectSchedule;
 use App\Models\Moe\ProjectScheduleDependency;
 use Drivezy\LaravelUtility\Library\DateUtil;
+use Drivezy\LaravelUtility\Models\LookupValue;
 
 /**
  * Class CriticalPathManager
@@ -20,19 +21,41 @@ class CriticalPathManager
      * @var null
      */
     private $project_id = null;
+    /**
+     * @var int
+     */
     private $startNode = 0;
+    /**
+     * @var int
+     */
     private $endNode = 0;
+
+    /**
+     * @var |null
+     */
+    private $type = null;
+    /**
+     * @var null
+     */
+    private $typeId = null;
 
 
     /**
      * CriticalPathManager constructor.
      * @param $id
+     * @param $typeId
      */
-    public function __construct ($id)
+    public function __construct ($id, $typeId = 1111)
     {
         $this->project_id = $id;
+        $this->typeId = $typeId;
+
+        $this->type = LookupValue::find($typeId)->value;
     }
 
+    /**
+     *
+     */
     public function process ()
     {
         $this->fixUpdatedStartTime();
@@ -50,9 +73,10 @@ class CriticalPathManager
      */
     public function fixUpdatedStartTime ()
     {
+        $column = "updated_{$this->type}_start_date";
         $projectSchedules = ProjectSchedule::where('project_id', $this->project_id)->get();
         foreach ( $projectSchedules as $projectSchedule ) {
-            $projectSchedule->updated_estimate_start_date = $this->getMaxStartTime($projectSchedule);
+            $projectSchedule->{$column} = $this->getMaxStartTime($projectSchedule);
             $projectSchedule->save();
         }
     }
@@ -63,31 +87,46 @@ class CriticalPathManager
      */
     private function getMaxStartTime ($projectSchedule)
     {
-        $sql = "select max(a.estimate_end_date) date from moe_project_schedules a, moe_project_schedule_dependencies b where a.id = b.dependency_id and b.project_schedule_id = {$projectSchedule->id} and b.deleted_at is null";
+        $endDate = "{$this->type}_end_date";
+        $startDate = "{$this->type}_start_date";
+
+        $sql = "select max(a.{$endDate}) date from moe_project_schedules a, moe_project_schedule_dependencies b where a.id = b.dependency_id and b.project_schedule_id = {$projectSchedule->id} and b.deleted_at is null";
         $record = sql($sql);
         if ( sizeof($record) && $record[0]->date )
             return $record[0]->date;
 
-        return $projectSchedule->estimate_start_date;
+        return $projectSchedule->{$startDate};
     }
 
+    /**
+     *
+     */
     public function generateNodes ()
     {
-        ProjectActivityNode::where('project_id', $this->project_id)->delete();
+        ProjectActivityNode::where('project_id', $this->project_id)
+            ->where('type_id', $this->typeId)->delete();
+        $endDate = "{$this->type}_end_date";
 
         $projectSchedules = ProjectSchedule::where('project_id', $this->project_id)->get();
         foreach ( $projectSchedules as $projectSchedule ) {
             ProjectActivityNode::create([
+                'type_id'             => $this->typeId,
                 'project_id'          => $projectSchedule->project_id,
                 'project_schedule_id' => $projectSchedule->id,
-                'activity_date'       => $projectSchedule->estimate_end_date,
+                'activity_date'       => $projectSchedule->{$endDate},
             ]);
         }
     }
 
+    /**
+     *
+     */
     public function generateLinks ()
     {
-        ActivityNodeLink::where('project_id', $this->project_id)->delete();
+        $startDate = "updated_{$this->type}_start_date";
+        $endDate = "{$this->type}_end_date";
+
+        ActivityNodeLink::where('project_id', $this->project_id)->where('type_id', $this->typeId)->delete();
 
         $projectSchedules = ProjectSchedule::where('project_id', $this->project_id)->get();
         foreach ( $projectSchedules as $projectSchedule ) {
@@ -95,34 +134,36 @@ class CriticalPathManager
             $dependencies = ProjectScheduleDependency::with('dependency')->where('project_schedule_id', $projectSchedule->id)->get();
 
             foreach ( $dependencies as $dependency ) {
-                //these are the soft links that are different
-//                if ( DateUtil::getDateTimeDifference($dependency->dependency->estimate_end_date, $projectSchedule->updated_estimate_start_date) != 0 ) continue;
-
                 $tail = ProjectActivityNode::where('project_schedule_id', $dependency->dependency_id)->first();
                 $head = ProjectActivityNode::where('project_schedule_id', $dependency->project_schedule_id)->first();
 
                 ActivityNodeLink::create([
+                    'type_id'      => $this->typeId,
                     'project_id'   => $this->project_id,
                     'tail_node_id' => $tail->id,
                     'head_node_id' => $head->id,
                     'activity_id'  => $projectSchedule->work_activity_id,
-                    'duration'     => DateUtil::getDateDifference($projectSchedule->updated_estimate_start_date, $projectSchedule->estimate_end_date),
+                    'duration'     => DateUtil::getDateDifference($projectSchedule->{$startDate}, $projectSchedule->{$endDate}),
                 ]);
             }
         }
     }
 
+    /**
+     *
+     */
     private function setStartEndNode ()
     {
-        ProjectActivityNode::where('project_id', $this->project_id)->update([
-            'earliest_start_duration'    => 0,
-            'latest_completion_duration' => 0,
-        ]);
+        ProjectActivityNode::where('type_id', $this->typeId)
+            ->where('project_id', $this->project_id)->update([
+                'earliest_start_duration'    => 0,
+                'latest_completion_duration' => 0,
+            ]);
 
-        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and a.id = b.project_schedule_id and a.work_activity_id = 74 and a.deleted_at is null and b.deleted_at is null";
+        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and b.type_id = {$this->typeId} and a.id = b.project_schedule_id and a.work_activity_id = 74 and a.deleted_at is null and b.deleted_at is null";
         $this->startNode = sql($sql)[0]->id;
 
-        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and a.id = b.project_schedule_id and a.work_activity_id = 75 and a.deleted_at is null and b.deleted_at is null";
+        $sql = "select b.id id from moe_project_schedules a, moe_project_activity_nodes b where a.project_id = {$this->project_id} and b.type_id = {$this->typeId} and a.id = b.project_schedule_id and a.work_activity_id = 75 and a.deleted_at is null and b.deleted_at is null";
         $this->endNode = sql($sql)[0]->id;
 
         $node = ProjectActivityNode::find($this->startNode);
@@ -131,10 +172,13 @@ class CriticalPathManager
         $node->save();
     }
 
+    /**
+     *
+     */
     private function setEarliestDuration ()
     {
         for ( $i = 0; $i < 100; ++$i ) {
-            $nodes = ProjectActivityNode::where('id', '!=', $this->startNode)->where('earliest_start_duration', 0)->where('project_id', $this->project_id)->get();
+            $nodes = ProjectActivityNode::where('id', '!=', $this->startNode)->where('earliest_start_duration', 0)->where('project_id', $this->project_id)->where('type_id', $this->typeId)->get();
             if ( !sizeof($nodes) ) return;
 
             foreach ( $nodes as $node ) {
@@ -149,9 +193,14 @@ class CriticalPathManager
         }
     }
 
+    /**
+     * @param $node
+     * @return int|mixed|null
+     */
     private function getEarliestDurationOfNode ($node)
     {
         $max = 0;
+
         //find all tails against this head
         $records = ActivityNodeLink::with('tail_node')->where('head_node_id', $node->id)->get();
         foreach ( $records as $record ) {
@@ -165,13 +214,16 @@ class CriticalPathManager
         return $max;
     }
 
+    /**
+     *
+     */
     private function setLatestCompletion ()
     {
         $endNode = ProjectActivityNode::find($this->endNode);
         $endNode->latest_completion_duration = $endNode->earliest_start_duration;
         $endNode->save();
 
-        $nodes = ProjectActivityNode::where('id', '!=', $this->startNode)->where('earliest_start_duration', '>', 0)->where('project_id', $this->project_id)->where('latest_completion_duration', 0)->orderBy('earliest_start_duration', 'desc')->get();
+        $nodes = ProjectActivityNode::where('id', '!=', $this->startNode)->where('earliest_start_duration', '>', 0)->where('project_id', $this->project_id)->where('type_id', $this->typeId)->where('latest_completion_duration', 0)->orderBy('earliest_start_duration', 'desc')->get();
 
         if ( !sizeof($nodes) ) return;
 
@@ -180,12 +232,16 @@ class CriticalPathManager
             $node->save();
         }
 
-        ProjectActivityNode::where('project_id', $this->project_id)->where('latest_completion_duration', '>', $endNode->latest_completion_duration)->update([
+        ProjectActivityNode::where('project_id', $this->project_id)->where('type_id', $this->typeId)->where('latest_completion_duration', '>', $endNode->latest_completion_duration)->update([
             'latest_completion_duration' => 0,
         ]);
 
     }
 
+    /**
+     * @param $node
+     * @return int
+     */
     private function getLatestCompletionOfNode ($node)
     {
         $min = 100000000;
@@ -199,11 +255,14 @@ class CriticalPathManager
         return $min;
     }
 
+    /**
+     *
+     */
     private function generatePaths ()
     {
         //cleanup tables before new insertion
-        ProjectPath::where('project_id', $this->project_id)->delete();
-        PathRoute::where('project_id', $this->project_id)->delete();
+        ProjectPath::where('project_id', $this->project_id)->where('type_id', $this->typeId)->delete();
+        PathRoute::where('project_id', $this->project_id)->where('type_id', $this->typeId)->delete();
 
         $break = false;
 
@@ -234,20 +293,29 @@ class CriticalPathManager
         return $this->setupPaths($paths);
     }
 
+    /**
+     * @param $node
+     * @return mixed
+     */
     private function getNextNodeOnPath ($node)
     {
         return ActivityNodeLink::where('tail_node_id', $node)->pluck('head_node_id');
     }
 
+    /**
+     * @param $paths
+     */
     private function setupPaths ($paths)
     {
         foreach ( $paths as $path ) {
             $projectPath = ProjectPath::create([
                 'project_id' => $this->project_id,
+                'type_id'    => $this->typeId,
             ]);
 
             foreach ( $path as $key => $value ) {
                 PathRoute::create([
+                    'type_id'    => $this->typeId,
                     'project_id' => $this->project_id,
                     'path_id'    => $projectPath->id,
                     'node_id'    => $value,
@@ -259,9 +327,13 @@ class CriticalPathManager
     }
 
     //check which one is the critical path
+
+    /**
+     *
+     */
     private function setAssignCriticalPath ()
     {
-        $paths = ProjectPath::where('project_id', $this->project_id)->get();
+        $paths = ProjectPath::where('project_id', $this->project_id)->where('type_id', $this->typeId)->get();
         foreach ( $paths as $path ) {
             if ( !$this->isCriticalPath($path) ) continue;
 
@@ -270,6 +342,10 @@ class CriticalPathManager
         }
     }
 
+    /**
+     * @param $path
+     * @return bool
+     */
     private function isCriticalPath ($path)
     {
         $routes = PathRoute::where('path_id', $path->id)->get();
@@ -298,6 +374,9 @@ class CriticalPathManager
         return true;
     }
 
+    /**
+     *
+     */
     private function calculateFloats ()
     {
         $links = ActivityNodeLink::with(['tail_node', 'head_node'])->where('project_id', $this->project_id)->get();

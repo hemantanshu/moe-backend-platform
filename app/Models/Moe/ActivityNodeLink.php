@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\ActivityNodeLinkObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -57,5 +58,13 @@ class ActivityNodeLink extends BaseModel
     public function activity ()
     {
         return $this->belongsTo(WorkActivity::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function type ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 }

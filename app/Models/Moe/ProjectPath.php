@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\ProjectPathObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 
 /**
  * Class ProjectPath
@@ -31,6 +32,14 @@ class ProjectPath extends BaseModel
     public function routes ()
     {
         return $this->hasMany(PathRoute::class, 'path_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 
     /**
