@@ -313,6 +313,9 @@ class CriticalPathManager
                 'type_id'    => $this->typeId,
             ]);
 
+            $projectPath->name = 'Path#' . $projectPath->id;
+            $projectPath->save();
+
             foreach ( $path as $key => $value ) {
                 PathRoute::create([
                     'type_id'    => $this->typeId,
