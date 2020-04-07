@@ -48,6 +48,8 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::post('calculateCriticalPath', 'Moe\ProjectController@calculateCriticalPath');
     Route::post('calculateSuggestedTimeline', 'Moe\ProjectController@calculateSuggestedTimeline');
 
+    Route::post('analyzeSlope', 'Moe\WorkActivityController@analyzeSlope');
+
 
 });
 

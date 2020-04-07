@@ -643,6 +643,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Libraries\\Moe\\ActivityDelayAnalysisManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/ActivityDelayAnalysisManager.php',
         'App\\Libraries\\Moe\\ActivityTimelineManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/ActivityTimelineManager.php',
         'App\\Libraries\\Moe\\CriticalPathManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/CriticalPathManager.php',
         'App\\Models\\Moe\\ActivityNodeLink' => __DIR__ . '/../..' . '/app/Models/Moe/ActivityNodeLink.php',
