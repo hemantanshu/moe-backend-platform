@@ -77,6 +77,8 @@ class BaseObserver
      */
     protected function saveObserverEvent (Eloquent $model)
     {
+        return;
+
         //create object against the observer event
         $obj = new ObserverEventManagerJob($model);
 

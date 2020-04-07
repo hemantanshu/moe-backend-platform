@@ -134,8 +134,8 @@ class CriticalPathManager
             $dependencies = ProjectScheduleDependency::with('dependency')->where('project_schedule_id', $projectSchedule->id)->get();
 
             foreach ( $dependencies as $dependency ) {
-                $tail = ProjectActivityNode::where('project_schedule_id', $dependency->dependency_id)->first();
-                $head = ProjectActivityNode::where('project_schedule_id', $dependency->project_schedule_id)->first();
+                $tail = ProjectActivityNode::where('project_schedule_id', $dependency->dependency_id)->where('type_id', $this->typeId)->first();
+                $head = ProjectActivityNode::where('project_schedule_id', $dependency->project_schedule_id)->where('type_id', $this->typeId)->first();
 
                 ActivityNodeLink::create([
                     'type_id'      => $this->typeId,

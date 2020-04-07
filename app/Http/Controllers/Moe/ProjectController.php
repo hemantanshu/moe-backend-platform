@@ -25,7 +25,11 @@ class ProjectController extends RecordController
      */
     public function calculateCriticalPath (Request $request)
     {
-        ( new CriticalPathManager($request->project_id) )->process();
+        $projectId = $request->project_id;
+
+        ( new CriticalPathManager($projectId, 1111) )->process();
+        ( new ActivityTimelineManager($projectId) )->process();
+        ( new CriticalPathManager($projectId, 1112) )->process();
 
         return success_response('generated path properly');
     }
@@ -36,13 +40,6 @@ class ProjectController extends RecordController
      */
     public function calculateSuggestedTimeline (Request $request)
     {
-        $projectId = $request->project_id;
-
-        ( new CriticalPathManager($projectId) )->fixUpdatedStartTime();
-        ( new CriticalPathManager($projectId) )->generateNodes();
-        ( new CriticalPathManager($projectId) )->generateLinks();
-        ( new ActivityTimelineManager($projectId) )->process();
-
         return success_response('generated timeline successfully');
     }
 }

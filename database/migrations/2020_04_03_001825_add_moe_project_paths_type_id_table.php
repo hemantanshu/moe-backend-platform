@@ -15,7 +15,7 @@ class AddMoeProjectPathsTypeIdTable extends Migration
     {
         Schema::table('moe_project_paths', function (Blueprint $table) {
             $table->string('name')->nullable();
-            
+
             $table->unsignedInteger('type_id')->nullable();
             $table->foreign('type_id')->references('id')->on('dz_lookup_values');
         });

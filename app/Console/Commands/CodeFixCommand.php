@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Libraries\Moe\ActivityTimelineManager;
 use App\Libraries\Moe\CriticalPathManager;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CodeFixCommand extends Command
 {
@@ -39,12 +41,15 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-//        ( new CriticalPathManager(40) )->fixUpdatedStartTime();
-//        ( new CriticalPathManager(40) )->generateNodes();
-//        ( new CriticalPathManager(40) )->generateLinks();
-//        ( new ActivityTimelineManager(40) )->process();
-
-//        ( new CriticalPathManager(40, 1111) )->process();
-        ( new CriticalPathManager(40, 1112) )->process();
+//        DB::listen(function ($query) {
+//            Log::info($query->sql);
+//            Log::info('---------------');
+//        });
+//
+//
+//        $projectId = 40;
+//        ( new CriticalPathManager($projectId, 1111) )->process();
+//        ( new ActivityTimelineManager($projectId) )->process();
+//        ( new CriticalPathManager($projectId, 1112) )->process();
     }
 }
