@@ -90,6 +90,7 @@ class ActivityDelayAnalysisManager
         $m = round($m, 3);
         $c = round($c, 3);
 
-        return "y={$m}x+{$c}";
+        $operator = $c > 0 ? '+' : '';
+        return "y={$m}x{$operator}{$c}";
     }
 }
