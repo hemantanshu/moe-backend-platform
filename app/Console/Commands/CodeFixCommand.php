@@ -3,11 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Libraries\Moe\ActivityDelayAnalysisManager;
-use App\Libraries\Moe\ActivityTimelineManager;
-use App\Libraries\Moe\CriticalPathManager;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class CodeFixCommand extends Command
 {

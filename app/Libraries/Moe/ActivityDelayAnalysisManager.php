@@ -26,9 +26,10 @@ class ActivityDelayAnalysisManager
      */
     private function getActivities ()
     {
+        WorkActivity::where('id', '>', 0)->update(['m_slope' => 0, 'c_y_intercept' => 0, 'co_relation' => 0]);
+
         $activities = WorkActivity::get();
         foreach ( $activities as $activity ) {
-            $activity->update(['m_slope' => 0, 'c_y_intercept' => 0]);
 
             $equation = $this->processActivity($activity);
 
@@ -56,6 +57,7 @@ class ActivityDelayAnalysisManager
             'x'  => 0,
             'xx' => 0,
             'y'  => 0,
+            'yy' => 0,
         ];
         foreach ( $records as $record ) {
             $x = intval($record->x);
@@ -64,23 +66,30 @@ class ActivityDelayAnalysisManager
             $sum['xy'] += $x * $y;
             $sum['x'] += $x;
             $sum['y'] += $y;
+            $sum['yy'] += $y * $y;
             $sum['xx'] += $x * $x;
         }
 
         $denominator = $n * $sum['xx'] - $sum['x'] * $sum['x'];
         if ( $denominator == 0 ) return null;
 
-        $m = $n * ( $sum['xy'] - $sum['x'] * $sum['y'] ) / ( $denominator );
-        $c = ( $sum['y'] - $m * $sum['x'] ) / ( $n );
+        $m = ( $n * $sum['xy'] - $sum['x'] * $sum['y'] ) / ( $denominator );
+        $c = round(( $sum['y'] - $m * $sum['x'] ) / ( $n ));
+
+        //regression calculation
+        $m1 = $n * $sum['xx'] - $sum['x'] * $sum['x'];
+        $m2 = $n * $sum['yy'] - $sum['y'] * $sum['y'];
+
+        $r = ( $n * $sum['xy'] - $sum['x'] * $sum['y'] ) / ( sqrt($m1 * $m2) );
 
         $activity->m_slope = $m;
         $activity->c_y_intercept = $c;
+        $activity->co_relation = $r;
         $activity->save();
 
         $m = round($m, 3);
         $c = round($c, 3);
 
         return "y={$m}x+{$c}";
-
     }
 }
