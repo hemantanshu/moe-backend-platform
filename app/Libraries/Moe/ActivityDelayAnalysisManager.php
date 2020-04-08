@@ -6,6 +6,7 @@ namespace App\Libraries\Moe;
 
 use App\Models\Moe\ProjectSchedule;
 use App\Models\Moe\WorkActivity;
+use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
  * Class ActivityDelayAnalysisManager
@@ -13,12 +14,15 @@ use App\Models\Moe\WorkActivity;
  */
 class ActivityDelayAnalysisManager
 {
+    private $min_counter = 3;
+
     /**
      *
      */
     public function process ()
     {
         $this->getActivities();
+        $this->min_counter = LaravelUtility::getProperty('activity.min.data.calculation', 3);
     }
 
     /**
@@ -50,7 +54,7 @@ class ActivityDelayAnalysisManager
         $records = sql($sql);
         $n = sizeof($records);
 
-        if ( $n < 2 ) return null;
+        if ( $n <= $this->min_counter ) return null;
 
         $sum = [
             'xy' => 0,
@@ -91,6 +95,7 @@ class ActivityDelayAnalysisManager
         $c = round($c, 3);
 
         $operator = $c > 0 ? '+' : '';
+
         return "y={$m}x{$operator}{$c}";
     }
 }
