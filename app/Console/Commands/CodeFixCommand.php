@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Libraries\Moe\ActivityDelayAnalysisManager;
+use App\Libraries\Moe\CostAnalysisManager;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -38,6 +39,6 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        ( new ActivityDelayAnalysisManager() )->process();
+        ( new CostAnalysisManager() )->process();
     }
 }

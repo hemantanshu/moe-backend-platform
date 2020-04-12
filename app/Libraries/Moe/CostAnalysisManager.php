@@ -1,54 +1,44 @@
-<?
+<?php
+
 namespace App\Libraries\Moe;
 
-use App\Models\Moe\ProjectSchedule;
-use App\Models\Moe\WorkActivity;
+use App\Models\Moe\CostHead;
+use App\Models\Moe\ProjectCost;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
- * Class ActivityDelayAnalysisManager
+ * Class CostAnalysisManager
  * @package App\Libraries\Moe
  */
-class ActivityDelayAnalysisManager
+class CostAnalysisManager
 {
     private $min_counter = 3;
 
-    /**
-     *
-     */
     public function process ()
     {
-        $this->min_counter = LaravelUtility::getProperty('activity.min.data.calculation', 3);
-        $this->getActivities();
+        $this->min_counter = LaravelUtility::getProperty('cost.min.data.calculation', 3);
+        $this->processCosts();
     }
 
-    /**
-     *
-     */
-    private function getActivities ()
+    private function processCosts ()
     {
-        WorkActivity::where('id', '>', 0)->update(['m_slope' => 0, 'c_y_intercept' => 0, 'co_relation' => 0]);
+        CostHead::where('id', '>', 0)->update(['m_slope' => 0, 'c_y_intercept' => 0, 'co_relation' => 0]);
 
-        $activities = WorkActivity::get();
-        foreach ( $activities as $activity ) {
-
-            $equation = $this->processActivity($activity);
-
-            ProjectSchedule::where('work_activity_id', $activity->id)->update([
+        $costs = CostHead::get();
+        foreach ( $costs as $cost ) {
+            $equation = $this->processCost($cost);
+            ProjectCost::where('cost_head_id', $cost->id)->update([
                 'equation' => $equation,
             ]);
         }
     }
 
-    /**
-     * @param $activity
-     * @return string|null
-     */
-    private function processActivity ($activity)
+    private function processCost ($cost)
     {
-        $sql = "select actual_duration x, (actual_duration - estimated_duration) y from moe_project_schedules where deleted_at is null and actual_end_date is not null and actual_start_date is not null and work_activity_id = {$activity->id}";
+        $sql = "select actual_cost x, (actual_cost - estimate_cost) y from moe_project_costs where deleted_at is null and actual_cost is not null and estimate_cost is not null and cost_head_id = {$cost->id}";
 
         $records = sql($sql);
+
         $n = sizeof($records);
 
         if ( $n <= $this->min_counter ) return null;
@@ -81,12 +71,14 @@ class ActivityDelayAnalysisManager
         $m1 = $n * $sum['xx'] - $sum['x'] * $sum['x'];
         $m2 = $n * $sum['yy'] - $sum['y'] * $sum['y'];
 
+        if($m1 * $m2 == 0) return null;
+
         $r = ( $n * $sum['xy'] - $sum['x'] * $sum['y'] ) / ( sqrt($m1 * $m2) );
 
-        $activity->m_slope = $m;
-        $activity->c_y_intercept = $c;
-        $activity->co_relation = $r;
-        $activity->save();
+        $cost->m_slope = $m;
+        $cost->c_y_intercept = $c;
+        $cost->co_relation = $r;
+        $cost->save();
 
         $m = round($m, 3);
         $c = round($c, 3);

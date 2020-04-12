@@ -59,6 +59,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Libraries\\Moe\\ActivityDelayAnalysisManager' => $baseDir . '/app/Libraries/Moe/ActivityDelayAnalysisManager.php',
     'App\\Libraries\\Moe\\ActivityTimelineManager' => $baseDir . '/app/Libraries/Moe/ActivityTimelineManager.php',
+    'App\\Libraries\\Moe\\CostAnalysisManager' => $baseDir . '/app/Libraries/Moe/CostAnalysisManager.php',
     'App\\Libraries\\Moe\\CriticalPathManager' => $baseDir . '/app/Libraries/Moe/CriticalPathManager.php',
     'App\\Models\\Moe\\ActivityNodeLink' => $baseDir . '/app/Models/Moe/ActivityNodeLink.php',
     'App\\Models\\Moe\\City' => $baseDir . '/app/Models/Moe/City.php',
