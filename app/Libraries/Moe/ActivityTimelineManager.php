@@ -77,10 +77,17 @@ class ActivityTimelineManager
     {
         //find the node id
         $node = ProjectActivityNode::where('type_id', 1111)->where('project_schedule_id', $schedule->id)->first();
-        $maxPreviousActivity = $this->getMaxActivitySchedule($node->id);
 
-        $schedule->suggested_start_date = $maxPreviousActivity ? $maxPreviousActivity->suggested_end_date : $schedule->estimate_start_date;
+        $maxPreviousRecord = $this->getMaxActivitySchedule($node->id);
+        if ( $maxPreviousRecord ) {
+            $maxPreviousActivity = ProjectSchedule::find($maxPreviousRecord->id);
+            $schedule->suggested_start_date = DateUtil::getFutureDate($maxPreviousRecord->lags, $maxPreviousActivity->suggested_end_date);
+        } else
+            $schedule->suggested_start_date = $schedule->estimate_start_date;
+
+
         $schedule->suggested_end_date = DateUtil::getFutureDate($schedule->mean_avg, $schedule->suggested_start_date);
+
         $schedule->save();
 
         //process forward nodes
@@ -96,10 +103,10 @@ class ActivityTimelineManager
      */
     private function getMaxActivitySchedule ($nodeId)
     {
-        $query = "select c.id from moe_activity_node_links a, moe_project_activity_nodes b, moe_project_schedules c where a.head_node_id = {$nodeId} and a.tail_node_id = b.id and b.project_schedule_id = c.id and a.type_id = 1111 order by c.estimate_end_date desc limit 1";
+        $query = "select a.lag lags, c.id id from moe_activity_node_links a, moe_project_activity_nodes b, moe_project_schedules c where a.head_node_id = {$nodeId} and a.tail_node_id = b.id and b.project_schedule_id = c.id and a.type_id = 1111 order by c.suggested_end_date desc limit 1";
         $record = sql($query);
 
-        return sizeof($record) ? ProjectSchedule::find($record[0]->id) : false;
+        return sizeof($record) ? $record[0] : false;
     }
 
 

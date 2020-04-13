@@ -3,7 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Libraries\Moe\ActivityDelayAnalysisManager;
+use App\Libraries\Moe\ActivityTimelineManager;
 use App\Libraries\Moe\CostAnalysisManager;
+use App\Libraries\Moe\CriticalPathManager;
+use App\Libraries\Moe\EquatedTimelineManager;
 use Illuminate\Console\Command;
 
 class CodeFixCommand extends Command
@@ -39,6 +42,12 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        ( new CostAnalysisManager() )->process();
+        $projectId = 40;
+
+        ( new CriticalPathManager($projectId, 1111) )->process();
+        ( new ActivityTimelineManager($projectId) )->process();
+        ( new EquatedTimelineManager($projectId) )->process();
+        ( new CriticalPathManager($projectId, 1112) )->process();
+        ( new CriticalPathManager($projectId, 1125) )->process();
     }
 }

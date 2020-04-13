@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Moe;
 
 use App\Libraries\Moe\ActivityTimelineManager;
 use App\Libraries\Moe\CriticalPathManager;
+use App\Libraries\Moe\EquatedTimelineManager;
 use App\Models\Moe\Project;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
 use Illuminate\Http\Request;
@@ -29,7 +30,9 @@ class ProjectController extends RecordController
 
         ( new CriticalPathManager($projectId, 1111) )->process();
         ( new ActivityTimelineManager($projectId) )->process();
+        ( new EquatedTimelineManager($projectId) )->process();
         ( new CriticalPathManager($projectId, 1112) )->process();
+        ( new CriticalPathManager($projectId, 1125) )->process();
 
         return success_response('generated path properly');
     }
