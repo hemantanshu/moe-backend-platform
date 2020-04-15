@@ -84,7 +84,7 @@ class ActivityTimelineManager
             $schedule->suggested_start_date = DateUtil::getFutureDate($maxPreviousRecord->lags, $maxPreviousActivity->suggested_end_date);
         } else
             $schedule->suggested_start_date = $schedule->estimate_start_date;
-
+        $schedule->suggested_duration = $schedule->mean_avg;
 
         $schedule->suggested_end_date = DateUtil::getFutureDate($schedule->mean_avg, $schedule->suggested_start_date);
 

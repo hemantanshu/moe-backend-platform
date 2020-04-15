@@ -73,7 +73,7 @@ class EquatedTimelineManager
             $schedule->equated_suggested_start_date = $schedule->estimate_start_date;
 
 
-        $schedule->suggested_end_date = DateUtil::getFutureDate($schedule->equated_suggested_duration, $schedule->equated_suggested_start_date);
+        $schedule->equated_suggested_end_date = DateUtil::getFutureDate($schedule->equated_suggested_duration, $schedule->equated_suggested_start_date);
 
         $schedule->save();
 
