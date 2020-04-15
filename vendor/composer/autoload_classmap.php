@@ -61,6 +61,7 @@ return array(
     'App\\Libraries\\Moe\\ActivityTimelineManager' => $baseDir . '/app/Libraries/Moe/ActivityTimelineManager.php',
     'App\\Libraries\\Moe\\CostAnalysisManager' => $baseDir . '/app/Libraries/Moe/CostAnalysisManager.php',
     'App\\Libraries\\Moe\\CriticalPathManager' => $baseDir . '/app/Libraries/Moe/CriticalPathManager.php',
+    'App\\Libraries\\Moe\\EquatedTimelineManager' => $baseDir . '/app/Libraries/Moe/EquatedTimelineManager.php',
     'App\\Models\\Moe\\ActivityNodeLink' => $baseDir . '/app/Models/Moe/ActivityNodeLink.php',
     'App\\Models\\Moe\\City' => $baseDir . '/app/Models/Moe/City.php',
     'App\\Models\\Moe\\CostHead' => $baseDir . '/app/Models/Moe/CostHead.php',

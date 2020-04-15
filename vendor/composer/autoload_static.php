@@ -647,6 +647,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Libraries\\Moe\\ActivityTimelineManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/ActivityTimelineManager.php',
         'App\\Libraries\\Moe\\CostAnalysisManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/CostAnalysisManager.php',
         'App\\Libraries\\Moe\\CriticalPathManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/CriticalPathManager.php',
+        'App\\Libraries\\Moe\\EquatedTimelineManager' => __DIR__ . '/../..' . '/app/Libraries/Moe/EquatedTimelineManager.php',
         'App\\Models\\Moe\\ActivityNodeLink' => __DIR__ . '/../..' . '/app/Models/Moe/ActivityNodeLink.php',
         'App\\Models\\Moe\\City' => __DIR__ . '/../..' . '/app/Models/Moe/City.php',
         'App\\Models\\Moe\\CostHead' => __DIR__ . '/../..' . '/app/Models/Moe/CostHead.php',
