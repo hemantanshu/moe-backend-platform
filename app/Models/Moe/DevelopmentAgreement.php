@@ -27,6 +27,11 @@ class DevelopmentAgreement extends BaseModel
         self::observe(new DevelopmentAgreementObserver());
     }
 
+    public function pda_tasks ()
+    {
+        return $this->hasMany(ProjectPDATask::class, 'pda_task_id');
+    }
+
     /**
      * @return BelongsTo
      */

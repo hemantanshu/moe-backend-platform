@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRptActivityProjectAnalysisTable extends Migration
+class CreateMoeMoeProjectPdaTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,23 @@ class CreateRptActivityProjectAnalysisTable extends Migration
      */
     public function up ()
     {
-        Schema::create('rpt_activity_project_analysis', function (Blueprint $table) {
+        Schema::create('moe_project_pda_tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('project_id')->nullable();
-            $table->unsignedBigInteger('work_activity_id')->nullable();
+            $table->unsignedInteger('project_pda_id')->nullable();
+            $table->unsignedBigInteger('pda_task_id')->nullable();
 
-            $table->integer('equated_delay')->default(0);
-            $table->integer('delay')->default(0);
-            $table->integer('percentage')->default(0);
+            $table->date('estimate_start_date')->nullable();
+            $table->date('estimate_end_date')->nullable();
+
+            $table->date('actual_start_date')->nullable();
+            $table->date('actual_end_date')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('project_id')->references('id')->on('moe_project_details');
-            $table->foreign('activity_id')->references('id')->on('moe_project_paths');
+            $table->foreign('project_pda_id')->references('id')->on('moe_development_agreements');
+            $table->foreign('pda_task_id')->references('id')->on('moe_pda_tasks');
 
             $table->foreign('created_by')->references('id')->on('sys_users');
             $table->foreign('updated_by')->references('id')->on('sys_users');
@@ -45,6 +47,6 @@ class CreateRptActivityProjectAnalysisTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('rpt_activity_project_analysis');
+        Schema::dropIfExists('moe_project_pda_tasks');
     }
 }
