@@ -30,6 +30,8 @@ class CostAnalysisManager
             ProjectCost::where('cost_head_id', $cost->id)->update([
                 'equation' => $equation,
             ]);
+            $this->setAverageCost($cost);
+            $this->setEquatedCost(( $cost->id ));
         }
     }
 
@@ -71,7 +73,7 @@ class CostAnalysisManager
         $m1 = $n * $sum['xx'] - $sum['x'] * $sum['x'];
         $m2 = $n * $sum['yy'] - $sum['y'] * $sum['y'];
 
-        if($m1 * $m2 == 0) return null;
+        if ( $m1 * $m2 == 0 ) return null;
 
         $r = ( $n * $sum['xy'] - $sum['x'] * $sum['y'] ) / ( sqrt($m1 * $m2) );
 
@@ -86,5 +88,31 @@ class CostAnalysisManager
         $operator = $c > 0 ? '+' : '';
 
         return "y={$m}x{$operator}{$c}";
+    }
+
+    private function setAverageCost ($cost)
+    {
+        $sql = "select avg((actual_cost - estimate_cost) / estimate_cost) avg from moe_project_costs where deleted_at is null and cost_head_id = {$cost->id}";
+
+        $record = sql($sql)->avg;
+        if ( !sizeof($record) ) return;
+
+        $avg = $record[0]->avg;
+
+        //get all project cost heads
+        $records = ProjectCost::where('cost_head_id', $cost->id)->get();
+        foreach ( $records as $record ) {
+            $record->suggested_cost = ( 1 + $avg ) * $record->estimated_cost;
+            $record->save();
+        }
+    }
+
+    private function setEquatedCost ($costId)
+    {
+        $cost = CostHead::find($costId);
+        $projectCosts = ProjectCost::where('cost_head_id', $costId)->get();
+        foreach ( $projectCosts as $projectCost ) {
+            $projectCost->equated_cost = $cost->m_slope * $projectCost->estimate_cost + $cost->c_y_intercept;
+        }
     }
 }

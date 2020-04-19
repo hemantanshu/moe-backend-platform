@@ -2,6 +2,7 @@
 
 namespace App\Observers\Moe;
 
+use App\Models\Moe\CostHead;
 use App\Models\Moe\ProjectCost;
 use Drivezy\LaravelUtility\Library\Message;
 use Drivezy\LaravelUtility\Observers\BaseObserver;

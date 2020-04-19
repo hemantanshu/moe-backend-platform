@@ -49,7 +49,7 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::post('calculateSuggestedTimeline', 'Moe\ProjectController@calculateSuggestedTimeline');
 
     Route::post('analyzeSlope', 'Moe\WorkActivityController@analyzeSlope');
-    Route::post('analyseCostOverRun', 'Moe\CostHeadController@analyzeSlope');
+    Route::post('analyseCostOverRun', 'Moe\CostHeadController@ana2020_04_19_224128_add_moe_project_costs_equated_cost_tablelyzeSlope');
 
     Route::resource('pdaTask', 'Moe\PDATaskController');
     Route::resource('projectPDATask', 'Moe\ProjectPDATaskController');
