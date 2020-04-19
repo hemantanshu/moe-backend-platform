@@ -92,7 +92,7 @@ class CostAnalysisManager
 
     private function setAverageCost ($cost)
     {
-        $sql = "select avg((actual_cost - estimate_cost) / estimate_cost) avg from moe_project_costs where deleted_at is null and cost_head_id = {$cost->id}";
+        $sql = "select avg((actual_cost - estimate_cost) / actual_cost) avg from moe_project_costs where deleted_at is null and cost_head_id = {$cost->id}";
 
         $record = sql($sql);
         if ( !sizeof($record) ) return;
