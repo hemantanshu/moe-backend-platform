@@ -102,7 +102,7 @@ class CostAnalysisManager
         //get all project cost heads
         $records = ProjectCost::where('cost_head_id', $cost->id)->get();
         foreach ( $records as $record ) {
-            $record->suggested_cost = ( 1 + $avg ) * $record->estimate_cost + $record->estimate_cost;
+            $record->suggested_cost = ( 1 + $avg ) * $record->estimate_cost;
             $record->save();
         }
     }
