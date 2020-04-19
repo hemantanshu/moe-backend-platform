@@ -13,8 +13,8 @@ class AddMoeCostDetailsAverageCostTable extends Migration
      */
     public function up ()
     {
-        Schema::table('moe_cost_details', function (Blueprint $table) {
-            $table->decimal('average_cost', 10, 3)->default(0);
+        Schema::table('moe_project_costs', function (Blueprint $table) {
+            $table->decimal('suggested_cost', 10, 3)->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class AddMoeCostDetailsAverageCostTable extends Migration
      */
     public function down ()
     {
-        Schema::table('moe_cost_details', function (Blueprint $table) {
-            $table->dropColumn('average_cost');
+        Schema::table('moe_project_costs', function (Blueprint $table) {
+            $table->dropColumn('suggested_cost');
         });
     }
 }

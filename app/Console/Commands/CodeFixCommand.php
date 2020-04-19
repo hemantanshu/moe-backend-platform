@@ -42,6 +42,8 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
+        ( new CostAnalysisManager() )->process();
+        return;
         $projectId = 50;
 
         ( new CriticalPathManager($projectId, 1111) )->process();

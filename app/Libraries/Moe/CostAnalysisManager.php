@@ -94,7 +94,7 @@ class CostAnalysisManager
     {
         $sql = "select avg((actual_cost - estimate_cost) / estimate_cost) avg from moe_project_costs where deleted_at is null and cost_head_id = {$cost->id}";
 
-        $record = sql($sql)->avg;
+        $record = sql($sql);
         if ( !sizeof($record) ) return;
 
         $avg = $record[0]->avg;
