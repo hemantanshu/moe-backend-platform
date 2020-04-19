@@ -112,7 +112,7 @@ class CostAnalysisManager
         $cost = CostHead::find($costId);
         $projectCosts = ProjectCost::where('cost_head_id', $costId)->get();
         foreach ( $projectCosts as $projectCost ) {
-            $projectCost->equated_cost = $cost->m_slope * $projectCost->estimate_cost + $cost->c_y_intercept;
+            $projectCost->equated_cost = $projectCost->estimate_cost + $cost->m_slope * $projectCost->estimate_cost + $cost->c_y_intercept;
             $projectCost->save();
         }
     }
