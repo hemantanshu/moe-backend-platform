@@ -1,4 +1,5 @@
 <?
+
 namespace App\Libraries\Moe;
 
 use App\Models\Moe\ProjectSchedule;
@@ -37,6 +38,9 @@ class ActivityDelayAnalysisManager
             ProjectSchedule::where('work_activity_id', $activity->id)->update([
                 'equation' => $equation,
             ]);
+
+            $activity->equation = $equation;
+            $activity->save();
         }
     }
 
