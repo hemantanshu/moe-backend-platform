@@ -106,6 +106,9 @@ class EquatedTimelineManager
         $duration += $schedule->equation ? $this->getDelay($schedule, $duration) : 0;
 
         $schedule->equated_suggested_duration = $duration;
+
+        $schedule->equated_percentage_deviation =  ( $schedule->actual_duration - $duration ) * 100 / $schedule->actual_duration;
+
         $schedule->save();
 
     }
