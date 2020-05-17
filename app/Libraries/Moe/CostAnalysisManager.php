@@ -32,6 +32,9 @@ class CostAnalysisManager
             ]);
             $this->setAverageCost($cost);
             $this->setEquatedCost(( $cost->id ));
+
+            $cost->equation = $equation;
+            $cost->save();
         }
     }
 
