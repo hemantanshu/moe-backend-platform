@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Moe;
 use App\Libraries\Moe\ActivityDelayAnalysisManager;
 use App\Models\Moe\WorkActivity;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use Illuminate\Http\Request;
 
 /**
  * Class WorkActivityController
@@ -20,8 +19,7 @@ class WorkActivityController extends RecordController
 
     public function analyzeSlope ()
     {
-        ( new ActivityDelayAnalysisManager() )->process();
-
+        (new ActivityDelayAnalysisManager())->process();
         return success_response('slope analyzed for all activities');
     }
 }
