@@ -22,7 +22,7 @@ class LoginController extends Controller
     public function validateLogin (Request $request)
     {
         if ( !Auth::attempt(['email' => $request->get('username'), 'password' => $request->get('password')], true) ) {
-            return fixed_response(['success' => false, 'reason' => 'Login Failedsss']);
+            return fixed_response(['success' => false, 'reason' => 'Login Failed']);
         }
 
         $user = Auth::user();

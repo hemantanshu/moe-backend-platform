@@ -26,7 +26,7 @@ class LoginController extends Controller
      */
     public function validatePasswordLogin (Request $request)
     {
-        $user = User::where('email', strtolower($request->email))->first();
+        $user = User::where('email', strtolower($request->username))->first();
 
         //if user is not found with the given login,
         // then send out the invalid credential message
@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         //check for the login credentials of the user
         $credentials = [
-            'email'    => $request->email,
+            'email'    => $request->username,
             'password' => $request->password,
         ];
         if ( !Auth::attempt($credentials, true) ) {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Drivezy\LaravelAccessManager\Controllers'], function () {
     Route::get('getUserSessionDetails', 'LoginController@getUserSessionDetails');
-    Route::post('login', 'LoginController@validatePasswordLogin');
+//    Route::post('login', 'LoginController@validatePasswordLogin');
     Route::post('user', 'UserController@store');
 });
 
