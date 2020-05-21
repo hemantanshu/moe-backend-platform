@@ -723,6 +723,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'App\\Observers\\Moe\\ZoneObserver' => __DIR__ . '/../..' . '/app/Observers/Moe/ZoneObserver.php',
         'App\\Observers\\Report\\ActivityProjectAnalysisObserver' => __DIR__ . '/../..' . '/app/Observers/Report/ActivityProjectAnalysisObserver.php',
         'App\\Observers\\Sys\\OpenPropertyObserver' => __DIR__ . '/../..' . '/app/Observers/Sys/OpenPropertyObserver.php',
+        'App\\Observers\\Sys\\UserObserver' => __DIR__ . '/../..' . '/app/Observers/Sys/UserObserver.php',
         'App\\Observers\\Sys\\UserPreferenceObserver' => __DIR__ . '/../..' . '/app/Observers/Sys/UserPreferenceObserver.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

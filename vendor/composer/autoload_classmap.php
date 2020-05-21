@@ -132,6 +132,7 @@ return array(
     'App\\Observers\\Moe\\ZoneObserver' => $baseDir . '/app/Observers/Moe/ZoneObserver.php',
     'App\\Observers\\Report\\ActivityProjectAnalysisObserver' => $baseDir . '/app/Observers/Report/ActivityProjectAnalysisObserver.php',
     'App\\Observers\\Sys\\OpenPropertyObserver' => $baseDir . '/app/Observers/Sys/OpenPropertyObserver.php',
+    'App\\Observers\\Sys\\UserObserver' => $baseDir . '/app/Observers/Sys/UserObserver.php',
     'App\\Observers\\Sys\\UserPreferenceObserver' => $baseDir . '/app/Observers/Sys/UserPreferenceObserver.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

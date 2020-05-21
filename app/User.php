@@ -6,10 +6,11 @@ use App\Models\Moe\DeveloperMember;
 use App\Models\Moe\UserEducation;
 use App\Models\Moe\UserEmployment;
 use App\Models\Moe\UserTraining;
+use App\Observers\Sys\php;
+use App\Observers\Sys\UserObserver;
 use Drivezy\LaravelAccessManager\Models\PermissionAssignment;
 use Drivezy\LaravelAccessManager\Models\RoleAssignment;
 use Drivezy\LaravelAccessManager\Models\UserGroupMember;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -108,5 +109,11 @@ class User extends Authenticatable
     public function employments ()
     {
         return $this->hasMany(UserEmployment::class);
+    }
+
+    protected static function boot ()
+    {
+        parent::boot();
+        self::observe(new UserObserver());
     }
 }
