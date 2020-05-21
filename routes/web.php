@@ -5,6 +5,7 @@ Route::get('test', 'TestController@test');
 
 Route::post('login', 'Sys\LoginController@validateLogin');
 Route::get('loginCheck', 'Sys\LoginController@checkLogin');
+Route::get('logout', 'Sys\LoginController@logout');
 
 Route::group(['prefix' => 'api/admin'], function () {
 

@@ -52,4 +52,14 @@ class LoginController extends Controller
 
         return fixed_response(['success' => false, 'reason' => 'No Logged User']);
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function logout ()
+    {
+        Auth::logout();
+
+        return success_response('successfully logged out');
+    }
 }
