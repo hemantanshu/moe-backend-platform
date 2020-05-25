@@ -267,7 +267,7 @@ class ReportManager
      */
     public static function runDbQuery ($query)
     {
-        return DB::connection('read_replica')->select(DB::raw($query));
+        return DB::select(DB::raw($query));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Drivezy\LaravelRecordManager\Controllers;
 
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelAccessManager\Models\RoleAssignment;
+use Drivezy\LaravelRecordManager\Library\ReportManager;
 use Drivezy\LaravelRecordManager\Models\ReportingQuery;
 use Illuminate\Http\Request;
 

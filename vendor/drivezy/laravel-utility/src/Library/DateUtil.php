@@ -4,6 +4,7 @@ namespace Drivezy\LaravelUtility\Library;
 
 use DateTime;
 use DateTimeZone;
+use Drivezy\LaravelUtility\Models\LookupValue;
 
 /**
  * Class DateUtil
@@ -169,4 +170,23 @@ class DateUtil
 
         return $acst_date->format('Y-m-d H:i:s');
     }
+
+    /**
+     * function to convert literals to its actual value
+     * @param $string
+     * @return false|datetime|string
+     */
+    public static function convertLiterals ($string)
+    {
+        $literals = LookupValue::where('lookup_type_id', 102)->get();
+
+        foreach ( $literals as $literal ) {
+            if ( $string === $literal->name ) {
+                return eval($literal->value);
+            }
+        }
+
+        return $string;
+    }
+
 }
