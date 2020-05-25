@@ -5,6 +5,7 @@ namespace Drivezy\LaravelRecordManager\Library;
 use Drivezy\LaravelAccessManager\AccessManager;
 use Drivezy\LaravelAccessManager\Models\RoleAssignment;
 use Drivezy\LaravelRecordManager\Models\QueryColumn;
+use Drivezy\LaravelRecordManager\Models\QueryParam;
 use Drivezy\LaravelRecordManager\Models\ReportingQuery;
 use Drivezy\LaravelRecordManager\Models\SystemScript;
 use Drivezy\LaravelUtility\Library\DateUtil;
