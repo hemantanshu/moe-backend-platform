@@ -64,6 +64,27 @@ Route::group(['namespace' => 'Drivezy\LaravelRecordManager\Controllers',
     Route::resource('inAppMessage', 'InAppMessageController');
 
     Route::post('auditLog/{id}', 'AuditLogController@getAuditLog');
+
+    //    Routes for managing reporting routes
+    Route::resource('reportingQuery', 'ReportingQueryController');
+    Route::match(['get', 'post'], 'getReportData', 'ReportingQueryController@getReportData');
+
+//    Routes for query_params
+    Route::resource('queryParam', 'QueryParamController');
+    Route::post('refreshQueryParam', 'QueryParamController@refreshQueryParams');
+
+//    Routes for query_columns
+    Route::resource('queryColumn', 'QueryColumnController');
+    Route::post('refreshQueryColumn', 'QueryColumnController@refreshQueryColumns');
+
+//    Route for user events
+    Route::resource('userEvent', 'Reporting\UserEventController');
+    Route::resource('userEventColumn', 'Reporting\UserEventColumnController');
+    Route::post('addUserEventData', 'Reporting\UserEventController@addUserEventData');
+
+//    Dashboard routes
+    Route::resource('dashboard', 'Reporting\DashboardController');
+    Route::resource('dashboardMapping', 'Reporting\DashboardMappingController');
 });
 
 
