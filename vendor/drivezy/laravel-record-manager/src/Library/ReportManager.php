@@ -28,7 +28,7 @@ class ReportManager
 
         if ( !AccessManager::hasRole([1, 3]) ) {
             foreach ( $queryData as $record ) {
-                $queryRoles = RoleAssignment::where('source_type', 'dbcf93ac53125732916013dc60063150')
+                $queryRoles = RoleAssignment::where('source_type', 'd80872fad8cb00c4c0b62b9041f7f6b4')
                     ->where('source_id', $record->id)
                     ->pluck('role_id')->toArray();
                 if ( count($queryRoles) ) {
@@ -318,7 +318,7 @@ class ReportManager
      */
     public static function refreshQueryParams ($queryId)
     {
-        $script = SystemScript::where('source_type', 'dbcf93ac53125732916013dc60063150')
+        $script = SystemScript::where('source_type', 'd80872fad8cb00c4c0b62b9041f7f6b4')
             ->where('source_id', $queryId)->first();
 
         if ( !$script ) return failed_response('No script found');
@@ -341,7 +341,7 @@ class ReportManager
      */
     public static function refreshQueryColumns ($queryId)
     {
-        $script = SystemScript::where('source_type', 'dbcf93ac53125732916013dc60063150')
+        $script = SystemScript::where('source_type', 'd80872fad8cb00c4c0b62b9041f7f6b4')
             ->where('source_id', $queryId)->first();
 
         if ( !$script ) return failed_response('No script found!');
