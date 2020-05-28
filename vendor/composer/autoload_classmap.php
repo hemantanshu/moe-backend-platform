@@ -1377,6 +1377,7 @@ return array(
     'Drivezy\\LaravelRecordManager\\Controllers\\PermissionController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/PermissionController.php',
     'Drivezy\\LaravelRecordManager\\Controllers\\PropertyController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/PropertyController.php',
     'Drivezy\\LaravelRecordManager\\Controllers\\PushNotificationController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/PushNotificationController.php',
+    'Drivezy\\LaravelRecordManager\\Controllers\\QueryColumnController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/QueryColumnController.php',
     'Drivezy\\LaravelRecordManager\\Controllers\\QueryParamController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/QueryParamController.php',
     'Drivezy\\LaravelRecordManager\\Controllers\\ReadRecordController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/ReadRecordController.php',
     'Drivezy\\LaravelRecordManager\\Controllers\\RecordController' => $vendorDir . '/drivezy/laravel-record-manager/src/Controllers/RecordController.php',

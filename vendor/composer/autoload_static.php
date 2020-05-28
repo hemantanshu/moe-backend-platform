@@ -1968,6 +1968,7 @@ class ComposerStaticInita10e90e379fd5a4aae3b98f1e1dadf7a
         'Drivezy\\LaravelRecordManager\\Controllers\\PermissionController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/PermissionController.php',
         'Drivezy\\LaravelRecordManager\\Controllers\\PropertyController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/PropertyController.php',
         'Drivezy\\LaravelRecordManager\\Controllers\\PushNotificationController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/PushNotificationController.php',
+        'Drivezy\\LaravelRecordManager\\Controllers\\QueryColumnController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/QueryColumnController.php',
         'Drivezy\\LaravelRecordManager\\Controllers\\QueryParamController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/QueryParamController.php',
         'Drivezy\\LaravelRecordManager\\Controllers\\ReadRecordController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/ReadRecordController.php',
         'Drivezy\\LaravelRecordManager\\Controllers\\RecordController' => __DIR__ . '/..' . '/drivezy/laravel-record-manager/src/Controllers/RecordController.php',

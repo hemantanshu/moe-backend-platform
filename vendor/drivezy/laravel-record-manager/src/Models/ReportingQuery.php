@@ -9,35 +9,71 @@ use Drivezy\LaravelRecordManager\Observers\ReportingQueryObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Support\Facades\Auth;
 
-class ReportingQuery extends BaseModel {
+/**
+ * Class ReportingQuery
+ * @package Drivezy\LaravelRecordManager\Models
+ */
+class ReportingQuery extends BaseModel
+{
+    /**
+     * @var string
+     */
     protected $table = 'sys_reporting_queries';
 
-    public function db_query () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function db_query ()
+    {
         return $this->belongsTo(SystemScript::class, 'query_id');
     }
 
-    public function roles () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function roles ()
+    {
         return $this->hasMany(RoleAssignment::class, 'source_id')->where('source_type', md5(self::class));
     }
 
-    public function permissions () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function permissions ()
+    {
         return $this->hasMany(PermissionAssignment::class, 'source_id')->where('source_type', md5(self::class));
     }
 
-    public function parameters () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function parameters ()
+    {
         return $this->hasMany(QueryParam::class, 'query_id');
     }
 
-    public function dictionary () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dictionary ()
+    {
         return $this->hasMany(QueryColumn::class, 'query_id');
     }
 
-    public function preferences () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function preferences ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', md5(self::class));
     }
 
-    public function list_preferences () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function list_preferences ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', md5(self::class))
             ->where(function ($q) {
@@ -47,12 +83,20 @@ class ReportingQuery extends BaseModel {
             });
     }
 
-    public function dashboards () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dashboards ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', 'ReportingDashboard');
     }
 
-    public function user_dashboards () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_dashboards ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', 'ReportingDashboard')
             ->where(function ($q) {
@@ -62,12 +106,20 @@ class ReportingQuery extends BaseModel {
             });
     }
 
-    public function metrics () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function metrics ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', 'ReportingMetric');
     }
 
-    public function user_metrics () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user_metrics ()
+    {
         return $this->hasMany(ListPreference::class, 'source_id')
             ->where('source_type', 'ReportingMetric')
             ->where(function ($q) {
@@ -77,11 +129,27 @@ class ReportingQuery extends BaseModel {
             });
     }
 
-    public function actions () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function actions ()
+    {
         return $this->hasMany(UIAction::class, 'source_id')->where('source_type', md5(self::class));
     }
 
-    public static function boot () {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function charts ()
+    {
+        return $this->hasMany(Chart::class, 'source_id')->where('source_type', md5(self::class));
+    }
+
+    /**
+     *
+     */
+    public static function boot ()
+    {
         parent::boot();
         self::observe(new ReportingQueryObserver());
     }

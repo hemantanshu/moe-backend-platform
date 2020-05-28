@@ -85,6 +85,10 @@ Route::group(['namespace' => 'Drivezy\LaravelRecordManager\Controllers',
 //    Dashboard routes
     Route::resource('dashboard', 'Reporting\DashboardController');
     Route::resource('dashboardMapping', 'Reporting\DashboardMappingController');
+
+    Route::resource('chart', 'ChartController');
+    Route::resource('chartPrimaryAxis', 'ChartPrimaryAxisController');
+    Route::resource('chartSecondaryAxis', 'ChartSecondaryAxisController');
 });
 
 
