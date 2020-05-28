@@ -24,7 +24,7 @@ class CreateDzChartSecondaryAxisTable extends Migration
             $table->string('color')->nullable();
             $table->integer('display_order')->default(0);
 
-            $table->unsignedBigInteger('chart_id')->nullable();
+            $table->unsignedInteger('chart_id')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

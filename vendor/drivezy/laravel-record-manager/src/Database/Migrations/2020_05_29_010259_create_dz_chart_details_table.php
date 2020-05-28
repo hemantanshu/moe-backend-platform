@@ -25,8 +25,8 @@ class CreateDzChartDetailsTable extends Migration
             $table->string('source_type')->nullable();
             $table->unsignedInteger('source_id')->nullable();
 
-            $table->unsignedBigInteger('chart_type_id')->nullable();
-            $table->unsignedBigInteger('chart_size_id')->nullable();
+            $table->unsignedInteger('chart_type_id')->nullable();
+            $table->unsignedInteger('chart_size_id')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

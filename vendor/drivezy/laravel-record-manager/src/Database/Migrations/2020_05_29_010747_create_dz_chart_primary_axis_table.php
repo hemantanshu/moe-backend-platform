@@ -22,7 +22,7 @@ class CreateDzChartPrimaryAxisTable extends Migration
             $table->string('name');
             $table->string('display_name')->nullable();
 
-            $table->unsignedBigInteger('chart_id')->nullable();
+            $table->unsignedInteger('chart_id')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
