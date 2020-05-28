@@ -6,6 +6,7 @@ namespace Drivezy\LaravelRecordManager\Models;
 
 use Drivezy\LaravelRecordManager\Observers\ChartObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 
 /**
  * Class Chart
@@ -32,6 +33,16 @@ class Chart extends BaseModel
     public function secondary_axis ()
     {
         return $this->hasMany(ChartSecondaryAxis::class);
+    }
+
+    public function chart_type ()
+    {
+        return $this->belongsTo(LookupValue::class);
+    }
+
+    public function chart_size ()
+    {
+        return $this->belongsTo(LookupValue::class);
     }
 
     /**
