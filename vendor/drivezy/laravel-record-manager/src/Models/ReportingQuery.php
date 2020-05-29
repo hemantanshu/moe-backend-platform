@@ -142,7 +142,7 @@ class ReportingQuery extends BaseModel
      */
     public function charts ()
     {
-        return $this->hasMany(Chart::class, 'source_id')->where('source_type', md5(self::class));
+        return $this->hasMany(Chart::class, 'source_id')->where('source_type', md5(self::class))->where('active', true);
     }
 
     /**
