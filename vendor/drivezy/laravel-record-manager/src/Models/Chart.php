@@ -35,12 +35,26 @@ class Chart extends BaseModel
         return $this->hasMany(ChartSecondaryAxis::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function chart_type ()
     {
         return $this->belongsTo(LookupValue::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function chart_size ()
+    {
+        return $this->belongsTo(LookupValue::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function placement ()
     {
         return $this->belongsTo(LookupValue::class);
     }
