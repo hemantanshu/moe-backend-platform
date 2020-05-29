@@ -14,7 +14,7 @@ class AddDzChartDetailsPlacementIdTable extends Migration
     public function up ()
     {
         Schema::table('dz_chart_details', function (Blueprint $table) {
-            $table->unsignedBigInteger('placement_id')->nullable();
+            $table->unsignedInteger('placement_id')->nullable();
             $table->foreign('placement_id')->references('id')->on('dz_lookup_values');
         });
     }
