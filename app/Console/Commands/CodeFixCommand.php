@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\Reports\InstalledCapacityYearlyAnalysisJob;
 use App\Libraries\Moe\ActivityDelayAnalysisManager;
 use Illuminate\Console\Command;
 
@@ -38,6 +39,6 @@ class CodeFixCommand extends Command
      */
     public function handle ()
     {
-        (new ActivityDelayAnalysisManager())->process();
+        (new InstalledCapacityYearlyAnalysisJob())->handle();
     }
 }
