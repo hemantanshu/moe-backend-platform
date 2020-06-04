@@ -69,7 +69,7 @@ class ListManager extends DataManager
 
                 //relationship against that item is not found
                 if ( !$data ) {
-                    Message::info('Relationship ' . $relationship . 'not found for one to one');
+                    Message::info('Relationship ' . $relationship . ' not found for one to one');
                     break;
                 }
 
@@ -222,7 +222,7 @@ class ListManager extends DataManager
      */
     private function setAggregationData ()
     {
-        $sql = 'SELECT ' . $this->aggregation_operator . '(' . $this->aggregation_column . ')' . ' as ' . $this->aggregation_column . ' FROM ' . $this->sql['tables'] . ' WHERE ' . $this->sql['joins'];
+        $sql = 'SELECT ' . $this->aggregation_operator . '(' . $this->aggregation_column . ')' . ' as \'' . str_replace('`', '', $this->aggregation_column) . '\' FROM ' . $this->sql['tables'] . ' WHERE ' . $this->sql['joins'];
 
         if ( $this->query )
             $sql .= ' and (' . $this->query . ')';
