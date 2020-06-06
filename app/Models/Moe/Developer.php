@@ -4,6 +4,7 @@ namespace App\Models\Moe;
 
 use App\Observers\Moe\DeveloperObserver;
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelUtility\Models\LookupValue;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +19,14 @@ class Developer extends BaseModel
      * @var string
      */
     protected $table = 'moe_developer_details';
+
+    /**
+     * @return BelongsTo
+     */
+    public function type ()
+    {
+        return $this->belongsTo(LookupValue::class);
+    }
 
     /**
      * Override the boot functionality to add up the observer

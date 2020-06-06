@@ -19,6 +19,14 @@ class River extends BaseModel
     protected $table = 'moe_river_details';
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sub_basin ()
+    {
+        return $this->belongsTo(SubBasin::class);
+    }
+
+    /**
      * Override the boot functionality to add up the observer
      */
     public static function boot ()

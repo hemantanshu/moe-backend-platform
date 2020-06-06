@@ -52,6 +52,9 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::post('analyzeSlope', 'Moe\WorkActivityController@analyzeSlope');
     Route::post('analyseCostOverRun', 'Moe\CostHeadController@analyzeSlope');
 
+    Route::resource('basin', 'Moe\BasinController');
+    Route::resource('subBasin', 'Moe\SubBasinController');
+
     Route::resource('pdaTask', 'Moe\PDATaskController');
     Route::resource('projectPDATask', 'Moe\ProjectPDATaskController');
 
