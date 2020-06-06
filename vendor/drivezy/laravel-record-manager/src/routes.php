@@ -89,6 +89,8 @@ Route::group(['namespace' => 'Drivezy\LaravelRecordManager\Controllers',
     Route::resource('chart', 'ChartController');
     Route::resource('chartPrimaryAxis', 'ChartPrimaryAxisController');
     Route::resource('chartSecondaryAxis', 'ChartSecondaryAxisController');
+
+    Route::post('uploadFile', 'DocumentController@uploadFile');
 });
 
 
