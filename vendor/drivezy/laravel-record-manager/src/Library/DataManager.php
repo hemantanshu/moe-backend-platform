@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
  */
 class DataManager
 {
-    protected $includes, $sqlCacheIdentifier, $report = false;
+    protected $includes, $sqlCacheIdentifier, $chart_id = false;
 
     protected $model, $base, $data;
 
