@@ -88,4 +88,12 @@ class DataModel extends BaseModel
     {
         return $this->hasMany(BusinessRule::class, 'model_id');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function reports ()
+    {
+        return $this->hasMany(Chart::class, 'source_id')->where('source_type', md5(self::class));
+    }
 }
