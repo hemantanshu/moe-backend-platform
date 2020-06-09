@@ -62,9 +62,13 @@ class ListManager extends DataManager
 
             foreach ( $relationships as $relationship ) {
                 $data = ModelRelationship::with(['reference_model', 'source_column', 'alias_column'])
-                    ->where('model_id', $model->id)->where('name', $relationship)
-                    ->where('reference_type_id', 41)
-                    ->first();
+                    ->where('model_id', $model->id)->where('name', $relationship)->where('reference_type_id', 41);
+
+                //in case of reports, do not add this restriction
+                if ( !$this->report )
+                    $data = $data->where('reference_type_id', 41);
+
+                $data = $data->first();
 
 
                 //relationship against that item is not found
@@ -102,6 +106,9 @@ class ListManager extends DataManager
      */
     private function loadResults ()
     {
+        if ( $this->report )
+            return self::sendReportData();
+
         if ( $this->grouping_column )
             return self::setGroupingData();
 
@@ -249,6 +256,46 @@ class ListManager extends DataManager
             'page'   => $this->page,
             'record' => $this->limit,
         ];
+    }
+
+    private function sendReportData ()
+    {
+        $groupingColumn = $aggregationColumn = $groups = [];
+
+        //iterate through the layouts and find out the columns that are defined for the purpose of reports
+        foreach ( $this->layout as $layout ) {
+            $layout = (object) $layout;
+
+            //get the grouping columns
+            if ( isset($layout->group) ) {
+                array_push($groupingColumn, "`{$layout->object}`.{$layout->column} as '{$layout->object}.{$layout->column}'");
+            }
+
+            //get the aggregation columns
+            if ( isset($layout->operator) ) {
+                array_push($aggregationColumn, "{$layout->operator}(`{$layout->object}`.{$layout->column}) as '{$layout->operator}.{$layout->object}.{$layout->column}'");
+            }
+        }
+
+        //create the query as per the grouping schema
+        $sql = 'SELECT ' . implode(',', $groupingColumn) . ' , ' . implode(',', $aggregationColumn) . ' FROM ' . $this->sql['tables'] . ' WHERE ' . $this->sql['joins'];
+        if ( $this->query )
+            $sql .= ' and (' . $this->query . ')';
+
+        $sql .= $this->deletedQuery();
+
+
+        //see if there is a need to group the data
+        if ( sizeof($groupingColumn) ) {
+            for ( $i = 1; $i <= sizeof($groupingColumn); ++$i ) {
+                array_push($groups, $i);
+            }
+
+            $sql .= ' group by ' . implode(',', $groups);
+        }
+
+        //load the data out of query to sql
+        $this->data = sql($sql);
     }
 }
 

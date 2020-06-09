@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
  */
 class DataManager
 {
-    protected $includes, $sqlCacheIdentifier = false;
+    protected $includes, $sqlCacheIdentifier, $report = false;
 
     protected $model, $base, $data;
 
@@ -217,6 +217,9 @@ class DataManager
      */
     private function getSelectItems ()
     {
+        //if the data is supposed to be that of reports, send it out differently
+        if ( $this->report ) return $this->fixReportColumns();
+
         self::fixSelectItems();
 
         $query = '';
@@ -256,6 +259,21 @@ class DataManager
         }
 
         $this->layout = $columns;
+    }
+
+    //create layout plan for the reporting column
+    private function fixReportColumns ()
+    {
+        $layout = [];
+        foreach ( $this->layout as $item ) {
+            $name = $item['object'] . '.' . $item['column'];
+            if ( in_array($name, $this->acceptedColumns) )
+                array_push($layout, $item);
+            else
+                Message::info('Requested column ' . $name . ' cannot be served');
+        }
+
+        $this->layout = $layout;
     }
 
     /**

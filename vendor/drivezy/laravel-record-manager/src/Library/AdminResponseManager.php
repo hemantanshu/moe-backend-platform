@@ -40,6 +40,7 @@ class AdminResponseManager
             'includes'             => $request->has('includes') ? $request->get('includes') : false,
             'layout'               => self::getLayoutDefinition(),
             'stats'                => $request->has('stats') ? $request->get('stats') : false,
+            'report'               => $request->has('report') ? $request->get('report') : false,
             'query'                => $request->has('query') ? $request->get('query') : false,
             'sqlCacheIdentifier'   => $request->has('request_identifier') ? $request->get('request_identifier') : false,
             'limit'                => $request->has('limit') ? $request->get('limit') : 20,
@@ -73,14 +74,18 @@ class AdminResponseManager
         }
 
         $definition = json_decode($definition->column_definition, true);
+        $keys = ['column', 'object', 'group', 'operator'];
 
         foreach ( $definition as $item ) {
             if ( !isset($item['object']) ) continue;
 
-            array_push($columns, [
-                'object' => $item['object'],
-                'column' => $item['column'],
-            ]);
+            $column = [];
+            foreach ( $keys as $key ) {
+                if ( isset($item[ $key ]) )
+                    $column[ $key ] = $item[ $key ];
+            }
+
+            array_push($columns, $column);
         }
 
         return $columns;
