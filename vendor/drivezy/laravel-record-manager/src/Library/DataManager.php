@@ -218,7 +218,7 @@ class DataManager
     private function getSelectItems ()
     {
         //if the data is supposed to be that of reports, send it out differently
-        if ( $this->report ) return $this->fixReportColumns();
+        if ( $this->chart_id ) return $this->fixReportColumns();
 
         self::fixSelectItems();
 

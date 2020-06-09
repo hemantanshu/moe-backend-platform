@@ -65,7 +65,7 @@ class ListManager extends DataManager
                     ->where('model_id', $model->id)->where('name', $relationship)->where('reference_type_id', 41);
 
                 //in case of reports, do not add this restriction
-                if ( !$this->report )
+                if ( !$this->chart_id )
                     $data = $data->where('reference_type_id', 41);
 
                 $data = $data->first();
@@ -106,7 +106,7 @@ class ListManager extends DataManager
      */
     private function loadResults ()
     {
-        if ( $this->report )
+        if ( $this->chart_id )
             return self::sendReportData();
 
         if ( $this->grouping_column )
@@ -265,15 +265,17 @@ class ListManager extends DataManager
         //iterate through the layouts and find out the columns that are defined for the purpose of reports
         foreach ( $this->layout as $layout ) {
             $layout = (object) $layout;
+            $columnName = "`{$layout->object}`.{$layout->column}";
 
             //get the grouping columns
             if ( isset($layout->group) ) {
-                array_push($groupingColumn, "`{$layout->object}`.{$layout->column} as '{$layout->object}.{$layout->column}'");
+                array_push($groupingColumn, "{$columnName} as '{$layout->identifier}'");
             }
 
             //get the aggregation columns
             if ( isset($layout->operator) ) {
-                array_push($aggregationColumn, "{$layout->operator}(`{$layout->object}`.{$layout->column}) as '{$layout->operator}.{$layout->object}.{$layout->column}'");
+                $operator = str_replace(":name:", $columnName, $layout->operator);
+                array_push($aggregationColumn, "{$operator} as '{$layout->identifier}'");
             }
         }
 

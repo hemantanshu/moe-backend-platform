@@ -2,6 +2,7 @@
 
 namespace Drivezy\LaravelRecordManager\Library;
 
+use Drivezy\LaravelRecordManager\Models\Chart;
 use Drivezy\LaravelRecordManager\Models\DataModel;
 use Drivezy\LaravelRecordManager\Models\ListPreference;
 use Drivezy\LaravelUtility\Facade\Message;
@@ -40,7 +41,7 @@ class AdminResponseManager
             'includes'             => $request->has('includes') ? $request->get('includes') : false,
             'layout'               => self::getLayoutDefinition(),
             'stats'                => $request->has('stats') ? $request->get('stats') : false,
-            'report'               => $request->has('report') ? $request->get('report') : false,
+            'chart_id'             => $request->has('chart_id') ? $request->get('chart_id') : false,
             'query'                => $request->has('query') ? $request->get('query') : false,
             'sqlCacheIdentifier'   => $request->has('request_identifier') ? $request->get('request_identifier') : false,
             'limit'                => $request->has('limit') ? $request->get('limit') : 20,
@@ -64,6 +65,8 @@ class AdminResponseManager
     private function getLayoutDefinition ()
     {
         $columns = [];
+        if ( $this->request->has('chart_id') ) return $this->setChartLayout();
+
         if ( !$this->request->has('layout_id') ) return $columns;
 
         $definition = ListPreference::find($this->request->get('layout_id'));
@@ -74,7 +77,7 @@ class AdminResponseManager
         }
 
         $definition = json_decode($definition->column_definition, true);
-        $keys = ['column', 'object', 'group', 'operator'];
+        $keys = ['column', 'object'];
 
         foreach ( $definition as $item ) {
             if ( !isset($item['object']) ) continue;
@@ -86,6 +89,41 @@ class AdminResponseManager
             }
 
             array_push($columns, $column);
+        }
+
+        return $columns;
+    }
+
+    /**
+     * @return array|void
+     */
+    private function setChartLayout ()
+    {
+        $chart = Chart::with(['primary_axis', 'secondary_axis'])->find($this->request->get('chart_id'));
+        if ( !$chart ) return;
+
+        $columns = [];
+
+        foreach ( $chart->primary_axis as $axis ) {
+            $name = explode('.', $axis->name);
+
+            array_push($columns, [
+                'column'     => last($name),
+                'object'     => implode('.', array_slice($name, 0, sizeof($name) - 1)),
+                'group'      => true,
+                'identifier' => $name = str_replace(' ', '_', strtolower($axis->display_name)),
+            ]);
+        }
+
+        foreach ( $chart->secondary_axis as $axis ) {
+            $name = explode('.', $axis->name);
+
+            array_push($columns, [
+                'column'     => last($name),
+                'object'     => implode('.', array_slice($name, 0, sizeof($name) - 1)),
+                'operator'   => $axis->operator,
+                'identifier' => $name = str_replace(' ', '_', strtolower($axis->display_name)),
+            ]);
         }
 
         return $columns;
