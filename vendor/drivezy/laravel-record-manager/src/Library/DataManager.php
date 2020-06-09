@@ -58,7 +58,7 @@ class DataManager
     public function process ($id = null)
     {
         $this->model->actions = ModelManager::getModelActions($this->model);
-
+        $this->model->charts = $this->model->charts;
         self::setReadDictionary($this->base, $this->model);
 
         $this->relationships[ $this->base ] = $this->model;

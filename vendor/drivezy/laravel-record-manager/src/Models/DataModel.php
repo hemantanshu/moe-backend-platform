@@ -92,7 +92,7 @@ class DataModel extends BaseModel
     /**
      * @return HasMany
      */
-    public function reports ()
+    public function charts ()
     {
         return $this->hasMany(Chart::class, 'source_id')->where('source_type', md5(self::class));
     }
